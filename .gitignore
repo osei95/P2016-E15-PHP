@@ -29,3 +29,4 @@ $RECYCLE.BIN/
 
 ### PROJECT ###
 **/config/database.ini
+**/config/apis.ini
