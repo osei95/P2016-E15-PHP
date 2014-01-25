@@ -150,6 +150,59 @@
 				}
 			}
 		}
+
+		function runkeeper_auth($f3){
+
+			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
+			$params = array();
+			parse_str($query, $params);
+
+			if(!isset($params['code'])){
+
+				$rerouteParams = array(
+				    "response_type" => "code",
+				    "client_id" => $f3->get('RUNKEEPER.clientid'),
+				    "redirect_uri" => $f3->get('RUNKEEPER.callbackUrl')
+				);
+				$f3->reroute($f3->get('RUNKEEPER.authurl').'?'.http_build_query($rerouteParams));
+
+			}else{
+
+			  	$params = array(
+			        "code" => $params['code'],
+			        "client_id" => $f3->get('RUNKEEPER.clientid'),
+			        "client_secret" => $f3->get('RUNKEEPER.clientsecret'),
+			        "redirect_uri" => $f3->get('RUNKEEPER.callbackUrl'),
+			        "grant_type" => $f3->get('RUNKEEPER.grantType')
+			    );
+
+				$ch = curl_init($f3->get('RUNKEEPER.token_url'));
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$auth_response = json_decode(curl_exec($ch),true);
+				curl_close($ch);
+
+				// Test de l'API
+				if(isset($auth_response['access_token'])){
+					
+					$url = "https://api.runkeeper.com/profile";
+					$opts = array(
+					    'http'=>array(
+					            'method'=>"GET",
+					            'header'=>"Authorization: Bearer {$auth_response['access_token']}\r\n".
+					            "Accept: application/vnd.com.runkeeper.Profile+json\r\n"
+					        )
+					);
+					$context = stream_context_create($opts);
+					$response = file_get_contents($url, false, $context);
+					$user = json_decode($response, true);
+
+					var_dump($user);
+
+				}
+			}
+		}
 		
 	}
 
