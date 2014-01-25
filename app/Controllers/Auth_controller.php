@@ -47,112 +47,26 @@
 
 		function jawbone_auth($f3){
 
-			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
-			$params = array();
-			parse_str($query, $params);
+			$this->oauth_2_0_auth($f3, 'JAWBONE');
 
-			if(!isset($params['code'])){
-
-				$rerouteParams = array(
-				    "response_type" => "code",
-				    "client_id" => $f3->get('JAWBONE.clientid'),
-				    "redirect_uri" => $f3->get('JAWBONE.callbackUrl'),
-				    "scope" => $f3->get('JAWBONE.scope')
-				);
-				$f3->reroute($f3->get('JAWBONE.authurl').'?'.http_build_query($rerouteParams));
-
-			}else{
-
-			  	$params = array(
-			        "code" => $params['code'],
-			        "client_id" => $f3->get('JAWBONE.clientid'),
-			        "client_secret" => $f3->get('JAWBONE.clientsecret'),
-			        "redirect_uri" => $f3->get('JAWBONE.callbackUrl'),
-			        "grant_type" => $f3->get('JAWBONE.grantType')
-			    );
-
-				$ch = curl_init($f3->get('JAWBONE.token_url'));
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$auth_response = json_decode(curl_exec($ch),true);
-				curl_close($ch);
-
-				// Test de l'API
-				if(isset($auth_response['access_token'])){
-					
-					$url = "https://jawbone.com/nudge/api/v.1.0/users/@me";
-					$opts = array(
-					    'http'=>array(
-					            'method'=>"GET",
-					            'header'=>"Authorization: Bearer {$auth_response['access_token']}\r\n"
-					        )
-					);
-					$context = stream_context_create($opts);
-					$response = file_get_contents($url, false, $context);
-					$user = json_decode($response, true);
-
-					var_dump($user);
-
-				}
-			}
 		}
 
 		function moves_auth($f3){
 
-			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
-			$params = array();
-			parse_str($query, $params);
+			$this->oauth_2_0_auth($f3, 'MOVES');
 
-			if(!isset($params['code'])){
-
-				$rerouteParams = array(
-				    "response_type" => "code",
-				    "client_id" => $f3->get('MOVES.clientid'),
-				    "redirect_uri" => $f3->get('MOVES.callbackUrl'),
-				    "scope" => $f3->get('MOVES.scope')
-				);
-				$f3->reroute($f3->get('MOVES.authurl').'?'.http_build_query($rerouteParams));
-
-			}else{
-
-			  	$params = array(
-			        "code" => $params['code'],
-			        "client_id" => $f3->get('MOVES.clientid'),
-			        "client_secret" => $f3->get('MOVES.clientsecret'),
-			        "redirect_uri" => $f3->get('MOVES.callbackUrl'),
-			        "grant_type" => $f3->get('MOVES.grantType')
-			    );
-
-				$ch = curl_init($f3->get('MOVES.token_url'));
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$auth_response = json_decode(curl_exec($ch),true);
-				curl_close($ch);
-
-				// Test de l'API
-				if(isset($auth_response['access_token'])){
-					
-					$url = "https://api.moves-app.com/api/v1/user/profile";
-					$opts = array(
-					    'http'=>array(
-					            'method'=>"GET",
-					            'header'=>"Authorization: Bearer {$auth_response['access_token']}\r\n"
-					        )
-					);
-					$context = stream_context_create($opts);
-					$response = file_get_contents($url, false, $context);
-					$user = json_decode($response, true);
-
-					var_dump($user);
-
-				}
-			}
 		}
 
 		function runkeeper_auth($f3){
 
+			$this->oauth_2_0_auth($f3, 'RUNKEEPER');	
+
+		}
+
+		function oauth_2_0_auth($f3,$apiName){
+
+			$vars = $f3->get($apiName);
+
 			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
 			$params = array();
 			parse_str($query, $params);
@@ -161,46 +75,30 @@
 
 				$rerouteParams = array(
 				    "response_type" => "code",
-				    "client_id" => $f3->get('RUNKEEPER.clientid'),
-				    "redirect_uri" => $f3->get('RUNKEEPER.callbackUrl')
+				    "client_id" => $vars['clientid'],
+				    "redirect_uri" => $vars['callbackUrl'],
+				    "scope" => $vars['scope']
 				);
-				$f3->reroute($f3->get('RUNKEEPER.authurl').'?'.http_build_query($rerouteParams));
+				$f3->reroute($vars['authurl'].'?'.http_build_query($rerouteParams));
 
 			}else{
 
 			  	$params = array(
 			        "code" => $params['code'],
-			        "client_id" => $f3->get('RUNKEEPER.clientid'),
-			        "client_secret" => $f3->get('RUNKEEPER.clientsecret'),
-			        "redirect_uri" => $f3->get('RUNKEEPER.callbackUrl'),
-			        "grant_type" => $f3->get('RUNKEEPER.grantType')
+			        "client_id" => $vars['clientid'],
+			        "client_secret" => $vars['clientsecret'],
+			        "redirect_uri" => $vars['callbackUrl'],
+			        "grant_type" => $vars['grantType']
 			    );
 
-				$ch = curl_init($f3->get('RUNKEEPER.token_url'));
+				$ch = curl_init($vars['token_url']);
 				curl_setopt($ch, CURLOPT_POST, 1);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				$auth_response = json_decode(curl_exec($ch),true);
 				curl_close($ch);
 
-				// Test de l'API
-				if(isset($auth_response['access_token'])){
-					
-					$url = "https://api.runkeeper.com/profile";
-					$opts = array(
-					    'http'=>array(
-					            'method'=>"GET",
-					            'header'=>"Authorization: Bearer {$auth_response['access_token']}\r\n".
-					            "Accept: application/vnd.com.runkeeper.Profile+json\r\n"
-					        )
-					);
-					$context = stream_context_create($opts);
-					$response = file_get_contents($url, false, $context);
-					$user = json_decode($response, true);
-
-					var_dump($user);
-
-				}
+				var_dump($auth_response);
 			}
 		}
 		
