@@ -52,7 +52,7 @@
 			parse_str($query, $params);
 
 			if(!isset($params['code'])){
-				
+
 				$rerouteParams = array(
 				    "response_type" => "code",
 				    "client_id" => $f3->get('JAWBONE.clientid'),
@@ -82,6 +82,59 @@
 				if(isset($auth_response['access_token'])){
 					
 					$url = "https://jawbone.com/nudge/api/v.1.0/users/@me";
+					$opts = array(
+					    'http'=>array(
+					            'method'=>"GET",
+					            'header'=>"Authorization: Bearer {$auth_response['access_token']}\r\n"
+					        )
+					);
+					$context = stream_context_create($opts);
+					$response = file_get_contents($url, false, $context);
+					$user = json_decode($response, true);
+
+					var_dump($user);
+
+				}
+			}
+		}
+
+		function moves_auth($f3){
+
+			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
+			$params = array();
+			parse_str($query, $params);
+
+			if(!isset($params['code'])){
+
+				$rerouteParams = array(
+				    "response_type" => "code",
+				    "client_id" => $f3->get('MOVES.clientid'),
+				    "redirect_uri" => $f3->get('MOVES.callbackUrl'),
+				    "scope" => $f3->get('MOVES.scope')
+				);
+				$f3->reroute($f3->get('MOVES.authurl').'?'.http_build_query($rerouteParams));
+
+			}else{
+
+			  	$params = array(
+			        "code" => $params['code'],
+			        "client_id" => $f3->get('MOVES.clientid'),
+			        "client_secret" => $f3->get('MOVES.clientsecret'),
+			        "redirect_uri" => $f3->get('MOVES.callbackUrl'),
+			        "grant_type" => $f3->get('MOVES.grantType')
+			    );
+
+				$ch = curl_init($f3->get('MOVES.token_url'));
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$auth_response = json_decode(curl_exec($ch),true);
+				curl_close($ch);
+
+				// Test de l'API
+				if(isset($auth_response['access_token'])){
+					
+					$url = "https://api.moves-app.com/api/v1/user/profile";
 					$opts = array(
 					    'http'=>array(
 					            'method'=>"GET",
