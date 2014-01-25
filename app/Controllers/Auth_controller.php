@@ -2,65 +2,49 @@
 
 	class Auth_controller{
 
-		function _construct(){
-
-		}
+		function _construct(){}
 
 		function fitbit_auth($f3){
+			$this->oauth_1_0_auth($f3, 'FITBIT');
+		}
+
+		function jawbone_auth($f3){
+			$this->oauth_2_0_auth($f3, 'JAWBONE');
+		}
+
+		function moves_auth($f3){
+			$this->oauth_2_0_auth($f3, 'MOVES');
+		}
+
+		function runkeeper_auth($f3){
+			$this->oauth_2_0_auth($f3, 'RUNKEEPER');	
+		}
+
+		function oauth_1_0_auth($f3,$apiName){
+
+			$vars = $f3->get($apiName);
 
 			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
 			$params = array();
 			parse_str($query, $params);
 
-			$oauth = new OAuth($f3->get('FITBIT.conskey'), $f3->get('FITBIT.conssec'), OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);
+			$oauth = new OAuth($vars['conskey'], $vars['conssec'], OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);
 
-			if(!$f3->exists('SESSION.oauth_token') || !$f3->exists('SESSION.oauth_token_secret')){
-				if(!isset($params['oauth_token']) || !$f3->exists('SESSION.oauth_token_secret')){
+			if(!isset($params['oauth_token']) || !$f3->exists('SESSION.temp_secret_token')){
 
-					$request_token_info = $oauth->getRequestToken($f3->get('FITBIT.req_url'), $f3->get('FITBIT.callbackUrl'));
-				    $f3->set('SESSION.oauth_token_secret', $request_token_info['oauth_token_secret']);
-				    $f3->reroute($f3->get('FITBIT.authurl').'?oauth_token='.$request_token_info['oauth_token']);
+				$request_token_info = $oauth->getRequestToken($vars['req_url'], $vars['callbackUrl']);
+			    $f3->set('SESSION.temp_secret_token', $request_token_info['oauth_token_secret']);
+			    $f3->reroute($vars['authurl'].'?oauth_token='.$request_token_info['oauth_token']);
 
-				}else{
+			}else{
 
-					$oauth->setToken($params['oauth_token'], $f3->get('SESSION.oauth_token_secret'));
-					$access_token_info = $oauth->getAccessToken($f3->get('FITBIT.acc_url'));
+				$oauth->setToken($params['oauth_token'], $f3->get('SESSION.temp_secret_token'));
+				$f3->clear('SESSION.temp_secret_token');
+				$auth_response = $oauth->getAccessToken($vars['acc_url']);
 
-					$f3->set('SESSION.oauth_token', $access_token_info['oauth_token']);
-					$f3->set('SESSION.oauth_token_secret', $access_token_info['oauth_token_secret']);
+				var_dump($auth_response);
 
-				}
 			}
-
-			// Test de l'API
-			if($f3->exists('SESSION.oauth_token') && $f3->exists('SESSION.oauth_token_secret')){
-
-				$url = 'http://api.fitbit.com/1/user/-/profile.json';
-
-				$oauth->setToken($f3->get('SESSION.oauth_token'),$f3->get('SESSION.oauth_token_secret'));
-				$oauth->fetch($url);
-			   	$response = $oauth->getLastResponse();
-
-			   	print_r($response);
-			}
-		}
-
-		function jawbone_auth($f3){
-
-			$this->oauth_2_0_auth($f3, 'JAWBONE');
-
-		}
-
-		function moves_auth($f3){
-
-			$this->oauth_2_0_auth($f3, 'MOVES');
-
-		}
-
-		function runkeeper_auth($f3){
-
-			$this->oauth_2_0_auth($f3, 'RUNKEEPER');	
-
 		}
 
 		function oauth_2_0_auth($f3,$apiName){
