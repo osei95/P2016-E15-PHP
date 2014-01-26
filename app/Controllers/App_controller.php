@@ -7,7 +7,7 @@
 		}
 
 		function home(){
-			
+			echo View::instance()->render('home.html');
 		}
 		
 	}
