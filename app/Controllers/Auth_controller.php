@@ -12,10 +12,20 @@
 				$f3->reroute('/login/fitbit');
 				exit;
 			}
+			$fitbit_infos = $this->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $auth_response['oauth_token'], 'oauth_token_secret' => $auth_response['oauth_token_secret'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));		
 			$user_model = new User_model();
 			$user = $user_model->getUserByInputId($f3, array('input_id'=>$auth_response['encoded_user_id'], 'input_name'=>'FITBIT'));
-			if($user==null){
-				$f3->set('SESSION.auth_response', array('auth_response' => $auth_response, 'input_name' => 'FITBIT', 'input_id'=>$auth_response['encoded_user_id']));
+			if($user==null){			
+				$name = ((isset($fitbit_infos['user']['fullName']) && valid($fitbit_infos['user']['fullName'],array('','NA',false,null)))?explode(' ', $fitbit_infos['user']['fullName'], 2):null);
+				$user_infos = array();
+				$user_infos['username'] = (isset($fitbit_infos['user']['nickname']) && valid($fitbit_infos['user']['nickname'],array('','NA'))?$fitbit_infos['user']['nickname']:null);
+				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
+				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
+				$user_infos['gender'] = (isset($fitbit_infos['user']['gender']) && valid($fitbit_infos['user']['gender'],array('','NA'))?(($fitbit_infos['user']['gender']=='MALE')?0:1):null);
+				$user_infos['email'] = null;
+				$user_infos['description'] = (isset($fitbit_infos['user']['aboutMe']) && valid($fitbit_infos['user']['aboutMe'],array('','NA'))?$fitbit_infos['user']['aboutMe']:null);
+				$f3->set('user_infos', $user_infos);
+				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'FITBIT', 'input_id'=>$auth_response['encoded_user_id']));	
 				echo View::instance()->render('registration.html');
 			}else{
 				echo View::instance()->render('dashboard.html');
@@ -29,11 +39,19 @@
 				$f3->reroute('/login/jawbone');
 				exit;
 			}
-			$user_infos = $this->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));
+			$jawbone_infos = $this->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));
 			$user_model = new User_model();
-			$user = $user_model->getUserByInputId($f3, array('input_id'=>$user_infos['meta']['user_xid'], 'input_name'=>'JAWBONE'));
+			$user = $user_model->getUserByInputId($f3, array('input_id'=>$jawbone_infos['meta']['user_xid'], 'input_name'=>'JAWBONE'));
 			if($user==null){
-				$f3->set('SESSION.auth_response', array('auth_response' => $auth_response, 'input_name' => 'JAWBONE', 'input_id'=>$user_infos['meta']['user_xid']));
+				$user_infos = array();
+				$user_infos['username'] = null;
+				$user_infos['firstname'] = (isset($jawbone_infos['data']['first']) && valid($jawbone_infos['data']['first'],array('','NA',false,null))?$jawbone_infos['data']['first']:null);
+				$user_infos['lastname'] = (isset($jawbone_infos['data']['last']) && valid($jawbone_infos['data']['last'],array('','NA',false,null))?$jawbone_infos['data']['last']:null);
+				$user_infos['gender'] = (isset($jawbone_infos['data']['gender']) && valid($jawbone_infos['data']['gender'],array('','NA',false,null))?(($jawbone_infos['data']['gender']=='MALE')?0:1):null);
+				$user_infos['email'] = null;
+				$user_infos['description'] = null;
+				$f3->set('user_infos', $user_infos);
+				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'JAWBONE', 'input_id'=>$jawbone_infos['meta']['user_xid']));
 				echo View::instance()->render('registration.html');
 			}else{
 				echo View::instance()->render('dashboard.html');
@@ -47,10 +65,20 @@
 				$f3->reroute('/login/moves');
 				exit;
 			}
+			// L'API moves ne donne accès à aucune information personnelle
+			//$moves_infos = $this->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));
 			$user_model = new User_model();
 			$user = $user_model->getUserByInputId($f3, array('input_id'=>$auth_response['user_id'], 'input_name'=>'MOVES'));
 			if($user==null){
-				$f3->set('SESSION.auth_response', array('auth_response' => $auth_response, 'input_name' => 'MOVES', 'input_id'=>$auth_response['user_id']));
+				$user_infos = array();
+				$user_infos['username'] = null;
+				$user_infos['firstname'] = null;
+				$user_infos['lastname'] = null;
+				$user_infos['gender'] = null;
+				$user_infos['email'] = null;
+				$user_infos['description'] = null;
+				$f3->set('user_infos', $user_infos);
+				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'MOVES', 'input_id'=>$auth_response['user_id']));
 				echo View::instance()->render('registration.html');
 			}else{
 				echo View::instance()->render('dashboard.html');
@@ -64,11 +92,21 @@
 				$f3->reroute('/login/runkeeper');
 				exit;
 			}
-			$user_infos = $this->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));
+			$general_infos = $this->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));
+			$runkeeper_infos = $this->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['profile']));
 			$user_model = new User_model();
-			$user = $user_model->getUserByInputId($f3, array('input_id' => $user_infos['userID'], 'input_name'=>'MOVES'));
+			$user = $user_model->getUserByInputId($f3, array('input_id' => $general_infos['userID'], 'input_name'=>'MOVES'));
 			if($user==null){
-				$f3->set('SESSION.auth_response', array('auth_response' => $auth_response, 'input_name' => 'MOVES', 'input_id' => $user_infos['userID']));
+				$name = ((isset($runkeeper_infos['name']) && valid($runkeeper_infos['name'],array('','NA',false,null)))?explode(' ', $runkeeper_infos['name'], 2):null);
+				$user_infos = array();
+				$user_infos['username'] = null;
+				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
+				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
+				$user_infos['gender'] = (isset($runkeeper_infos['gender']) && valid($runkeeper_infos['gender'],array('','NA',false,null))?(($runkeeper_infos['gender']=='M')?0:1):null);
+				$user_infos['email'] = null;
+				$user_infos['description'] = null;
+				$f3->set('user_infos', $user_infos);
+				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'MOVES', 'input_id' => $general_infos['userID']));
 				echo View::instance()->render('registration.html');
 			}else{
 				echo View::instance()->render('dashboard.html');
@@ -136,6 +174,17 @@
 			}
 		}
 
+		function oauth_1_0_request($params){    
+
+		  $oauth = new OAuth($params['conskey'], $params['conssec'], OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);   
+          $oauth->setToken($params['oauth_token'], $params['oauth_token_secret']);
+          $oauth->fetch($params['url']);
+          $json_response = $oauth->getLastResponse();
+          $response = json_decode($json_response, true);
+
+		  return $response;
+		}
+
 		function oauth_2_0_request($params){        
 			$opts = array(
 			   'http'=>array(
@@ -152,5 +201,20 @@
 		}
 		
 	}
+
+function valid($value, $bans=array()){
+	$bool = true;
+	if(!isset($value) || empty($value)){
+		$bool = false;
+	}else{
+		foreach($bans as $val){
+			if($value==$val){
+				$bool = false;
+				break;
+			}
+		}
+	}
+	return $bool;
+}
 
 ?>
