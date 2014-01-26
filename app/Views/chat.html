@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Messagerie</title>
+</head>
+<body>
+	<div id="app">
+		<form id="connexion">
+			<input type="hidden" name="from" value="<?php echo $from; ?>">
+			<input type="hidden" name="to" value="<?php echo $to; ?>">
+		</form>
+		<div id="chatbox">
+			<ul id="messages"></ul>
+			<form id="message">
+				<textarea name="message"></textarea>
+				<input type="submit" value="Envoyer">
+			</form>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="http://php.h3.erwan.co:8880/socket.io/socket.io.js"></script>
+	<script src="/public/js/chat.js"></script>
+</body>
+</html>
