@@ -6,6 +6,13 @@
 </head>
 <body>
 	<h1>Inscription</h1>
+	<?php 
+		if(isset($errors)){
+			foreach($errors as $e){
+				echo '<p class="error">'.$e.'</p>';
+			}
+		}
+	?>
 	<form action="/register" method="POST">
 		<label for="username">Pseudo</label>
 		<input type="text" name="username" id="username" value="<?php echo(($user_infos['username']==null)?'':$user_infos['username']) ?>" />

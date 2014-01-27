@@ -28,7 +28,7 @@
 				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'FITBIT', 'input_id'=>$auth_response['encoded_user_id']));	
 				echo View::instance()->render('registration.html');
 			}else{
-				echo View::instance()->render('dashboard.html');
+				$f3->reroute('/');
 			}
 		}
 
@@ -54,7 +54,8 @@
 				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'JAWBONE', 'input_id'=>$jawbone_infos['meta']['user_xid']));
 				echo View::instance()->render('registration.html');
 			}else{
-				echo View::instance()->render('dashboard.html');
+				$f3->set('SESSION.user', array('user_id' => $user['user_id'], 'user_email' => $user['user_email'], 'user_firstname' => $user['user_firstname'], 'user_lastname' => $user['user_lastname'], 'user_key' => $user['user_key'], 'user_gender' => $user['user_gender'], 'user_description' => $user['user_description']));
+				$f3->reroute('/');
 			}
 		}
 
@@ -81,7 +82,8 @@
 				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'MOVES', 'input_id'=>$auth_response['user_id']));
 				echo View::instance()->render('registration.html');
 			}else{
-				echo View::instance()->render('dashboard.html');
+				$f3->set('SESSION.user', $user);
+				$f3->reroute('/');
 			}
 		}
 
@@ -109,7 +111,7 @@
 				$f3->set('SESSION.registration', array('auth_response' => $auth_response, 'input_name' => 'MOVES', 'input_id' => $general_infos['userID']));
 				echo View::instance()->render('registration.html');
 			}else{
-				echo View::instance()->render('dashboard.html');
+				$f3->reroute('/');
 			}
 		}
 
