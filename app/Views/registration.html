@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Home</title>
+</head>
+<body>
+	<h1>Inscription</h1>
+	<?php 
+		if(isset($errors)){
+			foreach($errors as $e){
+				echo '<p class="error">'.$e.'</p>';
+			}
+		}
+	?>
+	<form action="/register" method="POST">
+		<label for="username">Pseudo</label>
+		<input type="text" name="username" id="username" value="<?php echo(($user_infos['username']==null)?'':$user_infos['username']) ?>" />
+		<br/><br/>
+		<label for="firstname">Prénom</label>
+		<input type="text" name="firstname" id="firstname" value="<?php echo(($user_infos['firstname']==null)?'':$user_infos['firstname']) ?>" />
+		<br/><br/>
+		<label for="lastname">Nom</label>
+		<input type="text" name="lastname" id="lastname" value="<?php echo(($user_infos['lastname']==null)?'':$user_infos['lastname']) ?>" />
+		<br/><br/>
+		<label for="email">Adresse E-mail</label>
+		<input type="text" name="email" id="email" value="<?php echo(($user_infos['email']==null)?'':$user_infos['email']) ?>" />
+		<br/><br/>
+		<input type="radio" name="gender" id="female" value="1" <?php echo(($user_infos['gender']==1)?'checked':'') ?> />
+		<label for="female">Femme</label>
+		<input type="radio" name="gender" id="male" value="0" <?php echo(($user_infos['gender']==0)?'checked':'') ?> />
+		<label for="male">Homme</label>
+		<br/><br/>
+		<label for="email">Description</label>
+		<textarea name="description" id="description"><?php echo(($user_infos['description']==null)?'':$user_infos['description']) ?></textarea>
+		<br/><br/>
+		<input type="submit" value="Envoyer"/>
+	</form>
+</body>
+</html>
