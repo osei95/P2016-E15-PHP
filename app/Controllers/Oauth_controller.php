@@ -77,16 +77,26 @@
 		}
 
 		function oauth_2_0_request($params){        
-			$opts = array(
+			/*$opts = array(
 			   'http'=>array(
 			           'method'=>(isset($params['method'])?$params['method']:'GET'),
-			           'header'=>"Authorization: Bearer {$params['access_token']}\r\n".
-			           (isset($params['accept'])?"Accept: ".$params['accept']."\r\n":"")
+			           'header'=>"Authorization: Bearer {$params['access_token']}"." \r\n".
+			           (isset($params['accept'])?"Accept: ".$params['accept']:"")
 			       )
 			);
+			var_dump($opts);
 			$context = stream_context_create($opts);
 			$json_response = file_get_contents($params['url'], false, $context);
-			$response = json_decode($json_response, true);
+			$response = json_decode($json_response, true);*/
+
+			$headers = array('Authorization: Bearer ' . $params['access_token']);
+			if(isset($params['accept']))		$headers['Accept'] = $params['accept'];
+
+			$ch = curl_init($params['url']);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$response = json_decode(curl_exec($ch),true);
+			curl_close($ch);
 
 			return $response;
 		}

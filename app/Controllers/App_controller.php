@@ -23,7 +23,7 @@
 			if($inputs!=null){
 				foreach($inputs as $input){
 					$activity_controller = new Activity_controller();
-					$activity_controller->import_activities($f3, array('user_id' => $user['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_has_input_id']));
+					$activity_controller->import_activity($f3, array('user_id' => $user['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_has_input_id']));
 				}
 			}
 		}
