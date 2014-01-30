@@ -1,44 +1,44 @@
 <?php
 	
-	class Input_model{
+	class Input_model extends Model{
 
-		function __construct(){
+		private $mapper;
+		private $oauth_model;
+  
+		public function __construct(){
+			parent::__construct();
+			$this->mapper=$this->getMapper('user_has_input');
+		} 
 
-		}
-
-		function newInput($f3, $params){
-			$input = $this->getInputByName($f3, array('input_shortname' => $params['input_name']));
+		function createInput($params){
+			$input = $this->getInputByName(array('input_shortname' => $params['input_name']));
 			if($input!=null){
-				$user_has_input = new DB\SQL\Mapper($f3->get('dB'), 'user_has_input');
-				$user_has_input->user_id = $params['user_id'];
-				$user_has_input->input_id = $input->input_id;
-				$user_has_input->user_has_input_id = $params['input_key'];
-				$user_has_input->user_has_input_oauth = $params['oauth'];
-				$user_has_input->user_has_input_oauth_secret = $params['oauth_secret'];
-				$user_has_input->save();
+				$this->mapper->user_id = $params['user_id'];
+				$this->mapper->input_id = $input->input_id;
+				$this->mapper->user_has_input_id = $params['input_key'];
+				$this->mapper->user_has_input_oauth = $params['oauth'];
+				$this->mapper->user_has_input_oauth_secret = $params['oauth_secret'];
+				$this->mapper->save();
 			}
 		}
 
-		function updateOauth($f3, $params){
-			$mapper = new DB\SQL\Mapper($f3->get('dB'),'user_has_input');
-			$user_has_input = $mapper->load(array('user_has_input_id=?', $params['user_has_input_id']));
+		function updateOauth($params){
+			$user_has_input = $this->mapper->load(array('user_has_input_id=?', $params['user_has_input_id']));
 			$user_has_input->user_has_input_oauth = $params['oauth'];
 			if(isset($params['oauth_secret']))	
 				$user_has_input->user_has_input_oauth_secret = $params['oauth_secret'];
 			$user_has_input->save();
 		}
 
-		function getInputByName($f3, $params){
-			$mapper = new DB\SQL\Mapper($f3->get('dB'),'input');
+		function getInputByName($params){
+			$mapper = $this->mapper=$this->getMapper('input');
 			$input = $mapper->load(array('input_shortname=?', $params['input_shortname']));
 			return (!$input?null:$input);
 		}
 
-		function getInputByUserId($f3, $params){
-			$inputs = $f3->get('dB')->exec(
-			    'SELECT user_has_input.input_id, user_has_input.user_has_input_id, input.input_shortname, user_has_input.user_has_input_oauth, user_has_input.user_has_input_oauth_secret FROM user_has_input LEFT JOIN user ON user_has_input.user_id=user.user_id LEFT JOIN input ON user_has_input.input_id=input.input_id WHERE user.user_id=:user_id',
-			    array(':user_id'=>$params['user_id'])
-			);
+		function getInputByUserId($params){
+			$mapper = $this->getMapper('user_input_list');
+			$inputs = $mapper->find(array('user_id=?', $params['user_id']));
 			return (!is_array($inputs)?null:$inputs);
 		}
 	}

@@ -1,44 +1,42 @@
 <?php
 	
-	class User_model{
+	class User_model extends Model{
 
-		function _construct(){
+		private $mapper;
+		private $oauth_model;
+  
+		public function __construct(){
+			parent::__construct();
+			$this->mapper=$this->getMapper('user');
+		} 
 
-		}
-
-		function getUserByInputId($f3, $params){
-			$users = $f3->get('dB')->exec(
-			    'SELECT user.user_id, user.user_username, user.user_firstname, user.user_lastname, user.user_email, user.user_gender, user.user_key, user.user_description FROM user LEFT JOIN user_has_input ON user.user_id=user_has_input.user_id LEFT JOIN input ON user_has_input.input_id=input.input_id WHERE user_has_input.user_has_input_id=:input_id AND input.input_shortname=:input_name',
-			    array(':input_id'=>$params['input_id'], ':input_name'=>$params['input_name'])
-			);
-			return (!is_array($users)?null:(count($users)>0)?$users[0]:null);
-		}
-
-		function getUserByUsername($f3, $params){
-			$mapper = new DB\SQL\Mapper($f3->get('dB'),'user');
-			$user = $mapper->load(array('user_username=?', $params['username']));
+		function getUserByInputId($params){
+			$mapper = $this->getMapper('user_input_list');
+			$user = $mapper->load(array('user_input_id=? AND input_shortname=?', $params['input_id'], $params['input_name']));
 			return (!$user?null:$user);
 		}
 
-		function getUserByEmail($f3, $params){
-			$mapper = new DB\SQL\Mapper($f3->get('dB'),'user');
-			$user = $mapper->load(array('user_email=?', $params['email']));
+		function getUserByUsername($params){
+			$user = $this->mapper->load(array('user_username=?', $params['username']));
 			return (!$user?null:$user);
 		}
 
-		function newUser($f3, $params){
+		function getUserByEmail($params){
+			$user = $this->mapper->load(array('user_email=?', $params['email']));
+			return (!$user?null:$user);
+		}
+
+		function createUser($params){
 			$key = uniqid();
-			$user = new DB\SQL\Mapper($f3->get('dB'), 'user');
-			$user->user_username = $params['username'];
-			$user->user_password = $params['password'];
-			$user->user_email = $params['email'];
-			$user->user_gender = $params['gender'];
-			$user->user_description = $params['description'];
-			$user->user_firstname = $params['firstname'];
-			$user->user_lastname = $params['lastname'];
-			$user->user_key = $key;
-			$user->save();
-			return $user;
+			$this->mapper->user_username = $params['username'];
+			$this->mapper->user_password = $params['password'];
+			$this->mapper->user_email = $params['email'];
+			$this->mapper->user_gender = $params['gender'];
+			$this->mapper->user_description = $params['description'];
+			$this->mapper->user_firstname = $params['firstname'];
+			$this->mapper->user_lastname = $params['lastname'];
+			$this->mapper->user_key = $key;
+			$this->mapper->save();
 		}
 	}
 ?>

@@ -9,6 +9,13 @@
 	<a href="/login/jawbone">Connectez-vous avec Jawbone Up</a>
 	<a href="/login/moves">Connectez-vous avec Moves</a>
 	<a href="/login/runkeeper">Connectez-vous avec Runkeeper</a>
+	<?php 
+		if(isset($errors)){
+			foreach($errors as $e){
+				echo '<p class="error">'.$e.'</p>';
+			}
+		}
+	?>
 	<form action="/login" method="POST">
 		<label for="username"></label>
 		<input type="text" name="username" id="username">
