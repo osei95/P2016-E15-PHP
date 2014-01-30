@@ -22,6 +22,7 @@
 			if($user==null){
 				$user_infos = array();
 				$user_infos['username'] = null;
+				$user_infos['password'] = null;
 				$user_infos['firstname'] = null;
 				$user_infos['lastname'] = null;
 				$user_infos['gender'] = null;
@@ -32,6 +33,8 @@
 				echo View::instance()->render('registration.html');
 			}else{
 				$f3->set('SESSION.user', array('user_id' => $user['user_id'], 'user_email' => $user['user_email'], 'user_firstname' => $user['user_firstname'], 'user_lastname' => $user['user_lastname'], 'user_key' => $user['user_key'], 'user_gender' => $user['user_gender'], 'user_description' => $user['user_description'], 'access_token' => $auth_response['access_token']));
+				$input_model = new Input_model();
+				$input_model->updateOauth($f3, array('user_has_input_id' => $auth_response['user_id'], 'oauth' => $auth_response['access_token']));
 				$f3->reroute('/');
 			}
 		}

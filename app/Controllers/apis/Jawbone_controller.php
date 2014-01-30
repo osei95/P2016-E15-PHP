@@ -21,6 +21,7 @@
 			if($user==null){
 				$user_infos = array();
 				$user_infos['username'] = null;
+				$user_infos['password'] = null;
 				$user_infos['firstname'] = (isset($jawbone_infos['data']['first']) && valid($jawbone_infos['data']['first'],array('','NA',false,null))?$jawbone_infos['data']['first']:null);
 				$user_infos['lastname'] = (isset($jawbone_infos['data']['last']) && valid($jawbone_infos['data']['last'],array('','NA',false,null))?$jawbone_infos['data']['last']:null);
 				$user_infos['gender'] = (isset($jawbone_infos['data']['gender']) && valid($jawbone_infos['data']['gender'],array('','NA',false,null))?(($jawbone_infos['data']['gender']=='MALE')?0:1):null);
@@ -31,6 +32,8 @@
 				echo View::instance()->render('registration.html');
 			}else{
 				$f3->set('SESSION.user', array('user_id' => $user['user_id'], 'user_email' => $user['user_email'], 'user_firstname' => $user['user_firstname'], 'user_lastname' => $user['user_lastname'], 'user_key' => $user['user_key'], 'user_gender' => $user['user_gender'], 'user_description' => $user['user_description'], 'access_token' => $auth_response['access_token']));
+				$input_model = new Input_model();
+				$input_model->updateOauth($f3, array('user_has_input_id' => $jawbone_infos['meta']['user_xid'], 'oauth' => $auth_response['access_token']));
 				$f3->reroute('/');
 			}
 		}

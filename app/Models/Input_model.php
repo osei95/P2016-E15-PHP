@@ -13,8 +13,19 @@
 				$user_has_input->user_id = $params['user_id'];
 				$user_has_input->input_id = $input->input_id;
 				$user_has_input->user_has_input_id = $params['input_key'];
+				$user_has_input->user_has_input_oauth = $params['oauth'];
+				$user_has_input->user_has_input_oauth_secret = $params['oauth_secret'];
 				$user_has_input->save();
 			}
+		}
+
+		function updateOauth($f3, $params){
+			$mapper = new DB\SQL\Mapper($f3->get('dB'),'user_has_input');
+			$user_has_input = $mapper->load(array('user_has_input_id=?', $params['user_has_input_id']));
+			$user_has_input->user_has_input_oauth = $params['oauth'];
+			if(isset($params['oauth_secret']))	
+				$user_has_input->user_has_input_oauth_secret = $params['oauth_secret'];
+			$user_has_input->save();
 		}
 
 		function getInputByName($f3, $params){
@@ -25,7 +36,7 @@
 
 		function getInputByUserId($f3, $params){
 			$inputs = $f3->get('dB')->exec(
-			    'SELECT user_has_input.input_id, user_has_input.user_has_input_id, input.input_shortname FROM user_has_input LEFT JOIN user ON user_has_input.user_id=user.user_id LEFT JOIN input ON user_has_input.input_id=input.input_id WHERE user.user_id=:user_id',
+			    'SELECT user_has_input.input_id, user_has_input.user_has_input_id, input.input_shortname, user_has_input.user_has_input_oauth, user_has_input.user_has_input_oauth_secret FROM user_has_input LEFT JOIN user ON user_has_input.user_id=user.user_id LEFT JOIN input ON user_has_input.input_id=input.input_id WHERE user.user_id=:user_id',
 			    array(':user_id'=>$params['user_id'])
 			);
 			return (!is_array($inputs)?null:$inputs);

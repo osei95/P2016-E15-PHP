@@ -22,6 +22,7 @@
 				$name = ((isset($fitbit_infos['user']['fullName']) && valid($fitbit_infos['user']['fullName'],array('','NA',false,null)))?explode(' ', $fitbit_infos['user']['fullName'], 2):null);
 				$user_infos = array();
 				$user_infos['username'] = (isset($fitbit_infos['user']['nickname']) && valid($fitbit_infos['user']['nickname'],array('','NA'))?$fitbit_infos['user']['nickname']:null);
+				$user_infos['password'] = null;
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($fitbit_infos['user']['gender']) && valid($fitbit_infos['user']['gender'],array('','NA'))?(($fitbit_infos['user']['gender']=='MALE')?0:1):null);
@@ -32,13 +33,14 @@
 				echo View::instance()->render('registration.html');
 			}else{
 				$f3->set('SESSION.user', array('user_id' => $user['user_id'], 'user_email' => $user['user_email'], 'user_firstname' => $user['user_firstname'], 'user_lastname' => $user['user_lastname'], 'user_key' => $user['user_key'], 'user_gender' => $user['user_gender'], 'user_description' => $user['user_description'], 'access_token' => $auth_response['oauth_token'], 'access_secret_token' => $auth_response['oauth_token_secret']));
+				$input_model = new Input_model();
+				$input_model->updateOauth($f3, array('user_has_input_id' => $auth_response['encoded_user_id'], 'oauth' => $auth_response['oauth_token'], 'oauth_secret' => $auth_response['oauth_token_secret']));
 				$f3->reroute('/');
 			}
 		}
 
 		function import_activity($f3, $params){
 			$vars = $f3->get('FITBIT');
-			
 			$date_request = date('Y-m-d');
 			$activity_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $f3->get('SESSION.user.access_token'), 'oauth_token_secret' => $f3->get('SESSION.user.access_secret_token'), 'url' => $vars['endpoints']['base'].str_replace('{date}',$date_request,$vars['endpoints']['activities'])));					
 			$duration = $activity_infos['summary']['fairlyActiveMinutes']+$activity_infos['summary']['veryActiveMinutes'];

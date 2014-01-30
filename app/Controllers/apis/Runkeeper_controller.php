@@ -23,6 +23,7 @@
 				$name = ((isset($runkeeper_infos['name']) && valid($runkeeper_infos['name'],array('','NA',false,null)))?explode(' ', $runkeeper_infos['name'], 2):null);
 				$user_infos = array();
 				$user_infos['username'] = null;
+				$user_infos['password'] = null;
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($runkeeper_infos['gender']) && valid($runkeeper_infos['gender'],array('','NA',false,null))?(($runkeeper_infos['gender']=='M')?0:1):null);
@@ -33,6 +34,8 @@
 				echo View::instance()->render('registration.html');
 			}else{
 				$f3->set('SESSION.user', array('user_id' => $user['user_id'], 'user_email' => $user['user_email'], 'user_firstname' => $user['user_firstname'], 'user_lastname' => $user['user_lastname'], 'user_key' => $user['user_key'], 'user_gender' => $user['user_gender'], 'user_description' => $user['user_description'], 'access_token' => $auth_response['access_token']));
+				$input_model = new Input_model();
+				$input_model->updateOauth($f3, array('user_has_input_id' => $general_infos['userID'], 'oauth' => $auth_response['access_token']));
 				$f3->reroute('/');
 			}
 		}

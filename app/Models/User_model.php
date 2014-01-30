@@ -30,6 +30,7 @@
 			$key = uniqid();
 			$user = new DB\SQL\Mapper($f3->get('dB'), 'user');
 			$user->user_username = $params['username'];
+			$user->user_password = $params['password'];
 			$user->user_email = $params['email'];
 			$user->user_gender = $params['gender'];
 			$user->user_description = $params['description'];
