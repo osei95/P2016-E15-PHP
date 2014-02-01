@@ -23,7 +23,7 @@
 			$runkeeper_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $auth_response['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['profile']));
 			$user_model = new User_model();
 			$user = $user_model->getUserByInputId(array('input_id' => $general_infos['userID'], 'input_name'=>'RUNKEEPER'));
-			if($user==null){
+			if(!$user){
 				$name = ((isset($runkeeper_infos['name']) && valid($runkeeper_infos['name'],array('','NA',false,null)))?explode(' ', $runkeeper_infos['name'], 2):null);
 				$user_infos = array();
 				$user_infos['username'] = null;
@@ -45,39 +45,41 @@
 
 		function importActivity($f3, $params){
 			$vars = $f3->get('RUNKEEPER');
-			$activity_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $f3->get('SESSION.user.access_token'), 'url' => $vars['endpoints']['base'].$vars['endpoints']['activities'], 'accept' => 'application/vnd.com.runkeeper.BackgroundActivitySet+json'));
+			$activity_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $params['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['activities'], 'accept' => 'application/vnd.com.runkeeper.BackgroundActivitySet+json'));
 
 			$today = date('Ymd');
 
 			$activities = array();
 
-			foreach($activity_infos['items'] as $activity){
-				$exploded_date = explode(' ',str_replace(',', '', $activity['start_time']));
-				$date_format = DateTime::createFromFormat('d M Y', $exploded_date[1].' '.$exploded_date[2].' '.$exploded_date[3]);
-				$date = $date_format->format('Ymd');
-				if($date==$today){
-					if($activity['type']=='Running' || $activity['type']=='Cycling' || $activity['type']=='Mountain Biking' || $activity['type']=='Walking'){
-						
-						switch($activity['type']){
-							case 'Walking':
-								$type = 'walk';
-								break;
-							case 'Running':
-								$type = 'run';
-								break;
-							case 'Cycling':
-							case 'Mountain Biking':
-								$type = 'bike';
-								break;
-							default :
-								$type = '';
+			if(isset($activity_infos['items']) && is_array($activity_infos['items'])){	// Si on a une activité ce jour
+				foreach($activity_infos['items'] as $activity){
+					$exploded_date = explode(' ',str_replace(',', '', $activity['start_time']));
+					$date_format = DateTime::createFromFormat('d M Y', $exploded_date[1].' '.$exploded_date[2].' '.$exploded_date[3]);
+					$date = $date_format->format('Ymd');
+					if($date==$today){
+						if($activity['type']=='Running' || $activity['type']=='Cycling' || $activity['type']=='Mountain Biking' || $activity['type']=='Walking'){
+							
+							switch($activity['type']){
+								case 'Walking':
+									$type = 'walk';
+									break;
+								case 'Running':
+									$type = 'run';
+									break;
+								case 'Cycling':
+								case 'Mountain Biking':
+									$type = 'bike';
+									break;
+								default :
+									$type = '';
+							}
+
+							if(!isset($activities[$type]))	$activities[$type] = array('calories' => 0, 'distance' => 0, 'duration' => 0);
+
+							$activities[$type]['calories']+=$activity['total_calories'];
+							$activities[$type]['distance']+=$activity['total_distance'];
+							$activities[$type]['duration']+=$activity['duration'];
 						}
-
-						if(!isset($activities[$type]))	$activities[$type] = array('calories' => 0, 'distance' => 0, 'duration' => 0);
-
-						$activities[$type]['calories']+=$activity['total_calories'];
-						$activities[$type]['distance']+=$activity['total_distance'];
-						$activities[$type]['duration']+=$activity['duration'];
 					}
 				}
 			}
@@ -87,10 +89,10 @@
 			foreach($activities as $type => $act){
 				$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => $type));
 
-				if($activity!=null){
+				if($activity){
 					$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
 
-					$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
+					$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
 				}
 			}
 

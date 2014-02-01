@@ -14,16 +14,16 @@
 
 		function auth($f3){
 			$vars = $f3->get('FITBIT');
-			var_dump($vars);
 			$auth_response = $this->oauth_controller->oauth_1_0_auth($f3, $vars);
 			if(isset($auth_response['error'])){
 				$f3->reroute('/login/fitbit');
 				exit;
 			}
+			var_dump($auth_response);
 			$fitbit_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $auth_response['oauth_token'], 'oauth_token_secret' => $auth_response['oauth_token_secret'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));		
 			$user_model = new User_model();
 			$user = $user_model->getUserByInputId(array('input_id'=>$auth_response['encoded_user_id'], 'input_name'=>'FITBIT'));
-			if($user==null){			
+			if(!$user){			
 				$name = ((isset($fitbit_infos['user']['fullName']) && valid($fitbit_infos['user']['fullName'],array('','NA',false,null)))?explode(' ', $fitbit_infos['user']['fullName'], 2):null);
 				$user_infos = array();
 				$user_infos['username'] = (isset($fitbit_infos['user']['nickname']) && valid($fitbit_infos['user']['nickname'],array('','NA'))?$fitbit_infos['user']['nickname']:null);
@@ -38,7 +38,7 @@
 			}else{
 				$f3->set('SESSION.user', array('user_id' => $user->user_id, 'user_email' => $user->user_email, 'user_firstname' => $user->user_firstname, 'user_lastname' => $user->user_lastname, 'user_key' => $user->user_key, 'user_gender' => $user->user_gender, 'user_description' => $user->user_description, 'access_token' => $auth_response['oauth_token'], 'access_secret_token' => $auth_response['oauth_token_secret']));
 				$input_model = new Input_model();
-				$input_model->updateOauth($f3, array('user_has_input_id' => $auth_response['encoded_user_id'], 'oauth' => $auth_response['oauth_token'], 'oauth_secret' => $auth_response['oauth_token_secret']));
+				$input_model->updateOauth(array('user_has_input_id' => $auth_response['encoded_user_id'], 'oauth' => $auth_response['oauth_token'], 'oauth_secret' => $auth_response['oauth_token_secret']));
 				$f3->reroute('/');
 			}
 		}
@@ -46,22 +46,26 @@
 		function importActivity($f3, $params){
 			$vars = $f3->get('FITBIT');
 			$date_request = date('Y-m-d');
-			$activity_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $f3->get('SESSION.user.access_token'), 'oauth_token_secret' => $f3->get('SESSION.user.access_secret_token'), 'url' => $vars['endpoints']['base'].str_replace('{date}',$date_request,$vars['endpoints']['activities'])));					
-			$duration = $activity_infos['summary']['fairlyActiveMinutes']+$activity_infos['summary']['veryActiveMinutes'];
-			foreach($activity_infos['summary']['distances'] as $distance){
-				if($distance['activity']=='total'){
-					$distance = $distance['distance'];
-					break;
-				}	
-			}
-			$calories = $activity_infos['summary']['activityCalories'];
-			$date = date('Ymd');
+			$activity_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $params['access_token'], 'oauth_token_secret' => $params['access_token_secret'], 'url' => $vars['endpoints']['base'].str_replace('{date}', $date_request, $vars['endpoints']['activities'])));					
+			
+			if(isset($activity_infos['summary']) && is_array($activity_infos['summary'])){	// Si on a une activité ce jour
 
-			$activity_model = new Activity_model();
-			$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => 'move'));
-			if($activity!=null){
-				$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
-				$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
+				$duration = $activity_infos['summary']['fairlyActiveMinutes']+$activity_infos['summary']['veryActiveMinutes'];
+				foreach($activity_infos['summary']['distances'] as $distance){
+					if($distance['activity']=='total'){
+						$distance = $distance['distance'];
+						break;
+					}	
+				}
+				$calories = $activity_infos['summary']['activityCalories'];
+				$date = date('Ymd');
+
+				$activity_model = new Activity_model();
+				$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => 'move'));
+				if($activity){
+					$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
+					$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
+				}
 			}
 
 		}

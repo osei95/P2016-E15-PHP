@@ -28,6 +28,17 @@
 			}
 		}
 
+		function oauth_1_0_request($params){    
+
+		  $oauth = new OAuth($params['conskey'], $params['conssec'], OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);   
+          $oauth->setToken($params['oauth_token'], $params['oauth_token_secret']);
+          $oauth->fetch($params['url']);
+          $json_response = $oauth->getLastResponse();
+          $response = json_decode($json_response, true);
+
+		  return $response;
+		}
+
 		function oauth_2_0_auth($f3, $vars){
 
 			$query = parse_url($f3->get('PARAMS')[0],PHP_URL_QUERY);
@@ -65,30 +76,25 @@
 			}
 		}
 
-		function oauth_1_0_request($params){    
+		function oauth_2_0_refresh_token($f3, $vars){
+			$params = array(
+		        "client_id" => $vars['clientid'],
+		        "client_secret" => $vars['clientsecret'],
+		        "grant_type" => $vars['grantType'],
+		        "refresh_token" => $vars['refresh_token']
+		    );
 
-		  $oauth = new OAuth($params['conskey'], $params['conssec'], OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);   
-          $oauth->setToken($params['oauth_token'], $params['oauth_token_secret']);
-          $oauth->fetch($params['url']);
-          $json_response = $oauth->getLastResponse();
-          $response = json_decode($json_response, true);
+			$ch = curl_init($vars['token_url']);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$auth_response = json_decode(curl_exec($ch),true);
+			curl_close($ch);
 
-		  return $response;
+			return $auth_response;
 		}
 
 		function oauth_2_0_request($params){        
-			/*$opts = array(
-			   'http'=>array(
-			           'method'=>(isset($params['method'])?$params['method']:'GET'),
-			           'header'=>"Authorization: Bearer {$params['access_token']}"." \r\n".
-			           (isset($params['accept'])?"Accept: ".$params['accept']:"")
-			       )
-			);
-			var_dump($opts);
-			$context = stream_context_create($opts);
-			$json_response = file_get_contents($params['url'], false, $context);
-			$response = json_decode($json_response, true);*/
-
 			$headers = array('Authorization: Bearer ' . $params['access_token']);
 			if(isset($params['accept']))		$headers['Accept'] = $params['accept'];
 

@@ -8,12 +8,11 @@
 		public function __construct(){
 			parent::__construct();
 			$this->mapper=$this->getMapper('user');
-		} 
+		}
 
 		function getUserByInputId($params){
 			$mapper = $this->getMapper('user_input_list');
-			$user = $mapper->load(array('user_input_id=? AND input_shortname=?', $params['input_id'], $params['input_name']));
-			return (!$user?null:$user);
+			return $mapper->load(array('user_input_id=? AND input_shortname=?', $params['input_id'], $params['input_name']));
 		}
 
 		function getUserByUsername($params){
@@ -22,8 +21,7 @@
 		}
 
 		function getUserByEmail($params){
-			$user = $this->mapper->load(array('user_email=?', $params['email']));
-			return (!$user?null:$user);
+			return $this->mapper->load(array('user_email=?', $params['email']));
 		}
 
 		function createUser($params){
@@ -37,6 +35,7 @@
 			$this->mapper->user_lastname = $params['lastname'];
 			$this->mapper->user_key = $key;
 			$this->mapper->save();
+			return $this->mapper;
 		}
 	}
 ?>
