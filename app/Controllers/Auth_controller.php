@@ -44,7 +44,7 @@
 				$errors['data'] = 'Une erreur s\'est produite lors de l\'envoi du formulaire. Veuillez recommencer.';
 			}
 			if(count($errors)>0){
-				$f3->set('errors', $errors);
+				$f3->set('errors_auth', $errors);
 			}else{
 				$input = $input_model->getInputByUserId(array('user_id' => $user->user_id));
 				if($input){
@@ -67,14 +67,13 @@
 		function register($f3){
 			$infos = array();
 			$errors = array();
-			if($f3->exists('POST.username') && $f3->exists('POST.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.gender') && $f3->exists('POST.description')){
+			if($f3->exists('SESSION.registration_auth.username') && $f3->exists('SESSION.registration_auth.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.gender') && $f3->exists('POST.description')){
 				$user_model = new User_model();
 				$infos = $f3->get('POST');
+				$infos['username'] = $f3->get('SESSION.registration_auth.username');
+				$infos['password'] = $f3->get('SESSION.registration_auth.password');
 				if($user_model->getUserByUsername(array('username' => $infos['username']))!=null){
 					$errors['username'] = 'Ce pseudonyme est déjà utilisé par un autre membre.';
-				}
-				if(strlen($infos['password'])<6){
-					$errors['password'] = 'Votre mot de passe doit contenir 6 caractères au minimum.';
 				}
 				if(strlen($infos['firstname'])<2){
 					$errors['firstname'] = 'Veuillez vérifier la saisie de votre prénom.';
@@ -89,6 +88,36 @@
 				}
 				if($infos['gender']!=0 && $infos['gender']!=1){
 					$errors['lastname'] = 'Veuillez indiquer votre sexe.';
+				}
+			}elseif($f3->exists('POST.username') && $f3->exists('POST.password') && $f3->exists('POST.input')){
+				$user_model = new User_model();
+				$this->tpl=array('sync'=>'home.html');
+				$f3->set('SESSION.registration_auth', array('username' => $f3->get('POST.username'), 'password' => $f3->get('POST.password')));
+				$infos = $f3->get('POST');
+				if(strlen($infos['username'])<6){
+					$errors['username'] = 'Votre pseudonyme doit contenir 4 caractères au minimum.';
+				}elseif($user_model->getUserByUsername(array('username' => $infos['username']))!=null){
+					$errors['username'] = 'Ce pseudonyme est déjà utilisé par un autre membre.';
+				}
+				if(strlen($infos['password'])<6){
+					$errors['password'] = 'Votre mot de passe doit contenir 6 caractères au minimum.';
+				}
+				if(count($errors)==0){
+					switch($f3->get('POST.input')){
+						case 'JAWBONE' :
+							$this->jawbone_auth($f3);
+							break;
+						case 'FITBIT' :
+							$this->fitbit_auth($f3);
+							break;
+						case 'MOVES' :
+							$this->moves_auth($f3);
+							break;
+						case 'RUNKEEPER' :
+							$this->runkeeper_auth($f3);
+							break;
+					}
+					exit;
 				}
 			}else{
 				$errors['data'] = 'Une erreur s\'est produite lors de l\'envoi du formulaire. Veuillez recommencer.';
@@ -107,7 +136,7 @@
 				$f3->reroute('/');
 			}else{
 				$f3->set('user_infos', $infos);
-				$f3->set('errors', $errors);
+				$f3->set('errors_register', $errors);
 			}
 		}
 		

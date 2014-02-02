@@ -25,8 +25,6 @@
 			$user = $user_model->getUserByInputId(array('input_id'=>$auth_response['user_id'], 'input_name'=>'MOVES'));
 			if(!$user){
 				$user_infos = array();
-				$user_infos['username'] = null;
-				$user_infos['password'] = null;
 				$user_infos['firstname'] = null;
 				$user_infos['lastname'] = null;
 				$user_infos['gender'] = null;

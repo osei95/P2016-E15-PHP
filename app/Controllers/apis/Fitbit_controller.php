@@ -19,15 +19,12 @@
 				$f3->reroute('/login/fitbit');
 				exit;
 			}
-			var_dump($auth_response);
 			$fitbit_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $auth_response['oauth_token'], 'oauth_token_secret' => $auth_response['oauth_token_secret'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));		
 			$user_model = new User_model();
 			$user = $user_model->getUserByInputId(array('input_id'=>$auth_response['encoded_user_id'], 'input_name'=>'FITBIT'));
 			if(!$user){			
 				$name = ((isset($fitbit_infos['user']['fullName']) && valid($fitbit_infos['user']['fullName'],array('','NA',false,null)))?explode(' ', $fitbit_infos['user']['fullName'], 2):null);
 				$user_infos = array();
-				$user_infos['username'] = (isset($fitbit_infos['user']['nickname']) && valid($fitbit_infos['user']['nickname'],array('','NA'))?$fitbit_infos['user']['nickname']:null);
-				$user_infos['password'] = null;
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($fitbit_infos['user']['gender']) && valid($fitbit_infos['user']['gender'],array('','NA'))?(($fitbit_infos['user']['gender']=='MALE')?0:1):null);

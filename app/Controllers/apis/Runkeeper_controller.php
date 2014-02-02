@@ -26,8 +26,6 @@
 			if(!$user){
 				$name = ((isset($runkeeper_infos['name']) && valid($runkeeper_infos['name'],array('','NA',false,null)))?explode(' ', $runkeeper_infos['name'], 2):null);
 				$user_infos = array();
-				$user_infos['username'] = null;
-				$user_infos['password'] = null;
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($runkeeper_infos['gender']) && valid($runkeeper_infos['gender'],array('','NA',false,null))?(($runkeeper_infos['gender']=='M')?0:1):null);
