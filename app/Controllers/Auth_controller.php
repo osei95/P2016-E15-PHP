@@ -48,16 +48,16 @@
 			}else{
 				$input = $input_model->getInputByUserId(array('user_id' => $user->user_id));
 				if($input){
+					$input_controller = new Input_controller();
 					if($f3->get($input['input_shortname'])['oauth']==2){
-						$input_controller = new Input_controller();
 						$auth_response = $input_controller->renewToken($f3, array('input_name' => $input['input_shortname'], 'user_has_input_id' => $input['user_input_id'], 'refresh_token' => $f3->get('SESSION.user.refresh_token')));
 						if($auth_response){
 							$f3->set('SESSION.user.refresh_token', $auth_response['refresh_token']);
 							$f3->set('SESSION.user.access_token', $auth_response['access_token']);
 						}
 					}
-					$activity_controller = new Activity_controller();
-					$activity_controller->importActivity($f3, array('user_id' => $user['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_input_id'], 'access_token' => $f3->get('SESSION.user.access_token'), 'access_token_secret' => $f3->get('SESSION.user.access_secret_token')));
+					$input_api_controller = $input_controller->getInputAPIController($f3, array('input_shortname' => $input['input_shortname']));
+					$input_api_controller->importActivity($f3, array('user_id' => $user['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_input_id'], 'access_token' => $f3->get('SESSION.user.access_token'), 'access_token_secret' => $f3->get('SESSION.user.access_secret_token')));
 				}
 				$f3->reroute('/');
 				exit;

@@ -21,6 +21,19 @@
 			}
 		}
 
+		function getInputAPIController($f3, $params){
+			switch($params['input_shortname']){
+				case 'JAWBONE':
+					return new Jawbone_controller();
+				case 'MOVES':
+					return new Moves_controller();
+				case 'RUNKEEPER':
+					return new Runkeeper_controller();
+				case 'FITBIT':
+					return new Fitbit_controller();
+			}
+		}
+
 	}
 
 ?>

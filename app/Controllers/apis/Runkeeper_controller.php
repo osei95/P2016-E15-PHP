@@ -95,6 +95,25 @@
 			}
 
 		}
+
+		function importBody($f3, $params){
+			$vars = $f3->get('RUNKEEPER');
+			$body_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $params['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['body'], 'accept' => 'application/vnd.com.runkeeper.NewWeightSet+json'));
+			$today = date('Ymd');
+
+			if(isset($body_infos['items']) && is_array($body_infos['items'])){
+				foreach($body_infos['items'] as $info){
+					$exploded_date = explode(' ',str_replace(',', '', $info['timestamp']));
+					$date_format = DateTime::createFromFormat('d M Y', $exploded_date[1].' '.$exploded_date[2].' '.$exploded_date[3]);
+					$date = $date_format->format('Ymd');
+					if($date==$today && intval($info['weight'])>0){
+						$body_model = new Body_model();
+						$date = date('Ymd');
+						$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $date, 'weight' => intval($info['weight'])));
+					}
+				}
+			}
+		}
 	}
 
 ?>
