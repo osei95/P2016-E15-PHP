@@ -21,6 +21,7 @@
 				$this->mapper->user_has_input_refresh_token = $params['oauth_refresh_token'];
 				$this->mapper->save();
 			}
+			return $this->mapper;
 		}
 
 		function updateOauth($params){

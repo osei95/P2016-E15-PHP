@@ -66,6 +66,18 @@
 			}
 
 		}
+
+		function importBody($f3, $params){
+			$vars = $f3->get('FITBIT');
+			$date_request = date('Y-m-d');
+			$body_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $params['access_token'], 'oauth_token_secret' => $params['access_token_secret'], 'url' => $vars['endpoints']['base'].str_replace('{date}', $date_request, $vars['endpoints']['body'])));					
+
+			if(isset($body_infos['body']) && isset($body_infos['body']['weight']) && intval($body_infos['body']['weight'])>0){
+				$body_model = new Body_model();
+				$date = date('Ymd');
+				$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $date, 'weight' => intval($body_infos['body']['weight'])));
+			}
+		}
 	}
 
 ?>

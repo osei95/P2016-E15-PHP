@@ -51,7 +51,7 @@
 
 				foreach($items as $item){
 					$date = $item['date'];
-					if($date==$today){
+					if($date==$today || (isset($params['date']) && $params['date']=='all')){
 						$type = $item['type'];
 						$duration = $item['time_completed']-$item['time_created'];
 						$distance = $item['details']['distance'];
@@ -67,7 +67,25 @@
 					}
 				}
 			}
+		}
 
+		function importBody($f3, $params){
+			$vars = $f3->get('JAWBONE');
+			$activity_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $params['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['body']));
+			$today = date('Ymd');
+
+			if(isset($activity_infos['data']['items']) && is_array($activity_infos['data']['items'])){
+
+				$items = $activity_infos['data']['items'];
+
+				foreach($items as $item){
+					$date = $item['date'];
+					if(($date==$today || (isset($params['date']) && $params['date']=='all')) && intval($item['weight'])>0){
+						$body_model = new Body_model();
+						$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $today, 'weight' => intval($item['weight'])));
+					}
+				}
+			}
 		}
 	}
 
