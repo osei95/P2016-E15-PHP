@@ -51,7 +51,7 @@
 
 				foreach($items as $item){
 					$date = $item['date'];
-					if($date==$today){
+					if($date==$today || (isset($params['date']) && $params['date']=='all')){
 						$type = $item['type'];
 						$duration = $item['time_completed']-$item['time_created'];
 						$distance = $item['details']['distance'];
@@ -80,7 +80,7 @@
 
 				foreach($items as $item){
 					$date = $item['date'];
-					if($date==$today && intval($item['weight'])>0){
+					if(($date==$today || (isset($params['date']) && $params['date']=='all')) && intval($item['weight'])>0){
 						$body_model = new Body_model();
 						$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $today, 'weight' => intval($item['weight'])));
 					}

@@ -54,7 +54,7 @@
 					$exploded_date = explode(' ',str_replace(',', '', $activity['start_time']));
 					$date_format = DateTime::createFromFormat('d M Y', $exploded_date[1].' '.$exploded_date[2].' '.$exploded_date[3]);
 					$date = $date_format->format('Ymd');
-					if($date==$today){
+					if($date==$today || (isset($params['date']) && $params['date']=='all')){
 						if($activity['type']=='Running' || $activity['type']=='Cycling' || $activity['type']=='Mountain Biking' || $activity['type']=='Walking'){
 							
 							switch($activity['type']){
@@ -72,11 +72,12 @@
 									$type = '';
 							}
 
-							if(!isset($activities[$type]))	$activities[$type] = array('calories' => 0, 'distance' => 0, 'duration' => 0);
+							if(!isset($activities[$date]))	$activities[$date] = array();
+							if(!isset($activities[$date][$type]))	$activities[$date] = array($type => array('calories' => 0, 'distance' => 0, 'duration' => 0));
 
-							$activities[$type]['calories']+=$activity['total_calories'];
-							$activities[$type]['distance']+=$activity['total_distance'];
-							$activities[$type]['duration']+=$activity['duration'];
+							$activities[$date][$type]['calories']+=$activity['total_calories'];
+							$activities[$date][$type]['distance']+=$activity['total_distance'];
+							$activities[$date][$type]['duration']+=$activity['duration'];
 						}
 					}
 				}
@@ -84,13 +85,15 @@
 
 			$activity_model = new Activity_model();
 
-			foreach($activities as $type => $act){
-				$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => $type));
+			foreach($activities as $date => $acts){
+				foreach($acts as $type => $act){
+					$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => $type));
 
-				if($activity){
-					$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
+					if($activity){
+						$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
 
-					$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
+						$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
+					}
 				}
 			}
 
@@ -106,7 +109,7 @@
 					$exploded_date = explode(' ',str_replace(',', '', $info['timestamp']));
 					$date_format = DateTime::createFromFormat('d M Y', $exploded_date[1].' '.$exploded_date[2].' '.$exploded_date[3]);
 					$date = $date_format->format('Ymd');
-					if($date==$today && intval($info['weight'])>0){
+					if(($date==$today || (isset($params['date']) && $params['date']=='all')) && intval($info['weight'])>0){
 						$body_model = new Body_model();
 						$date = date('Ymd');
 						$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $date, 'weight' => intval($info['weight'])));

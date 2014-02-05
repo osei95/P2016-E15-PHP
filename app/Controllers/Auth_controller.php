@@ -127,12 +127,15 @@
 				$user = $user_model->createUser($infos);
 				$registration_infos = $f3->get('SESSION.registration');
 				$input_model = new Input_model();
-				$input_model->createInput(array('user_id' => $user->user_id, 'input_key' => $registration_infos['input_id'], 'input_name' => $registration_infos['input_name'], 'oauth' => $registration_infos['access_token'], 'oauth_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'oauth_refresh_token' => (isset($registration_infos['refresh_token'])?$registration_infos['refresh_token']:'')));
+				$input = $input_model->createInput(array('user_id' => $user->user_id, 'input_key' => $registration_infos['input_id'], 'input_name' => $registration_infos['input_name'], 'oauth' => $registration_infos['access_token'], 'oauth_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'oauth_refresh_token' => (isset($registration_infos['refresh_token'])?$registration_infos['refresh_token']:'')));
 				$f3->clear('SESSION.registration');
 				$f3->set('SESSION.user', array('user_id' => $user->user_id, 'user_email' => $user->user_email, 'user_firstname' => $user->user_firstname, 'user_lastname' => $user->user_lastname, 'user_key' => $user->user_key, 'user_gender' => $user->user_gender, 'user_description' => $user->user_description, 'access_token' => $registration_infos['access_token'], 'access_secret_token' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'refresh_token' => (isset($registration_infos['refresh_token'])?$registration_infos['refresh_token']:'')));
-				/*$input_model = new Input_model();
-				$input_model->updateOauth(array('user_has_input_id' => $registration_infos['input_id'], 'oauth' => (isset($registration_infos['access_token'])?$registration_infos['access_token']:'NULL')));*/
-				
+				$input_controller = new Input_controller();
+				$input_api_controller = $input_controller->getInputAPIController($f3, array('input_shortname' => $registration_infos['input_name']));
+				if($registration_infos['input_name']=='FITBIT' || $registration_infos['input_name']=='RUNKEEPER' || $registration_infos['input_name']=='JAWBONE'){
+					$input_api_controller->importBody($f3, array('user_id' => $user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
+				}
+				$input_api_controller->importActivity($f3, array('user_id' =>$user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
 				$f3->reroute('/');
 			}else{
 				$f3->set('user_infos', $infos);
