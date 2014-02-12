@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Profil</title>
+</head>
+<body>
+	<h1>Sexe : <?php echo ($user['user_gender'] == 0) ? 'Homme' : 'Femme'; ?> </h1>
+	<h1>Bonjour <?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
+	<h2>About</h2>
+	<p>
+		<?php echo $user['user_description']; ?>
+	</p>
+	<h2>Mon profil</h2>
+	<p>
+		Taille : <?php echo $userWeight['body_height'].' cm';  ?>
+		Poids : <?php echo $userWeight['body_weight'].' kg'; ?>
+		Age : <?php  ?>
+		Ville : <?php  ?>
+		Caractère : <?php  ?>
+		Apparence : <?php  ?>
+	</p>
+</body>
+</html>
