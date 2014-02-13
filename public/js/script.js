@@ -7,7 +7,7 @@ $(document).ready(function() {
     
     function resize(){
         if(window.innerHeight>670){
-            $("body>section:nth-child(2)").css('height',window.innerHeight-60+'px');
+            $("#landing>section:nth-child(2)").css('height',window.innerHeight-60+'px');
         }
     }
     
