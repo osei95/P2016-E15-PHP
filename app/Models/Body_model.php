@@ -11,12 +11,11 @@
 		} 
 
 		function addBodyUser($params){
-			$mapper = $this->getMapper('body');
-			$mapper->body_user_id = $params['user_id'];
-			$mapper->body_date = $params['date'];
-			if(isset($params['weight']))	$mapper->body_weight = $params['weight'];
-			if(isset($params['height']))	$mapper->body_height = $params['height'];
-			$mapper->save();
+			$this->mapper->user_id = $params['user_id'];
+			$this->mapper->body_date = $params['date'];
+			if(isset($params['weight']))	$this->mapper->body_weight = $params['weight'];
+			if(isset($params['height']))	$this->mapper->body_height = $params['height'];
+			$this->mapper->save();
 		}
 	}
 

@@ -25,10 +25,22 @@
 			$user = $user_model->getUserByInputId(array('input_id' => $general_infos['userID'], 'input_name'=>'RUNKEEPER'));
 			if(!$user){
 				$name = ((isset($runkeeper_infos['name']) && valid($runkeeper_infos['name'],array('','NA',false,null)))?explode(' ', $runkeeper_infos['name'], 2):null);
+				
+				if(isset($runkeeper_infos['birthday']) && valid($runkeeper_infos['birthday'],array('','NA',false,null))){
+					$exploded_birthday = explode(' ',str_replace(',', '', $runkeeper_infos['birthday']));
+					$birthday_format = DateTime::createFromFormat('d M Y', $exploded_birthday[1].' '.$exploded_birthday[2].' '.$exploded_birthday[3]);
+					$birthday = array('day' => $birthday_format->format('d'), 'month' => $birthday_format->format('m'), 'year' => $birthday_format->format('Y'));
+				}else{
+					$birthday = null;
+				}
+
 				$user_infos = array();
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($runkeeper_infos['gender']) && valid($runkeeper_infos['gender'],array('','NA',false,null))?(($runkeeper_infos['gender']=='M')?0:1):null);
+				$user_infos['birthday'] = $birthday;
+				$user_infos['city'] = null;
+				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;
 				$user_infos['description'] = null;
 				$f3->set('user_infos', $user_infos);

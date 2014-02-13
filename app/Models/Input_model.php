@@ -35,7 +35,7 @@
 		}
 
 		function getInputs(){
-			$mapper = $this->getMapper('user_input_list');
+			$mapper = $this->getMapper('user_infos');
 			return $mapper->find();
 		}
 
@@ -45,7 +45,7 @@
 		}
 
 		function getInputByUserId($params){
-			$mapper = $this->getMapper('user_input_list');
+			$mapper = $this->getMapper('user_infos');
 			return $mapper->load(array('user_id=?', $params['user_id']));
 		}
 	}

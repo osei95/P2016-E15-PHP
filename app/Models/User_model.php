@@ -11,7 +11,7 @@
 		}
 
 		function getUserByInputId($params){
-			$mapper = $this->getMapper('user_input_list');
+			$mapper = $this->getMapper('user_infos');
 			return $mapper->load(array('user_input_id=? AND input_shortname=?', $params['input_id'], $params['input_name']));
 		}
 
@@ -33,6 +33,11 @@
 			$this->mapper->user_description = $params['description'];
 			$this->mapper->user_firstname = $params['firstname'];
 			$this->mapper->user_lastname = $params['lastname'];
+			$this->mapper->user_city = $params['city'];
+			$this->mapper->user_postcode = $params['postcode'];
+			$this->mapper->user_birthday = $params['birthday'];
+			$this->mapper->user_sport = $params['sport'];
+			$this->mapper->user_appearance = $params['appearance'];
 			$this->mapper->user_key = $key;
 			$this->mapper->save();
 			return $this->mapper;

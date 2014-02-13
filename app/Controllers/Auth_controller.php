@@ -67,7 +67,7 @@
 		function register($f3){
 			$infos = array();
 			$errors = array();
-			if($f3->exists('SESSION.registration_auth.username') && $f3->exists('SESSION.registration_auth.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.gender') && $f3->exists('POST.description')){
+			if($f3->exists('SESSION.registration_auth.username') && $f3->exists('SESSION.registration_auth.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.city') && $f3->exists('POST.postcode') && $f3->exists('POST.gender') && $f3->exists('POST.description') && $f3->exists('POST.birthday_day') && $f3->exists('POST.birthday_month') && $f3->exists('POST.birthday_year') && $f3->exists('POST.sport') && $f3->exists('POST.appearance')){
 				$user_model = new User_model();
 				$infos = $f3->get('POST');
 				$infos['username'] = $f3->get('SESSION.registration_auth.username');
@@ -86,8 +86,25 @@
 				}elseif($user_model->getUserByEmail(array('email' => $infos['email']))!=null){
 					$errors['email'] = 'Cette adresse mail est déjà utilisée par un autre membre.';
 				}
+				if(strlen($infos['city'])<2){
+					$errors['city'] = 'Veuillez vérifier la saisie de votre ville.';
+				}
+				if(strlen($infos['postcode'])<2){
+					$errors['postcode'] = 'Veuillez vérifier la saisie de votre code postal.';
+				}
 				if($infos['gender']!=0 && $infos['gender']!=1){
 					$errors['lastname'] = 'Veuillez indiquer votre sexe.';
+				}
+				if(intval($infos['birthday_day'])<1 || intval($infos['birthday_day'])>31 || intval($infos['birthday_month'])<1 || intval($infos['birthday_month'])>12 || intval($infos['birthday_year'])<date('Y')-120 || intval($infos['birthday_year'])>date('Y')-16){
+					$errors['birthday'] = 'Veuillez vérifier la saisie de votre date de naissance.';
+				}else{
+					$infos['birthday'] = intval($infos['birthday_year']).'-'.intval($infos['birthday_month']).'-'.intval($infos['birthday_day']);
+				}
+				if(intval($infos['sport'])<1){
+					$errors['sport'] = 'Veuillez indiquer le sport que vous pratiquez.';
+				}
+				if(intval($infos['appearance'])<1){
+					$errors['appearance'] = 'Veuillez indiquer votre corpulence.';
 				}
 			}elseif($f3->exists('POST.username') && $f3->exists('POST.password') && $f3->exists('POST.input')){
 				$user_model = new User_model();
@@ -138,6 +155,7 @@
 				$input_api_controller->importActivity($f3, array('user_id' =>$user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
 				$f3->reroute('/');
 			}else{
+				$infos['birthday'] = array('day' => $infos['birthday_day'], 'month' => $infos['birthday_month'], 'year' => $infos['birthday_year']);
 				$f3->set('user_infos', $infos);
 				$f3->set('errors_register', $errors);
 			}

@@ -22,12 +22,22 @@
 			$fitbit_infos = $this->oauth_controller->oauth_1_0_request(array('conskey' => $vars['conskey'], 'conssec' => $vars['conssec'], 'oauth_token' => $auth_response['oauth_token'], 'oauth_token_secret' => $auth_response['oauth_token_secret'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['user']));		
 			$user_model = new User_model();
 			$user = $user_model->getUserByInputId(array('input_id'=>$auth_response['encoded_user_id'], 'input_name'=>'FITBIT'));
-			if(!$user){			
+			if(!$user){	
+				if(isset($fitbit_infos['user']['dateOfBirth']) && valid($fitbit_infos['user']['dateOfBirth'],array('','NA',false,null))){
+					$exploded_birthday = explode('-', $fitbit_infos['user']['dateOfBirth']);
+					$birthday = array('day' => $exploded_birthday[1], 'month' => $exploded_birthday[2], 'year' => $exploded_birthday[0]);
+				}else{
+					$birthday = null;
+				}
+
 				$name = ((isset($fitbit_infos['user']['fullName']) && valid($fitbit_infos['user']['fullName'],array('','NA',false,null)))?explode(' ', $fitbit_infos['user']['fullName'], 2):null);
 				$user_infos = array();
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($fitbit_infos['user']['gender']) && valid($fitbit_infos['user']['gender'],array('','NA'))?(($fitbit_infos['user']['gender']=='MALE')?0:1):null);
+				$user_infos['birthday'] = $birthday;
+				$user_infos['city'] = null;
+				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;
 				$user_infos['description'] = (isset($fitbit_infos['user']['aboutMe']) && valid($fitbit_infos['user']['aboutMe'],array('','NA'))?$fitbit_infos['user']['aboutMe']:null);
 				$f3->set('user_infos', $user_infos);
@@ -75,7 +85,7 @@
 			if(isset($body_infos['body']) && isset($body_infos['body']['weight']) && intval($body_infos['body']['weight'])>0){
 				$body_model = new Body_model();
 				$date = date('Ymd');
-				$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $date, 'weight' => intval($body_infos['body']['weight'])));
+				$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $date, 'weight' => intval($body_infos['body']['weight']*1000), 'height' => (isset($item['height'])?null:intval($item['height']))));
 			}
 		}
 	}

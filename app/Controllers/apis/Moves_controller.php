@@ -28,6 +28,9 @@
 				$user_infos['firstname'] = null;
 				$user_infos['lastname'] = null;
 				$user_infos['gender'] = null;
+				$user_infos['birthday'] = null;
+				$user_infos['city'] = null;
+				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;
 				$user_infos['description'] = null;
 				$f3->set('user_infos', $user_infos);

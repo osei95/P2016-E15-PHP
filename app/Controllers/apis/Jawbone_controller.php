@@ -27,6 +27,9 @@
 				$user_infos['firstname'] = (isset($jawbone_infos['data']['first']) && valid($jawbone_infos['data']['first'],array('','NA',false,null))?$jawbone_infos['data']['first']:null);
 				$user_infos['lastname'] = (isset($jawbone_infos['data']['last']) && valid($jawbone_infos['data']['last'],array('','NA',false,null))?$jawbone_infos['data']['last']:null);
 				$user_infos['gender'] = (isset($jawbone_infos['data']['gender']) && valid($jawbone_infos['data']['gender'],array('','NA',false,null))?(($jawbone_infos['data']['gender']=='MALE')?0:1):null);
+				$user_infos['birthday'] = null;
+				$user_infos['city'] = null;
+				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;
 				$user_infos['description'] = null;
 				$f3->set('user_infos', $user_infos);
@@ -82,7 +85,7 @@
 					$date = $item['date'];
 					if(($date==$today || (isset($params['date']) && $params['date']=='all')) && intval($item['weight'])>0){
 						$body_model = new Body_model();
-						$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $today, 'weight' => intval($item['weight'])));
+						$body_model->addBodyUser(array('user_id' => $params['user_id'], 'date' => $today, 'weight' => intval($item['weight']*1000), 'height' => (isset($item['height'])?null:intval($item['height']*1000))));
 					}
 				}
 			}

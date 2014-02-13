@@ -27,6 +27,27 @@
 		<label for="email">Description</label>
 		<textarea name="description" id="description"><?php echo(($user_infos['description']==null)?'':$user_infos['description']) ?></textarea>
 		<br/><br/>
+		<label for="city">Ville</label>
+		<input type="text" name="city" id="city" value="<?php echo(($user_infos['city']==null)?'':$user_infos['city']) ?>" />
+		<br/><br/>
+		<label for="postcode">Code postal</label>
+		<input type="text" name="postcode" id="postcode" value="<?php echo(($user_infos['postcode']==null)?'':$user_infos['postcode']) ?>" />
+		<br/><br/>
+		<label for="birthday_day">Date de naissance</label>
+		<input type="text" name="birthday_day" id="birthday_day" value="<?php echo(($user_infos['birthday']==null)?'':$user_infos['birthday']['day']) ?>" />
+		<input type="text" name="birthday_month" id="birthday_month" value="<?php echo(($user_infos['birthday']==null)?'':$user_infos['birthday']['month']) ?>" />
+		<input type="text" name="birthday_year" id="birthday_year" value="<?php echo(($user_infos['birthday']==null)?'':$user_infos['birthday']['year']) ?>" />
+		<br/><br/>
+		<label for="sport">Sport principal</label>
+		<select name="sport" id="sport">
+			<option value="1">Football</value>
+		</select>
+		<br/><br/>
+		<label for="appearance">Corpulance</label>
+		<select name="appearance" id="appearance">
+			<option value="1">Mince</value>
+		</select>
+		<br/><br/>
 		<input type="submit" value="Envoyer"/>
 	</form>
 </body>
