@@ -8,5 +8,8 @@ $(document).ready(function() {
             $("#landing>section:nth-child(4)>div>div>img").animate({left:'0', opacity:1}, 1500);
         }
     });
+    $(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
 
 });
