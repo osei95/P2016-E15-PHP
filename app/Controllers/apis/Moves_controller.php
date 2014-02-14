@@ -78,11 +78,19 @@
 							$activities[$type]['duration']=$item['duration'];
 
 							foreach($activities as $type => $act){
-								$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => $type));
+								$activity = $activity_model->getActivityByShortName(array('activity_shortname' => $type));
 								if($activity){
-									$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
 
+									$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date));
+
+									$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
 									$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
+								
+									if($current_activity==false || $act['distance'] > $current_activity->distance || $act['calories'] > $current_activity->calories || $act['duration']-> $current_activity->duration){
+										// On poste la nouvelle actualité
+										$news_model = new News_model();
+										$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$act['distance'].'kms en '.date('h',$act['duration']).'h '.date('i',$act['duration']).'minutes.'));
+									}
 								}
 							}
 						}

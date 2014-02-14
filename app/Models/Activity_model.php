@@ -10,8 +10,13 @@
 			$this->mapper=$this->getMapper('activity');
 		} 
 
-		function getActivitybyShortName($params){
+		function getActivityByShortName($params){
 			return $activity = $this->mapper->load(array('activity_shortname=?', $params['activity_shortname']));
+		}
+
+		function getActivityUserByDate($params){
+			$mapper=$this->getMapper('user_has_activity');
+			return $activity =$mapper->load(array('user_id=? AND date=?', $params['user_id'], $params['date']));
 		}
 
 		function removeActivityUser($params){

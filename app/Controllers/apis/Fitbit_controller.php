@@ -68,10 +68,19 @@
 				$date = date('Ymd');
 
 				$activity_model = new Activity_model();
-				$activity = $activity_model->getActivitybyShortName(array('activity_shortname' => 'move'));
+				$activity = $activity_model->getActivityByShortName(array('activity_shortname' => 'move'));
 				if($activity){
+
+					$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date));
+
 					$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
 					$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
+					
+					if($current_activity==false || $distance > $current_activity->distance || $calories > $current_activity->calories || $duration > $current_activity->duration){
+						// On poste la nouvelle actualité
+						$news_model = new News_model();
+						$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$distance.'kms en '.date('h',$duration).'h '.date('i',$duration).'minutes.'));
+					}
 				}
 			}
 

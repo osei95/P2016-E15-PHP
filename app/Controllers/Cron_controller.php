@@ -19,7 +19,7 @@
 					}
 					$input_api_controller = $input_controller->getInputAPIController($f3, array('input_shortname' => $input['input_shortname']));
 					//$input_api_controller->importBody($f3, array('user_id' => $input['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_input_id'], 'access_token' => $auth_response['access_token'], 'access_token_secret' => $auth_response['access_secret_token']));
- 					$input_api_controller->importActivity($f3, array('user_id' => $input['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_input_id'], 'access_token' => $auth_response['access_token'], 'access_token_secret' => $auth_response['access_secret_token']));
+ 					$input_api_controller->importActivity($f3, array('user_id' => $input['user_id'], 'user_firstname' => $input['user_firstname'], 'user_lastname' => $input['user_lastname'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_input_id'], 'access_token' => $auth_response['access_token'], 'access_token_secret' => $auth_response['access_secret_token']));
 				}
 			}
 		}

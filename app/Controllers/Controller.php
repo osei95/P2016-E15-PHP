@@ -6,6 +6,13 @@
       protected $model;
 
       protected function __construct(){
+
+         $f3=\Base::instance();
+
+         if($f3->get('PATTERN')!='/' && strpos($f3->get('PATTERN'),'/register')===false && strpos($f3->get('PATTERN'),'/login')===false && !$f3->get('SESSION.user')){
+            $f3->reroute('/');
+         }
+
          $modelName=substr(get_class($this),0,strpos(get_class($this),'_')+1).'model';
          if(class_exists($modelName)){
             $this->model=new $modelName();
