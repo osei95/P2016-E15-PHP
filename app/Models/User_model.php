@@ -37,5 +37,10 @@
 			$this->mapper->save();
 			return $this->mapper;
 		}
+
+		function getUserById($params){
+			$mapper = $this->getMapper('user_infos');
+			return $mapper->load(array('user_username=?',$params)); //load recupère 1 seule ligne sinon find
+		}
 	}
 ?>
