@@ -16,7 +16,7 @@
 
 		function getActivityUserByDate($params){
 			$mapper=$this->getMapper('user_has_activity');
-			return $activity =$mapper->load(array('user_id=? AND date=?', $params['user_id'], $params['date']));
+			return $activity =$mapper->load(array('user_id=? AND date=? AND activity_id=? AND input_id=?', $params['user_id'], $params['date'], $params['activity_id'], $params['input_id']));
 		}
 
 		function removeActivityUser($params){

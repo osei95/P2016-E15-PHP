@@ -48,7 +48,7 @@
 			$today = date('Ymd');
 			$activity_model = new Activity_model();
 
-			print_r($activity_infos);
+			//print_r($activity_infos);
 
 			if(isset($activity_infos['data']['items']) && is_array($activity_infos['data']['items'])){	// Si on a une activité ce jour
 
@@ -58,7 +58,7 @@
 					$date = $item['date'];
 					if($date==$today || (isset($params['date']) && $params['date']=='all')){
 						$type = $item['type'];
-						$duration = $item['time_completed']-$item['time_created'];
+						$duration = $item['details']['active_time'];
 						$distance = $item['details']['distance'];
 						$calories = $item['details']['calories'];
 
@@ -66,15 +66,31 @@
 
 						if($activity){
 
-							$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date));
-
-							$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
-							$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
-						
+							$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'input_id' => $params['input_id']));
+							
 							if($current_activity==false || $distance > $current_activity->distance || $calories > $current_activity->calories || $duration > $current_activity->duration){
-								// On poste la nouvelle actualité
-								$news_model = new News_model();
-								$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$distance.'kms en '.date('h',$duration).'h '.date('i',$duration).'minutes.'));
+								// On poste la nouvelle actualité si la distance parcourue est > à 1km
+
+								if($current_activity==false){
+									$current_activity = new stdClass();
+									$current_activity->distance=0;
+									$current_activity->calories=0;
+									$current_activity->duration=0;
+								}
+
+								$new_distance = ($distance-$current_activity->distance)/1000;
+								$new_calories = $calories-$current_activity->calories;
+								$new_duration = $duration-$current_activity->duration;
+
+								if($new_distance>1){
+
+									$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
+									$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
+
+									$news_model = new News_model();
+									$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$new_distance.'km'.($new_distance>1?'s':'').' en '.gmdate('H',$new_duration).'h'.gmdate('i',$new_duration).'minutes.'));
+								
+								}
 							}
 						}
 					}

@@ -103,15 +103,31 @@
 
 					if($activity){
 
-						$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date));
-
-						$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
-						$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
-					
+						$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'input_id' => $params['input_id']));
+						
 						if($current_activity==false || $act['distance'] > $current_activity->distance || $act['calories'] > $current_activity->calories || $act['duration'] > $current_activity->duration){
-							// On poste la nouvelle actualité
-							$news_model = new News_model();
-							$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$act['distance'].'kms en '.date('h',$act['duration']).'h '.date('i',$act['duration']).'minutes.'));
+							// On poste la nouvelle actualité si la distance parcourue est > à 1km
+
+							if($current_activity==false){
+								$current_activity = new stdClass();
+								$current_activity->distance=0;
+								$current_activity->calories=0;
+								$current_activity->duration=0;
+							}
+
+							$new_distance = ($act['distance']-$current_activity->distance)/1000;
+							$new_calories = $act['calories']-$current_activity->calories;
+							$new_duration = $act['duration']-$current_activity->duration;
+
+							if($new_distance>1){
+
+								$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
+								$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
+
+								$news_model = new News_model();
+								$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$new_distance.'km'.($new_distance>1?'s':'').' en '.gmdate('H',$new_duration).'h'.gmdate('i',$new_duration).'minutes.'));
+							
+							}
 						}
 					}
 				}
