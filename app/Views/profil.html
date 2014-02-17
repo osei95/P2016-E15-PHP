@@ -152,45 +152,21 @@
 				</ul>
 				<div class="separe"><span></span></div>
 				<ul>
+					<?php foreach($news as $n): ?>
 					<li class="mon-actu clearfix">
 						<div class="fleft">
 							<div><img src="../public/images/profil2.jpg" alt=""></div>
 						</div>
 						<div class="fleft">
-							<p><strong>John Williams</strong> a parcouru 17 kms en 1 heure et 13 minutes </p>
+							<p><strong><?php echo($user['user_firstname'].' '.$user['user_lastname']); ?></strong> <?php echo($n['news_content']) ?></p>
 							<a href="#">J'encourage</a>
 						</div>
 						<div class="fright">
-							<p>20/01/2014</p>
+							<p><?php echo(date('d/m/Y', $n['news_date'])) ?></p>
 							<span>18</span>
 						</div>
 					</li>
-					<li class="mon-actu clearfix">
-						<div class="fleft">
-							<div><img src="../public/images/profil2.jpg" alt=""></div>
-						</div>
-						<div class="fleft">
-							<p><strong>John Williams</strong> a parcouru 17 kms en 1 heure et 13 minutes </p>
-							<a href="#">J'encourage</a>
-						</div>
-						<div class="fright">
-							<p>20/01/2014</p>
-							<span>18</span>
-						</div>
-					</li>
-					<li class="mon-actu clearfix">
-						<div class="fleft">
-							<div><img src="../public/images/profil2.jpg" alt=""></div>
-						</div>
-						<div class="fleft">
-							<p><strong>John Williams</strong> a parcouru 17 kms en 1 heure et 13 minutes </p>
-							<a href="#">J'encourage</a>
-						</div>
-						<div class="fright">
-							<p>20/01/2014</p>
-							<span>18</span>
-						</div>
-					</li>
+					<?php endforeach; ?>
 				</ul>
 			</div>
 		</section>

@@ -9,12 +9,22 @@
 		}
 
 		function profil($f3){
-			$model = new User_model();
-			$user = $model->getUserById($f3->get('PARAMS.username'));
-			$table = $user->cast($user); //Convertit l'objet MySQL en tableau PHP
-			$table['body_weight'] = $table['body_weight'] / 1000;
-			$table['body_height'] = $table['body_height'] / 1000;
-			$f3->set('user', $table);
+			/* Récupération des informations de l'utilisateur */
+			$user_model = new User_model();
+			$user = $user_model->getUserByUsername(array('username' => $f3->get('PARAMS.username')));
+			if($user){
+				$user_infos = $user->cast();
+				$user_infos['body_weight'] = $user_infos['body_weight'] / 1000;
+				$user_infos['body_height'] = $user_infos['body_height'] / 1000;
+				$f3->set('user', $user_infos);
+
+				/* Récupération des news propres à l'utilisateur */
+				$news_model = new News_model();
+				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id));
+				$f3->set('news', $news);
+			}else{
+				$this->tpl=array('sync'=>'404.html');
+			}
 		}
 	}
 ?>
