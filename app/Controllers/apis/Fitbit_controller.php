@@ -94,7 +94,7 @@
 							$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
 
 							$news_model = new News_model();
-							$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.$new_distance.'km'.($new_distance>1?'s':'').' en '.gmdate('H',$new_duration).'h'.gmdate('i',$new_duration).'minutes.', 'date' => time()));
+							$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity', 'content' => 'a parcouru '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
 						
 						}
 					}
