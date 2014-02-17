@@ -155,7 +155,8 @@
 				$input_api_controller->importActivity($f3, array('user_id' =>$user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
 				$f3->reroute('/');
 			}else{
-				$infos['birthday'] = array('day' => $infos['birthday_day'], 'month' => $infos['birthday_month'], 'year' => $infos['birthday_year']);
+				if($f3->exists('POST.birthday_day') && $f3->exists('POST.birthday_month') && $f3->exists('POST.birthday_year'))
+					$infos['birthday'] = array('day' => $infos['birthday_day'], 'month' => $infos['birthday_month'], 'year' => $infos['birthday_year']);
 				$f3->set('user_infos', $infos);
 				$f3->set('errors_register', $errors);
 			}
