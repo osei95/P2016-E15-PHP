@@ -33,6 +33,13 @@
  		function getNewsToUserIdByType($params){
 			return $this->mapper->find(array('news_to=? AND news_type=?', $params['user_id'], $params['type']), array('order'=>'news_date DESC'));
  		}
+
+ 		function support($params){
+ 			$mapper=$this->getMapper('support');
+ 			$mapper->user_id = $params['user_id'];
+			$mapper->news_id = $params['news_id'];
+			$mapper->save();
+ 		}
 	}
 
 ?>

@@ -26,5 +26,11 @@
 				$this->tpl=array('sync'=>'404.html');
 			}
 		}
+
+		function support($f3){
+			$news_model = new News_model();
+			$news_model->support(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+			$f3->reroute('/');
+		}
 	}
 ?>

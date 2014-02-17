@@ -159,7 +159,7 @@
 						</div>
 						<div class="fleft">
 							<p><strong><?php echo($user['user_firstname'].' '.$user['user_lastname']); ?></strong> <?php echo($n['news_content']) ?></p>
-							<a href="#">J'encourage</a>
+							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>">J'encourage</a><?php endif; ?>
 						</div>
 						<div class="fright">
 							<p><?php echo(date('d/m/Y', $n['news_date'])) ?></p>
