@@ -34,7 +34,7 @@
 				<div class="fleft">
 					<h1 class="titleN2"><?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
 					<span class="actif"></span>
-					<div><img src="images/profil1.jpg" alt=""></div>
+					<div><img src="medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
 					<a id="suivre" href="#">Suivre</a>
 					<a id="discuter" href="#">Discuter</a>
 				</div>
@@ -155,15 +155,15 @@
 					<?php foreach($news as $n): ?>
 					<li class="mon-actu clearfix">
 						<div class="fleft">
-							<div><img src="../public/images/profil2.jpg" alt=""></div>
+							<div><img src="medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
 						</div>
 						<div class="fleft">
 							<p><strong><?php echo($user['user_firstname'].' '.$user['user_lastname']); ?></strong> <?php echo($n['news_content']) ?></p>
-							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>">J'encourage</a><?php endif; ?>
+							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="<?php if(in_array($n['news_id'], $supports)) echo('on'); ?>">J'encourage</a><?php endif; ?>
 						</div>
 						<div class="fright">
 							<p><?php echo(date('d/m/Y', $n['news_date'])) ?></p>
-							<span>18</span>
+							<span><?php echo($n['news_supports']); ?></span>
 						</div>
 					</li>
 					<?php endforeach; ?>
