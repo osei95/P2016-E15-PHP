@@ -16,6 +16,14 @@
 				$user_infos = $user->cast();
 				$user_infos['body_weight'] = $user_infos['body_weight'] / 1000;
 				$user_infos['body_height'] = $user_infos['body_height'] / 1000;
+				/* Fonction permettant de calculer l'age */
+				$date = new DateTime($user_infos['user_birthday']);
+				$now = new DateTime();
+				$interval = $now->diff($date);
+				$user_infos['user_birthday'] = $interval->y;
+				/* Convertit la ville en minuscule et ajoute une majuscule à la première lettre */
+				$user_infos['user_city'] = strtolower($table['user_city']);
+				$user_infos['user_city'] = ucfirst($table['user_city']);
 				$f3->set('user', $user_infos);
 
 				/* Récupération des news propres à l'utilisateur */
