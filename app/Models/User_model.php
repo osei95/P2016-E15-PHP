@@ -28,7 +28,7 @@
 
 		function createUser($params){
 			$mapper=$this->getMapper('user');
-			$key = uniqid();
+			$key=uniqid();
 			$mapper->user_username = $params['username'];
 			$mapper->user_password = $params['password'];
 			$mapper->user_email = $params['email'];
@@ -44,6 +44,24 @@
 			$mapper->user_key = $key;
 			$mapper->save();
 			return $mapper;
+		}
+
+		function follow($params){
+			$mapper=$this->getMapper('following');
+			$mapper->following_from = $params['from'];
+			$mapper->following_to = $params['to'];
+			$mapper->save();
+		}
+
+		function unfollow($params){
+			$mapper=$this->getMapper('following');
+			$follow=$mapper->load(array('following_from=? AND following_to=?', $params['from'], $params['to']));
+			if($follow)	$follow->erase();
+		}
+
+		function isFollow($params){
+			$mapper=$this->getMapper('following');
+			return $mapper->load(array('following_from=? AND following_to=?', $params['from'], $params['to']));
 		}
 	}
 ?>
