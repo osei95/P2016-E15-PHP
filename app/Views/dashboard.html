@@ -30,10 +30,10 @@
 			<div class="contain clearfix dash-container">
 				<div class="fleft">
 					<div class="presentation">
-						<h1 class="title-dash">John Williams</h1>
+						<h1 class="title-dash"><?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
 						<div class="presentation-infos">
-							<p><span>24 </span>Rencontres</p>
-							<p><span>10 </span>Followers</p>
+							<p><span><?php echo $user['achieved_goals']; ?></span> Objectif<?php if($user['achieved_goals']>1) echo('s'); ?> réussi<?php if($user['achieved_goals']>1) echo('s'); ?></p>
+							<p><span><?php echo $user['followings']; ?></span> Follower<?php if($user['followings']>1) echo('s'); ?></p>
 						</div>
 					</div>
 					<div><img src="images/profil1.jpg" alt=""></div>
@@ -41,64 +41,31 @@
 				
 				<div class="fright">
 					<h2 class="objectifs-dash">Mes objectifs</h2>
-
-					<div class="details">
-							<div class="targets">
-								<div class="pics">
-									<img src="images/profil1.jpg" alt="">
-								</div>
-					</div> <!--End of targets -->
-							<div class="status">
-								<span class="actif"></span>
-							</div> <!--End of status -->
-							
-							<div class="name">
-								<p>Eva Longoria</p>
-							</div> <!--End of name -->
-							
-							<div class="link">
-								<a href="#">Voir les détails</a>
-							</div> <!--End of link -->
-					</div>
 					
-					<div class="details">
-							<div class="targets">
-								<div class="pics">
-									<img src="images/profil1.jpg" alt="">
-								</div>
-					</div> <!--End of targets -->
-							<div class="status">
-								<span class="actif"></span>
-							</div> <!--End of status -->
-							
-							<div class="name">
-								<p>Eva Longoria</p>
-							</div> <!--End of name -->
-							
-							<div class="link">
-								<a href="#">Voir les détails</a>
-							</div> <!--End of link -->
-					</div>
-					
-					<div class="details">
-							<div class="targets">
-								<div class="pics">
-									<img src="images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End of targets -->
-							<div class="status">
-								<span class="actif"></span>
-							</div> <!--End of status -->
-							
-							<div class="name">
-								<p>Eva Longoria</p>
-							</div> <!--End of name -->
-							
-							<div class="link">
-								<a href="#">Voir les détails</a>
-							</div> <!--End of link -->
-					</div>
-					</div>
+					<?php if(count($goals)>0):?>
+						<?php foreach($goals as $g): ?>
+						<div class="details">
+								<div class="targets">
+									<div class="pics">
+										<img src="/medias/users/<?php echo($g['user_from_id']); ?>/profil.jpg" alt="">
+									</div>
+								</div> <!--End of targets -->
+								<div class="status">
+									<span class="actif"></span>
+								</div> <!--End of status -->
+								
+								<div class="name">
+									<p><?php echo $g['user_from_firstname'].' '.$g['user_from_lastname']; ?></p>
+								</div> <!--End of name -->
+								
+								<div class="link">
+									<a href="#">Voir les détails</a>
+								</div> <!--End of link -->
+						</div>
+						<?php endforeach; ?>
+					<?php else: ?>
+						<p>Vous n'avez pas encore d'objectif...</p>
+					<?php endif; ?>
 	
 				</div>
 				
