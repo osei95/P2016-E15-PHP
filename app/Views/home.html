@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="public/css/reset.css">
+	  <link rel="stylesheet" href="public/font/stylesheet.css">
+	  <link rel="stylesheet" href="public/css/style.css">
+	</head>
+	<body id="landing">
+		<header class="active">
+			<div class="contain">
+				<div class="fleft">
+				</div>
+				<?php
+					if(isset($errors_login))	echo '<p class="error">'.current($errors_login).'</p>';
+				?>
+				<form action="/login" method="POST" class="fright">
+					<input type="text" name="username" placeholder="Pseudonyme" value="<?php if(isset($infos['username']) && isset($errors_login))	echo $infos['username'];?>">
+					<input type="password" name="password" placeholder="Mot de passe">
+					<input type="submit" value="Connexion">
+				</form>
+			</div>
+		</header>
+		<section class="">
+			<div class="contain">
+				<div class="fleft">
+					<h1>RUN & MEET</h1>
+					<p>Le site des rencontres pour sportifs</p>
+				</div>
+				<div class="fright">
+					<h2>Rejoignez-nous !</h2>
+					<?php
+						if(isset($errors_register))	echo '<p class="error">'.current($errors_register).'</p>';
+					?>
+					<form action="/register" method="POST" class="fright">
+						<label for="username">Pseudonyme</label><input type="text" name="username" id="username" value="<?php if(isset($infos['username']) && isset($errors_register))	echo $infos['username'];?>"><br>
+						<label for="password">Mot de passe</label><input type="password" name="password" id="password"><br>
+						<label for="input">Bracelet/App</label>
+						<select name="input" id="input">
+						   <optgroup label="Bracelets"> 
+						      <option value="FITBIT">Fitbit</option> 
+						      <option value="JAWBONE">Jawbone Up</option> 
+						   </optgroup> 
+						   <optgroup label="Applications"> 
+						      <option value="MOVES">Moves</option> 
+						      <option value="RUNKEEPER">Runkeeper</option> 
+						   </optgroup> 
+						</select><br>
+						<input type="submit" value="JE M'INSCRIS">
+					</form>
+					<p>En continuant, tu confirmes avoir lu et accepté nos <a href="">Termes et Conditions</a>, notre <a href="">Politique de protection des données</a> ainsi que notre <a href="">Politique en matière de Cookies</a></p>
+				</div>
+			</div>
+		</section>
+		<section class="">
+			<div class="contain">
+				<div class="fleft">
+					<img src="public/images/bracelet.png" alt="">
+				</div>
+				<div class="fright">
+					<h2>UTILISEZ VOTRE BRACELET...</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				</div>
+			</div>
+		</section>
+		<section class="">
+		    <div class="contain">
+				<div class="fleft">
+					<h2>ET FAITES DES RENCONTRES !</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				</div>
+				<div class="fright">
+					<img src="public/images/ipad.png" alt="">
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class="contain">
+				<div>
+					<div>
+						<p>© 2014 Run & Meet - Tous droits réservés</p>
+					</div>
+					<div>
+						<p class="footer-title">Nous suivre sur</p>
+						<div>
+							<a href=""></a>
+							<a href=""></a>
+							<a href=""></a>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p class="footer-title">A propos de Run & Meet</p>
+							<ul>
+								<li><a href="">A propos</a></li>
+								<li><a href="">Conditions d'utilisation</a></li>
+								<li><a href="">Protection des données</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	  	<script type="text/javascript" src="public/js/script.js"></script>
+	</body>
+</html>
