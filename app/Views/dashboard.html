@@ -16,10 +16,10 @@
 		<header class="active">
 			<div class="contain">
 				<div>
-					<a href=""></a>
-					<a href=""></a>
-					<a href=""></a>
-					<a href=""></a>
+					<a href="/profil" title="Mon profil"></a>
+					<a href="/" title="Mon dashboard"></a>
+					<a href="/messages" title="Messagerie"></a>
+					<a href="/search" title="Recherche"></a>
 				</div>
 				<a href="/logout">Déconnexion</a>
 			</div>
@@ -109,7 +109,7 @@
 				<article class="<?php echo($activity_class); ?>"> <!-- Start of a the article -->
 				<div class="contain clearfix">
 						<div class="profil <?php echo($pos_class); ?>">
-							<p class="name"><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></p>
+							<a href="/profil/<?php echo $n['user_from_username']; ?>" class="name"><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></a>
 							
 							<div class="friend-pics">
 								<div class="targets">

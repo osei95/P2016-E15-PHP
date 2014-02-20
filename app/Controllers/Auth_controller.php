@@ -36,7 +36,7 @@
 				if($user && $user->user_password == hash('md5', $f3->get('POST.password'), true)){
 					$input_model = new Input_model();
 					$input = $input_model->getInputByUserId(array('user_id' => $user->user_id));
-					$f3->set('SESSION.user', array('user_id' => $user->user_id, 'user_email' => $user->user_email, 'user_firstname' => $user->user_firstname, 'user_lastname' => $user->user_lastname, 'user_key' => $user->user_key, 'user_gender' => $user->user_gender, 'user_description' => $user->user_description, 'access_token' => $input['user_input_oauth'], 'access_secret_token' => (($input['user_input_oauth_secret']!='NULL')?$input['user_input_oauth_secret']:''), 'refresh_token' => (($input['user_input_oauth_refresh_token']!='NULL')?$input['user_input_oauth_refresh_token']:'')));
+					$f3->set('SESSION.user', array('user_id' => $user->user_id, 'user_email' => $user->user_email, 'user_username' => $user->user_username, 'user_firstname' => $user->user_firstname, 'user_lastname' => $user->user_lastname, 'user_key' => $user->user_key, 'user_gender' => $user->user_gender, 'user_description' => $user->user_description, 'access_token' => $input['user_input_oauth'], 'access_secret_token' => (($input['user_input_oauth_secret']!='NULL')?$input['user_input_oauth_secret']:''), 'refresh_token' => (($input['user_input_oauth_refresh_token']!='NULL')?$input['user_input_oauth_refresh_token']:'')));
 				}else{
 					$errors['auth'] = 'Erreur d\'authentification.';
 				}
@@ -146,7 +146,7 @@
 				$input_model = new Input_model();
 				$input = $input_model->createInput(array('user_id' => $user->user_id, 'input_key' => $registration_infos['input_id'], 'input_name' => $registration_infos['input_name'], 'oauth' => $registration_infos['access_token'], 'oauth_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'oauth_refresh_token' => (isset($registration_infos['refresh_token'])?$registration_infos['refresh_token']:'')));
 				$f3->clear('SESSION.registration');
-				$f3->set('SESSION.user', array('user_id' => $user->user_id, 'user_email' => $user->user_email, 'user_firstname' => $user->user_firstname, 'user_lastname' => $user->user_lastname, 'user_key' => $user->user_key, 'user_gender' => $user->user_gender, 'user_description' => $user->user_description, 'access_token' => $registration_infos['access_token'], 'access_secret_token' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'refresh_token' => (isset($registration_infos['refresh_token'])?$registration_infos['refresh_token']:'')));
+				$f3->set('SESSION.user', array('user_id' => $user->user_id, 'user_email' => $user->user_email, 'user_username' => $user->user_username, 'user_firstname' => $user->user_firstname, 'user_lastname' => $user->user_lastname, 'user_key' => $user->user_key, 'user_gender' => $user->user_gender, 'user_description' => $user->user_description, 'access_token' => $registration_infos['access_token'], 'access_secret_token' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'refresh_token' => (isset($registration_infos['refresh_token'])?$registration_infos['refresh_token']:'')));
 				$input_controller = new Input_controller();
 				$input_api_controller = $input_controller->getInputAPIController($f3, array('input_shortname' => $registration_infos['input_name']));
 				if($registration_infos['input_name']=='FITBIT' || $registration_infos['input_name']=='RUNKEEPER' || $registration_infos['input_name']=='JAWBONE'){

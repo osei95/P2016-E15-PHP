@@ -9,9 +9,12 @@
 		}
 
 		function profil($f3){
+
+			$username = ($f3->exists('PARAMS.username')?$f3->get('PARAMS.username'):$f3->get('SESSION.user.user_username'));
+
 			/* Récupération des informations de l'utilisateur */
 			$user_model = new User_model();
-			$user = $user_model->getUserByUsername(array('username' => $f3->get('PARAMS.username')));
+			$user = $user_model->getUserByUsername(array('username' => $username));
 			if($user){
 				$user_infos = $user->cast();
 				$user_infos['body_weight'] = $user_infos['body_weight'] / 1000;
