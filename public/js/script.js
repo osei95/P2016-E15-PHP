@@ -1,4 +1,26 @@
 $(document).ready(function() {
+    resize();
+
+    window.onresize = function() {
+        resize();
+    };
+
+    function resize(){
+        if(window.innerHeight>670){
+            $("#landing>section:nth-child(2)").css('height',window.innerHeight-60+'px');
+        }
+    }
+    
+    $('a[href^="index.php#"]').click(function() {  
+      link = $(this).attr('href'); 
+      if($(link ).length>=1)
+        hauteur=$(link).offset().top;
+      else
+        hauteur = $("section#"+link.substr(10,link.length-1)).offset().top;
+        console.log(hauteur);
+      $('body').animate({scrollTop: hauteur}, 600);
+      return false;  
+    });
     
     $(document).scroll(function() {
         if($(document).scrollTop()+$(window).height()>(860+250)){

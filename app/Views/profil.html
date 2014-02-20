@@ -15,10 +15,12 @@
 	  <script type="text/javascript" src="../public/js/jquery.mousewheel-3.0.6.pack.js"></script>
 	  <script type="text/javascript" src="../public/js/jquery.fancybox.pack.js?v=2.1.5"></script>
 	  <script type="text/javascript" src="../public/js/script.js"></script>
+	  <script type="text/javascript" src="js/d3-min.js"></script>
+	  <script type="text/javascript" src="js/graphs.js"></script>
 
 	</head>
 	<body id="profil">
-		<header class="active">
+		<header class="active" id="2">
 			<div class="contain">
 				<div>
 					<a href=""></a>
@@ -39,7 +41,11 @@
 					<?php if($supports['follow'] && $supports['is_follow']):?><a id="discuter" href="#">Discuter</a><?php endif; ?>
 				</div>
 				<div class="fright">
-					<h2 class="titleN2">A propos</h2>
+					<div class="graphs">
+						<div class="objectif"><h2>Niveau</h2><p></p></div>
+						<div class="reussite"><h2>Taux de réussite</h2><p>sur les 15 derniers jours</p></div>
+						<div class="activite"><h2>Votre activité</h2><p>sur les 15 derniers jours</p></div>
+					</div>
 					<p><?php echo '” '.$user['user_description'].' ”'; ?></p>
 				</div>
 			</div>
@@ -56,14 +62,14 @@
 				       <td colspan="3">
 							<table class="photos-list">
 								<tr>
-									<td><a class="fancybox" rel="group" href="../public/images/profil1.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
+									<td><a class="fancybox" rel="group" href="../public/images/profil2.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
 									<td><a class="fancybox" rel="group" href="../public/images/profil2.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
 									<td><a class="fancybox" rel="group" href="../public/images/profil2.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
 								</tr>
 								<tr>					
-									<td><a class="fancybox" rel="group" href="../public/images/profil1.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
-									<td><a class="fancybox" rel="group" href="../public/images/profil1.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
-									<td><a class="fancybox" rel="group" href="../public/images/profil1.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
+									<td><a class="fancybox" rel="group" href="../public/images/profil2.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
+									<td><a class="fancybox" rel="group" href="../public/images/profil2.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
+									<td><a class="fancybox" rel="group" href="../public/images/profil2.jpg"><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Voir la photo</span></div></a></td>
 								</tr>
 							</table>
 				       </td>
@@ -131,14 +137,8 @@
 		</section>
 		<section id="activity">
 			<div class="contain">
-				<h2 class="titleN2">Activité sportive</h2>
+				<h2 class="titleN2">Activité sportive - 15 derniers jours</h2>
 				<div class="graphic"></div>
-				<div>
-					<div>
-						<h3><span>45 676</span><br>Calories perdues</h3>
-					</div>
-					<div><h3><span>127,56</span><br>Minutes d'activité physique</h3></div>
-				</div>
 			</div>
 		</section>
 		<section id="actuality">
