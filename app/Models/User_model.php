@@ -46,6 +46,9 @@
 			return $mapper;
 		}
 
+
+		/* Followers */
+
 		function follow($params){
 			$mapper=$this->getMapper('following');
 			$mapper->following_from = $params['from'];
@@ -62,6 +65,13 @@
 		function isFollow($params){
 			$mapper=$this->getMapper('following');
 			return $mapper->load(array('following_from=? AND following_to=?', $params['from'], $params['to']));
+		}
+
+		/* Goals */
+
+		function getAllGoalsToByUserId($params){
+			$mapper=$this->getMapper('goal_infos');
+			return $mapper->find(array('user_to_id=?', $params['id']));
 		}
 	}
 ?>

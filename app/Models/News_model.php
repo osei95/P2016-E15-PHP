@@ -20,19 +20,20 @@
 		}
 
 		function getAllNewsFromUserId($params){
-			return $this->mapper->find(array('news_from=?', $params['user_id']), array('order'=>'news_date DESC'));
+			return $this->mapper->find(array('user_from_id=?', $params['user_id']), array('order'=>'news_date DESC'));
  		}
 
  		function getAllRelationsNews($params){
-			return $this->mapper->find(array('news_to=?', $params['user_id']), array('order'=>'news_date DESC'));
+ 			return $this->dB->exec("SELECT * FROM news_infos INNER JOIN following ON news_infos.user_from_id=following.following_to AND following.following_from=".intval($params['user_id'])." GROUP BY news_infos.news_id ORDER BY news_date DESC");
+			//return $this->mapper->find(array('user_to_id=?', $params['user_id']), array('order'=>'news_date DESC'));
  		}
 
  		function getNewsFromUserIdByType($params){
-			return $this->mapper->find(array('news_from=? AND news_type=?', $params['user_id'], $params['type']), array('order'=>'news_date DESC'));
+			return $this->mapper->find(array('user_from_id=? AND news_type=?', $params['user_id'], $params['type']), array('order'=>'news_date DESC'));
  		}
 
  		function getNewsToUserIdByType($params){
-			return $this->mapper->find(array('news_to=? AND news_type=?', $params['user_id'], $params['type']), array('order'=>'news_date DESC'));
+			return $this->mapper->find(array('user_to_id=? AND news_type=?', $params['user_id'], $params['type']), array('order'=>'news_date DESC'));
  		}
 
  		function createSupport($params){

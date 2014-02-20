@@ -1,10 +1,143 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Home</title>
-</head>
-<body>
-	<h1>Bonjour <?php echo $SESSION['user']['user_firstname'].' '.$SESSION['user']['user_lastname']; ?></h1>
-</body>
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="../public/css/reset.css">
+	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css" type="text/css" media="screen" />
+	  <link rel="stylesheet" href="../public/font/stylesheet.css">
+	  <link rel="stylesheet" href="../public/css/style-dash.css">
+	  <link rel="stylesheet" href="../public/css/style.css">
+	</head>
+	<body id="profil">
+		<header class="active">
+			<div class="contain">
+				<div>
+					<a href="/profil" title="Mon profil"></a>
+					<a href="/" title="Mon dashboard"></a>
+					<a href="/messages" title="Messagerie"></a>
+					<a href="/search" title="Recherche"></a>
+				</div>
+				<a href="/logout">Déconnexion</a>
+			</div>
+		</header>
+		<section id="informations-dash">
+		<div class="dash-head">
+		
+			<div class="contain clearfix dash-container">
+				<div class="fleft">
+					<div class="presentation">
+						<h1 class="title-dash"><?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
+						<div class="presentation-infos">
+							<p><span><?php echo $user['achieved_goals']; ?></span> Objectif<?php if($user['achieved_goals']>1) echo('s'); ?> réussi<?php if($user['achieved_goals']>1) echo('s'); ?></p>
+							<p><span><?php echo $user['followings']; ?></span> Follower<?php if($user['followings']>1) echo('s'); ?></p>
+						</div>
+					</div>
+					<div><img src="images/profil1.jpg" alt=""></div>
+				</div>
+				
+				<div class="fright">
+					<h2 class="objectifs-dash">Mes objectifs</h2>
+					
+					<?php if(count($goals)>0):?>
+						<?php foreach($goals as $g): ?>
+						<div class="details">
+								<div class="targets">
+									<div class="pics">
+										<img src="/medias/users/<?php echo($g['user_from_id']); ?>/profil.jpg" alt="">
+									</div>
+								</div> <!--End of targets -->
+								<div class="status">
+									<span class="actif"></span>
+								</div> <!--End of status -->
+								
+								<div class="name">
+									<p><?php echo $g['user_from_firstname'].' '.$g['user_from_lastname']; ?></p>
+								</div> <!--End of name -->
+								
+								<div class="link">
+									<a href="#">Voir les détails</a>
+								</div> <!--End of link -->
+						</div>
+						<?php endforeach; ?>
+					<?php else: ?>
+						<p>Vous n'avez pas encore d'objectif...</p>
+					<?php endif; ?>
+	
+				</div>
+				
+			</div>
+		</div>
+		</section>
+		
+		<nav>
+			<div class="contain clearfix">
+				<ul id="middle-nav">
+					<li><a href="#">Toutes les actualités</a></li>
+					<li><a class="actif" href="#">Personnes rencontrées</a></li>
+					<li><a href="#">Personnes suivies</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<section id="news">
+			<?php if(count($news)>0):
+				$pos_class = 'fright';
+				foreach($news as $n):
+					$activity_class='bg-';
+					switch($n['news_type']){
+						case 'activity_caloris':
+							$activity_class.='cal';
+							break;
+						case 'activity_event':
+							$activity_class.='event';
+							break;
+						case 'activity_friend':
+							$activity_class.='friend';
+							break;
+						default :
+							$activity_class.='km';
+					}
+
+					if($pos_class=='fright')	$pos_class = 'fleft';
+					else 						$pos_class = 'fright';
+
+				?>
+				<article class="<?php echo($activity_class); ?>"> <!-- Start of a the article -->
+				<div class="contain clearfix">
+						<div class="profil <?php echo($pos_class); ?>">
+							<a href="/profil/<?php echo $n['user_from_username']; ?>" class="name"><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></a>
+							
+							<div class="friend-pics">
+								<div class="targets">
+									<div class="pics">
+										<img src="/medias/users/<?php echo($n['user_from_id']); ?>/profil.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<p class="date"><?php echo(date('d/m/Y', $n['news_date'])) ?></p>
+						</div>
+				
+					
+					<div class="live-news fleft">
+						<p><span><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></span> <?php echo($n['news_content']) ?></p>
+						<div class="separator"></div>
+						<div class="link">
+							<?php if($n['user_from_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="<?php if(in_array($n['news_id'], $supports['news'])) echo('on'); ?>">J'encourage</a><?php endif; ?>
+						</div> <!--End of link -->
+					</div>
+				</div>
+				</article> <!-- End of a the article -->
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</section>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	 	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	  	<script type="text/javascript" src="../public/js/jquery.mousewheel-3.0.6.pack.js"></script>
+	  	<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
+	  	<script type="text/javascript" src="../public/js/script.js"></script>	
+	</body>
 </html>
