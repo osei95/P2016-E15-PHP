@@ -21,7 +21,7 @@
 					<a href=""></a>
 					<a href=""></a>
 				</div>
-				<a href="#">Déconnexion</a>
+				<a href="/logout">Déconnexion</a>
 			</div>
 		</header>
 		<section id="informations-dash">
@@ -84,25 +84,42 @@
 		</nav>
 		
 		<section id="news">
-			
-				<article class="bg-km"> <!-- Start of a the article -->
+			<?php if(count($news)>0):?>
+				<?php foreach($news as $n): ?>
+				<?php
+					$class='bg-';
+					switch($n['news_type']){
+						case 'activity_caloris':
+							$class.='cal';
+							break;
+						case 'activity_event':
+							$class.='event';
+							break;
+						case 'activity_friend':
+							$class.='friend';
+							break;
+						default :
+							$class.='km';
+					}
+				?>
+				<article class="<?php echo($class); ?>"> <!-- Start of a the article -->
 				<div class="contain clearfix">
 						<div class="profil fleft">
-							<p class="name">Eva Mendes</p>
+							<p class="name"><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></p>
 							
 							<div class="friend-pics">
 								<div class="targets">
 									<div class="pics">
-										<img src="images/profil1.jpg" alt="">
+										<img src="/medias/users/<?php echo($n['user_from_id']); ?>/profil.jpg" alt="">
 									</div>
 								</div>
 							</div>
-							<p class="date">28 Janvier 2014</p>
+							<p class="date"><?php echo(date('d/m/Y', $n['news_date'])) ?></p>
 						</div>
 				
 					
 					<div class="live-news fleft">
-						<p><span>Eva Mendes</span> a parcouru 15 kms en 1 heure et 23 minutes</p>
+						<p><span><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></span> <?php echo($n['news_content']) ?></p>
 						<div class="separator"></div>
 						<div class="link">
 							<a href="#">J'encourage</a>
@@ -110,110 +127,8 @@
 					</div>
 				</div>
 				</article> <!-- End of a the article -->
-			
-				<article class="bg-cal"> <!-- Start of a the article -->
-				<div class="contain clearfix">
-						<div class="profil fright">
-							<p class="name">Jennifer Lopez</p>
-							
-							<div class="friend-pics">
-								<div class="targets">
-									<div class="pics">
-										<img src="images/profil1.jpg" alt="">
-									</div>
-								</div>
-							</div>
-							<p class="date">28 Janvier 2014</p>
-						</div>
-				
-					
-					<div class="live-news fright">
-						<p><span>Jennifer Lopez</span> Jennifer Lopez a perdu 1359 calories en 1 journée</p>
-						<div class="separator"></div>
-						<div class="link">
-							<a href="#">J'encourage</a>
-						</div> <!--End of link -->
-					</div>
-				</div>
-				</article> <!-- End of a the article -->
-				
-				<article class="bg-event"> <!-- Start of a the article -->
-				<div class="contain clearfix">
-						<div class="profil fleft">
-							<p class="name">Mila Kunis</p>
-							
-							<div class="friend-pics">
-								<div class="targets">
-									<div class="pics">
-										<img src="images/profil1.jpg" alt="">
-									</div>
-								</div>
-							</div>
-							<p class="date">28 Janvier 2014</p>
-						</div>
-				
-					
-					<div class="live-news fleft">
-						<p><span>Mila Kunis</span> a participé au marathon de Los Angeles</p>
-						<div class="separator"></div>
-						<div class="link">
-							<a href="#">J'encourage</a>
-						</div> <!--End of link -->
-					</div>
-				</div>
-				</article> <!-- End of a the article -->
-			
-				<article class="bg-friend"> <!-- Start of a the article -->
-				<div class="contain clearfix">
-						<div class="profil fright">
-							<p class="name">Noémie Lenoir</p>
-							
-							<div class="friend-pics">
-								<div class="targets">
-									<div class="pics">
-										<img src="images/profil1.jpg" alt="">
-									</div>
-								</div>
-							</div>
-							<p class="date">28 Janvier 2014</p>
-						</div>
-				
-					
-					<div class="live-news fright">
-						<p><span>Noémie Lenoir</span> a accepté votre invitation à discuter</p>
-						<div class="separator"></div>
-						<div class="link">
-							<a href="#">J'encourage</a>
-						</div> <!--End of link -->
-					</div>
-				</div>
-				</article> <!-- End of a the article -->
-
-				<article class="bg-km"> <!-- Start of a the article -->
-				<div class="contain clearfix">
-						<div class="profil fleft">
-							<p class="name">Nicole Scherzinger</p>
-							
-							<div class="friend-pics">
-								<div class="targets">
-									<div class="pics">
-										<img src="images/profil1.jpg" alt="">
-									</div>
-								</div>
-							</div>
-							<p class="date">28 Janvier 2014</p>
-						</div>
-				
-					
-					<div class="live-news fleft">
-						<p><span>Nicole Scherzinger</span> a parcouru 9 kms en 1 heure et 2 minutes</p>
-						<div class="separator"></div>
-						<div class="link">
-							<a href="#">J'encourage</a>
-						</div> <!--End of link -->
-					</div>
-				</div>
-				</article> <!-- End of a the article -->
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</section>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	 	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>

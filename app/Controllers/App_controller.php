@@ -29,11 +29,20 @@
 						$goals_infos[$key] = $g->cast();
 					}
 					$f3->set('goals', $goals_infos);
+
+					$news_model = new News_model();
+					$news = $news_model->getAllRelationsNews(array('user_id' => $f3->get('SESSION.user.user_id')));
+					$f3->set('news', $news);
 					
 				}else{
 					$this->tpl=array('sync'=>'404.html');
 				}
 			}
+		}
+
+		public function logout($f3){
+			session_destroy();
+			$f3->reroute('/');
 		}
 		
 	}
