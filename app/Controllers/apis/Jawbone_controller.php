@@ -48,8 +48,6 @@
 			$today = date('Ymd');
 			$activity_model = new Activity_model();
 
-			//print_r($activity_infos);
-
 			if(isset($activity_infos['data']['items']) && is_array($activity_infos['data']['items'])){	// Si on a une activité ce jour
 
 				$items = $activity_infos['data']['items'];
@@ -85,7 +83,7 @@
 								if($new_distance>1){
 
 									$date_time_date = DateTime::createFromFormat('Ymd', $date);
-									$timestamp_date = $date_format->getTimestamp();
+									$timestamp_date = $date_time_date->getTimestamp();
 
 									$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity' => $activity));
 									$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));

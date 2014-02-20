@@ -60,7 +60,6 @@
 					$input_api_controller->importActivity($f3, array('user_id' => $user['user_id'], 'input_shortname' => $input['input_shortname'], 'input_id' => $input['input_id'], 'user_has_input_id' => $input['user_input_id'], 'access_token' => $f3->get('SESSION.user.access_token'), 'access_token_secret' => $f3->get('SESSION.user.access_secret_token')));
 				}
 				$f3->reroute('/');
-				exit;
 			}
 		}
 
@@ -134,7 +133,6 @@
 							$this->runkeeper_auth($f3);
 							break;
 					}
-					exit;
 				}
 			}else{
 				$errors['data'] = 'Une erreur s\'est produite lors de l\'envoi du formulaire. Veuillez recommencer.';
