@@ -84,12 +84,19 @@
 
 								if($new_distance>1){
 
-									$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity' => $activity));
-									$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
+									$date_time_date = DateTime::createFromFormat('Ymd', $date);
+									$timestamp_date = $date_format->getTimestamp();
+
+									$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity' => $activity));
+									$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
 
 									$news_model = new News_model();
 									$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity_distance', 'content' => 'a parcouru '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
 								
+									if($new_calories>1){
+										$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity_calories', 'content' => ' a perdu '.number_format($new_calories,1).' calorie'.($new_calories>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
+									}
+
 								}
 							}
 						}
