@@ -24,7 +24,7 @@
  		}
 
  		function getAllRelationsNews($params){
- 			return $this->dB->exec("SELECT * FROM news_infos LEFT JOIN following ON news_infos.user_from_id=following.following_to AND following.following_from=".intval($params['user_id'])." GROUP BY news_infos.news_id ORDER BY news_date DESC");
+ 			return $this->dB->exec("SELECT * FROM news_infos INNER JOIN following ON news_infos.user_from_id=following.following_to AND following.following_from=".intval($params['user_id'])." GROUP BY news_infos.news_id ORDER BY news_date DESC");
 			//return $this->mapper->find(array('user_to_id=?', $params['user_id']), array('order'=>'news_date DESC'));
  		}
 
