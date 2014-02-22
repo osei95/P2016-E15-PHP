@@ -20,12 +20,12 @@
       }
 
       public function afterroute($f3){
-         if($f3->get('AJAX')){
-            echo View::instance()->render($this->tpl['async']);
-         }else{
-            echo View::instance()->render($this->tpl['sync']);
-         } 
-      }
+         $mimeTypes=array('html'=>'text/html','json'=>'application/json');
+         $tpl=($f3->get('AJAX') && isset($this->tpl['async']))?$this->tpl['async']:$this->tpl['sync'];
+         $ext=substr($tpl,strrpos($tpl,'.')+1);
+         $mime=$mimeTypes[$ext];
+         echo View::instance()->render($tpl,$mime);
+      } 
    }
    
 ?>

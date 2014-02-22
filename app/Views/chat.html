@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="../public/css/reset.css">
+	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css" type="text/css" media="screen" />
+	  <link rel="stylesheet" href="../public/font/stylesheet.css">
+	  <link rel="stylesheet" href="../public/css/style-chat.css">
+	  <!--<link rel="stylesheet" href="css/style.css">-->
+	</head>
+	<body id="profil">
+		<header class="active">
+			<div class="contain">
+				<div>
+					<a href="/profil"></a>
+					<a href="/"></a>
+					<a href="#"></a>
+					<a href="/search"></a>
+				</div>
+				<a href="#">Déconnexion</a>
+			</div>
+		</header>
+		<section id="chat-feed">
+			<div class="chat-head">
+				<div class="contain clearfix dash-container">
+					<div class="f-all">
+						<h2 class="TitleN3">Conversations</h2>
+						<div class ="chat-infos">
+							<span class="chat-icon-women"></span>
+							<p><?php echo($user['relations']); ?> contact<?php if($user['relations']>1): echo('s'); endif; ?></p>
+							<div class="separator"></div>
+							<div id="tfheader">
+								<form id="tfnewsearch" method="get" action="">
+									<input type="text" class="tftextinput" placeholder="Recherche une personne" name="name" size="25" maxlength="120">
+									<input type="submit" value=" " class="tfbutton">
+								</form>
+								<div class="tfclear"></div>
+							</div>
+						</div>
+						<div class="friends-feed">
+							<div class="controllers">
+								<a href="#"><span class="btn-prev"></span></a>
+								<a href="#"><span class="btn-next"></span></a>
+							</div>
+							<div class="friends-talk">
+								<?php if(is_array($relations) && count($relations)>0): ?>
+								<?php foreach($relations as $r): ?>
+								<div class="details" data-id="<?php echo($r['user_id']); ?>">
+									<div class="targets">
+										<div class="pics">
+											<img src="/medias/users/<?php echo($r['user_id']); ?>/profil.jpg" alt="">
+										</div>
+									</div> <!--End of targets -->
+									<div class="status">
+										<span class="actif"></span>
+									</div> <!--End of status -->
+									<div class="name">
+										<p><?php echo($r['user_firstname'].' '.$r['user_lastname']);?></p>
+									</div> <!--End of name -->
+								</div>
+								<?php endforeach; ?>
+								<?php else: ?>
+								<p>Vous n'avez pas encore de relation.</p>
+								<?php endif; ?>
+								<div class="separator-bottom"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+		<div class="contain clearfix">
+			<section id="conversation-block" class="hidden">
+				<div class="conversation-actions">					
+				</div>
+				<form id="conversation-tfchat" method="post">
+					<textarea type="text" class="conversation-tftextarea" placeholder="Entrez votre message"></textarea>
+					<div class="form-actions">		
+						<!--<div class="file_upload">
+							<input type="file" id="file_upload" name="file_upload">
+							<label for="file_upload">Envoyez une photo</label>
+						</div>-->
+						<input type="submit" value="Envoyer" class="conversation-tfbutton">
+					</div>
+				</form>	
+			</section>
+		</div>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<script type="text/javascript" src="../public/js/jquery.mousewheel-3.0.6.pack.js"></script>
+		<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
+		<script type="text/javascript" src="../public/js/script.js"></script>
+		<script type="text/javascript" src="http://php.h3.erwan.co:8880/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="../public/js/chat.js"></script>
+	</body>
+</html>
