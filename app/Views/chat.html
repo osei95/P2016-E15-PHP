@@ -31,7 +31,7 @@
 						<h2 class="TitleN3">Conversations</h2>
 						<div class ="chat-infos">
 							<span class="chat-icon-women"></span>
-							<p>357 contacts</p>
+							<p><?php echo($user['relations']); ?> contact<?php if($user['relations']>1): echo('s'); endif; ?></p>
 							<div class="separator"></div>
 							<div id="tfheader">
 								<form id="tfnewsearch" method="get" action="">
@@ -47,84 +47,25 @@
 								<a href="#"><span class="btn-next"></span></a>
 							</div>
 							<div class="friends-talk">
-								<div class="details">
+								<?php if(is_array($relations) && count($relations)>0): ?>
+								<?php foreach($relations as $r): ?>
+								<div class="details" data-id="<?php echo($r['user_id']); ?>">
 									<div class="targets">
 										<div class="pics">
-											<img src="../public/images/profil1.jpg" alt="">
+											<img src="/medias/users/<?php echo($r['user_id']); ?>/profil.jpg" alt="">
 										</div>
 									</div> <!--End of targets -->
 									<div class="status">
 										<span class="actif"></span>
 									</div> <!--End of status -->
 									<div class="name">
-										<p>Eva Longoria</p>
+										<p><?php echo($r['user_firstname'].' '.$r['user_lastname']);?></p>
 									</div> <!--End of name -->
 								</div>
-								<div class="details">
-									<div class="targets">
-										<div class="pics">
-											<img src="../public/images/profil1.jpg" alt="">
-										</div>
-									</div> <!--End of targets -->
-									<div class="status">
-										<span class="actif"></span>
-									</div> <!--End of status -->
-									<div class="name">
-										<p>Eva Longoria</p>
-									</div> <!--End of name -->
-								</div>
-								<div class="details">
-									<div class="targets">
-										<div class="pics">
-											<img src="../public/images/profil1.jpg" alt="">
-										</div>
-									</div> <!--End of targets -->
-									<div class="status">
-										<span class="actif"></span>
-									</div> <!--End of status -->
-									<div class="name">
-										<p>Eva Longoria</p>
-									</div> <!--End of name -->
-								</div>
-								<div class="details">
-									<div class="targets">
-										<div class="pics">
-											<img src="../public/images/profil1.jpg" alt="">
-										</div>
-									</div> <!--End of targets -->
-									<div class="status">
-										<span class="actif"></span>
-									</div> <!--End of status -->
-									<div class="name">
-										<p>Eva Longoria</p>
-									</div> <!--End of name -->
-								</div>
-								<div class="details">
-									<div class="targets">
-										<div class="pics">
-											<img src="../public/images/profil1.jpg" alt="">
-										</div>
-									</div> <!--End of targets -->
-									<div class="status">
-										<span class="actif"></span>
-									</div> <!--End of status -->
-									<div class="name">
-										<p>Eva Longoria</p>
-									</div> <!--End of name -->
-								</div>
-								<div class="details">
-									<div class="targets">
-										<div class="pics">
-											<img src="../public/images/profil1.jpg" alt="">
-										</div>
-									</div> <!--End of targets -->
-									<div class="status">
-										<span class="actif"></span>
-									</div> <!--End of status -->
-									<div class="name">
-										<p>Eva Longoria</p>
-									</div> <!--End of name -->
-								</div>
+								<?php endforeach; ?>
+								<?php else: ?>
+								<p>Vous n'avez pas encore de relation.</p>
+								<?php endif; ?>
 								<div class="separator-bottom"></div>
 							</div>
 						</div>
@@ -134,129 +75,16 @@
 		</div>
 		</section>
 		<div class="contain clearfix">
-			<section id="conversation-block">
-				<div class="conversation-actions">
-					<div class="me">
-						<div class="me_block">
-							<div class="me_pics">
-								<div class="pics">
-									<img src="../public/images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End me_pics -->
-							<div class="me_talk">
-								<span class="clock_icon">10h42</span>
-								<p class="message">
-									Contrairement à une opinion répandue, 
-									le Lorem Ipsum n'est pas simplement du texte aléatoire. 
-									Il trouve ses racines dans une oeuvre de la littérature 
-									latine classique.
-								</p>
-							</div>
-						</div>		
-					</div>
-					<div class="date">
-						<div class="separator"></div>
-						<p> Lundi 14 février 2014 </p>
-						<div class="separator"></div>
-					</div>
-					<div class="friend">
-						<div class="friend_block">
-							<div class="friend_pics">
-								<div class="pics">
-									<img src="../public/images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End me_pics -->
-							<div class="friend_talk">
-								<span class="clock_icon">10h42</span>
-								<p class="message">
-									Contrairement à une opinion répandue, 
-									le Lorem Ipsum n'est pas simplement du texte aléatoire. 
-									Il trouve ses racines dans une oeuvre de la littérature 
-									latine classique.
-								</p>
-							</div>
-						</div>		
-					</div>				
-					<div class="me">
-						<div class="me_block">
-							<div class="me_pics">
-								<div class="pics">
-									<img src="../public/images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End me_pics -->
-							<div class="me_talk">
-								<span class="clock_icon">10h42</span>
-								<p class="message">
-									Contrairement à une opinion répandue, 
-									le Lorem Ipsum n'est pas simplement du texte aléatoire. 
-									Il trouve ses racines dans une oeuvre de la littérature 
-									latine classique.
-								</p>
-							</div>
-						</div>		
-					</div>
-					<div class="friend">
-						<div class="friend_block">
-							<div class="friend_pics">
-								<div class="pics">
-									<img src="../public/images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End me_pics -->
-							<div class="friend_talk">
-								<span class="clock_icon">10h42</span>
-								<p class="message">
-									Contrairement à une opinion répandue, 
-									le Lorem Ipsum n'est pas simplement du texte aléatoire. 
-									Il trouve ses racines dans une oeuvre de la littérature 
-									latine classique.
-								</p>	
-							</div>
-						</div>		
-					</div>	
-					<div class="me">
-						<div class="me_block">
-							<div class="me_pics">
-								<div class="pics">
-									<img src="../public/images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End me_pics -->
-							<div class="me_talk">
-								<span class="clock_icon">10h42</span>
-								<p class="message">
-									Contrairement à une opinion répandue, 
-									le Lorem Ipsum n'est pas simplement du texte aléatoire. 
-									Il trouve ses racines dans une oeuvre de la littérature 
-									latine classique.
-								</p>	
-							</div>
-						</div>		
-					</div>
-					<div class="friend">
-						<div class="friend_block">
-							<div class="friend_pics">
-								<div class="pics">
-									<img src="../public/images/profil1.jpg" alt="">
-								</div>
-							</div> <!--End me_pics -->
-							<div class="friend_talk">
-								<span class="clock_icon">10h42</span>
-								<p class="message">
-									Contrairement à une opinion répandue, 
-									le Lorem Ipsum n'est pas simplement du texte aléatoire. 
-									Il trouve ses racines dans une oeuvre de la littérature 
-									latine classique.
-								</p>
-							</div>	
-						</div>		
-					</div>					
+			<section id="conversation-block" class="hidden">
+				<div class="conversation-actions">					
 				</div>
 				<form id="conversation-tfchat" method="post">
 					<textarea type="text" class="conversation-tftextarea" placeholder="Entrez votre message"></textarea>
 					<div class="form-actions">		
-						<div class="file_upload">
+						<!--<div class="file_upload">
 							<input type="file" id="file_upload" name="file_upload">
 							<label for="file_upload">Envoyez une photo</label>
-						</div>
+						</div>-->
 						<input type="submit" value="Envoyer" class="conversation-tfbutton">
 					</div>
 				</form>	
@@ -267,5 +95,7 @@
 		<script type="text/javascript" src="../public/js/jquery.mousewheel-3.0.6.pack.js"></script>
 		<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
 		<script type="text/javascript" src="../public/js/script.js"></script>
+		<script type="text/javascript" src="http://php.h3.erwan.co:8880/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="../public/js/chat.js"></script>
 	</body>
 </html>

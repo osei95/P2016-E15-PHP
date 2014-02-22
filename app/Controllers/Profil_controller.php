@@ -66,5 +66,9 @@
 			}
 			$f3->reroute('/');
 		}
+
+		function session($f3){
+			$this->tpl=array('sync'=>'session.json', 'async'=>'session.json');
+		}
 	}
 ?>
