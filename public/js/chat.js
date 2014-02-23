@@ -1,60 +1,57 @@
 var last_date = null;
 var init = true;
 
-$(function(){
-	var GLOBALS = {
-		url : 'http://php.h3.erwan.co',
-		port : '8880'
-	}
-	var socket = io.connect(GLOBALS.url+':'+GLOBALS.port);
+socket.on('loadedPage',function(params){
 
+	if(params.status=='200'){
 
-	$('.friends-talk .details').on('click', function(evt){
-		evt.preventDefault();
+		$('.friends-talk .details').on('click', function(evt){
+			evt.preventDefault();
 
-		init = true;
-		$('#conversation-block .conversation-actions').empty();
+			$(this).removeClass('notification');
 
-		/* On affiche le bloc de saisie */
-		$('#conversation-block').removeClass('hidden');
+			init = true;
+			last_date = null;
+			$('#conversation-block .conversation-actions').empty();
 
-		/* On affiche le loader */
+			/* On affiche le bloc de saisie */
+			$('#conversation-block').removeClass('hidden');
 
-		var id_user = $(this).data('id');
-		$.ajax({
-            url: GLOBALS.url+"/profil/session",
-            type: "GET",
-            dataType: 'json',
-            success: function(data){
-            	console.log('success');
-            	console.log(data);
-            	socket.emit('login', {
-				from : {
-					token : data.user.token
-				},
+			/* On affiche le loader */
+			var id_user = $(this).data('id');
+			socket.emit('connectIM', {
 				to : {
 					id : id_user
 				}
 			});
-            } 
-        });
-	});
+		});
+	}else{
+		alert('Erreur de connexion au serveur');
+	}
+});
 
 
-	$('#conversation-tfchat textarea.conversation-tftextarea').keydown(function(evt) {
-	    if (evt.keyCode == 13) {
-	    	evt.preventDefault();
-	        $(this.form).submit();
-	    }
-	});
+$('#conversation-tfchat textarea.conversation-tftextarea').keydown(function(evt) {
+    if (evt.keyCode == 13) {
+    	evt.preventDefault();
+        $(this.form).submit();
+    }
+});
 
 
-	socket.on('receiveMessage',function(params){
+socket.on('notifyMessageIM',function(params){
+	var friend_id = params.from;
+	$('.friends-talk .details[data-id='+friend_id+']').addClass('notification');
+});
 
-		/* On cache le loader */
 
-		var messages = params.messages;
-		console.log(messages);
+socket.on('receiveMessageIM',function(params){
+
+	/* On cache le loader */
+
+	var messages = params.messages;
+	console.log(messages);
+	if(messages.length>0){
 		if(last_date==null)	last_date=messages[0].message_date;
 		for(var key in messages){
 			var html_message = $('<div>').addClass(messages[key].message_from_class).append(
@@ -92,17 +89,16 @@ $(function(){
 				$('#conversation-block .conversation-actions').append(html_message);
 			}
 		}
-		if(init==true) init=false;
-		$('#conversation-block .conversation-actions').animate({ scrollTop: $('#conversation-block .conversation-actions')[0].scrollHeight}, 1000);
-	});
+	}
+	if(init==true) init=false;
+	$('#conversation-block .conversation-actions').animate({ scrollTop: $('#conversation-block .conversation-actions')[0].scrollHeight}, 1000);
+});
 
-	/* Envoi d'un message */
-	$('#conversation-tfchat').on('submit', function(evt){
-		evt.preventDefault();
-		socket.emit('sendMessage', {
-			message : $('#conversation-tfchat textarea.conversation-tftextarea').val()
-		});
-		$('#conversation-tfchat textarea.conversation-tftextarea').val('');
+/* Envoi d'un message */
+$('#conversation-tfchat').on('submit', function(evt){
+	evt.preventDefault();
+	socket.emit('sendMessageIM', {
+		message : $('#conversation-tfchat textarea.conversation-tftextarea').val()
 	});
-
-})
+	$('#conversation-tfchat textarea.conversation-tftextarea').val('');
+});

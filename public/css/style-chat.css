@@ -832,6 +832,11 @@ width: 300px;
 	margin: 0 auto;
 	overflow: hidden;
 }
+
+#profil #chat-feed .f-all .details.notification .targets{
+    border-color: #e3867f;
+}
+
 #profil #chat-feed .f-all .details .targets .pics img{
     min-height: 100%;
     min-width: 100%;
