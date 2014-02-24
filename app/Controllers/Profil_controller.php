@@ -78,5 +78,42 @@
 		function session($f3){
 			$this->tpl=array('sync'=>'session.json', 'async'=>'session.json');
 		}
+
+		function datasHeader($f3){
+			$sport = array();
+			$graphs = array();
+			$general = array();
+			$table = array();
+
+			$datasHeader = new User_model();
+			$datas = $datasHeader->getElementsByDatas('PARAMS.username');
+			while ($donnees = $datas->fetch()) {
+				$sport[] = $donnees;
+			}
+			$sport[] = $donnees->cast();
+
+			for ($i=0; $i < 15; $i++) { 
+				//Convertis la date dans le bon format pour le JSON
+				$timeStamp = $sport[$i]['date'];
+				$sport[$i]['date'] = date("d/m", $sport[$i]['date']);
+				//Convertis la distance en km
+				$sport[$i]['distance'] = $sport[$i]['distance'] / 1000;
+				//Date fulldate
+				$date = $jour[date("w",$timeStamp)].' '.date("d",$timeStamp).' '.$mois[date("n",$timeStamp)];
+				$sport[$i]['fulldate'] = $date;
+				$date1 = date("G",$sport[$i]['duration']);
+				$date2 = date("i",$sport[$i]['duration']);
+				$sport[$i]['duration'] = $date1.' heures '.$date2.' minutes';
+				//Si la date existe pas
+				if (count($sport) < 15 && $i > count($sport)) {
+					$sport[$i]['distance'] = 0;
+				}
+			}
+
+			$table['general'] = $general;
+			$table['graphs'] = $graphs;
+			$table['sport'] = $sport;
+
+		}
 	}
 ?>

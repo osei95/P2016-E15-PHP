@@ -79,5 +79,11 @@
 		function getAllRelationsByUserId($params){
 			 return $this->dB->exec("SELECT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname` FROM `following` `following_from` INNER JOIN `user` ON `following_from`.`following_to` = `user`.`user_id` WHERE EXISTS( SELECT `following_to`.`following_from`, `following_to`.`following_to` FROM `following` `following_to` WHERE `following_from`.`following_from` = `following_to`.`following_to` AND `following_to`.`following_from` = `following_from`.`following_to`) AND `following_from`.`following_from`=".intval($params['id']));
 		}
+
+		function getElementsByDatas($params){
+			$tableDatas = array();
+			$mapper = $this->getMapper('user_has_activity');
+			return $mapper->find(array('user_id=?', $params['username']), array('order'=>'date DESC','limit'=>0,15));
+		}
 	}
 ?>
