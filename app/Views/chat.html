@@ -49,7 +49,7 @@
 							<div class="friends-talk">
 								<?php if(is_array($relations) && count($relations)>0): ?>
 								<?php foreach($relations as $r): ?>
-								<div class="details" data-id="<?php echo($r['user_id']); ?>">
+								<div class="details <?php if(isset($notifications_chat[$r['user_id']])): echo('notification'); endif; ?>" data-id="<?php echo($r['user_id']); ?>">
 									<div class="targets">
 										<div class="pics">
 											<img src="/medias/users/<?php echo($r['user_id']); ?>/profil.jpg" alt="">

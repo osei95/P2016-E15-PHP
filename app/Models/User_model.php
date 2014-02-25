@@ -85,5 +85,9 @@
 		function getAllNotificationsByUserId($params){
 			 return $this->dB->exec("SELECT `notification`.`notification_type`, COUNT(`notification`.`notification_id`) `notifications` FROM `notification` WHERE user_id=".intval($params['id'])." GROUP BY notification_type");
 		}
+
+		function getAllNotificationsByUserIdAndType($params){
+			 return $this->dB->exec("SELECT `notification`.`notification_from`, COUNT(`notification`.`notification_id`) `notifications` FROM `notification` WHERE user_id=".intval($params['id'])." AND `notification`.`notification_type`='".$params['type']."' GROUP BY notification_from");
+		}
 	}
 ?>

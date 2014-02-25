@@ -26,6 +26,13 @@
 				}
 				$f3->set('notifications', $notifications_list);
 
+				$notifications_chat = $user_model->getAllNotificationsByUserIdAndType(array('id' => $f3->get('SESSION.user.user_id'), 'type' => 'message'));
+				$notifications_chat_list=array();
+				foreach($notifications_chat as $n){
+					$notifications_chat_list[$n['notification_from']]=$n['notifications'];
+				}
+				$f3->set('notifications_chat', $notifications_chat_list);
+
 			}else{
 				$f3->reroute('/');
 			}

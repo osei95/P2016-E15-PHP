@@ -32,7 +32,7 @@ socket.on('receiveNotification',function(params){
 	var nthNotifications = 0;
 	if($(selector+'>span').length>0){
 		nthNotifications=parseInt($(selector+'>span').text());
-		$(selector+'>span').text(nthNotifications++);
+		$(selector+'>span').text(nthNotifications+1);
 	}else{
 		$(selector).append($('<span>').text(1));
 	}
