@@ -72,7 +72,9 @@
 
 				if($activity){
 
-					$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $date, 'activity_id' => $activity->activity_id, 'input_id' => $params['input_id']));
+					$timestamp_date = strtotime($date);
+
+					$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'input_id' => $params['input_id']));
 					
 					if($current_activity==false || $distance > $current_activity->distance || $calories > $current_activity->calories || $duration > $current_activity->duration){
 						// On poste la nouvelle actualité si la distance parcourue est > à 1km
@@ -92,7 +94,6 @@
 
 							//$date_time_date = DateTime::createFromFormat('Ymd', $date);
 							//$timestamp_date = $date_time_date->getTimestamp();
-							$timestamp_date = strtotime($date);
 
 							$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity' => $activity));
 							$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $duration, 'distance' => $distance, 'calories' => $calories));
