@@ -101,9 +101,9 @@
 
 			$level = testLevel($totalDistance);
 
-			$graphs[0]['valeur'] = $level[0];
-			$graphs[0]['texte'] = $level[1];
-			$graphs[0]['restant'] = round($level[2]);
+			$graphs[0]['valeur'] = $level['value'];
+			$graphs[0]['texte'] = $level['level'];
+			$graphs[0]['restant'] = round($level['leftKm'], 1);
 
 			$activity_tab = array();
 			foreach($activity as $key => $value){

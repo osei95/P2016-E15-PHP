@@ -15,26 +15,31 @@
 	}
 
 	function testLevel($valueDistance){
+
 		$tableResult = array();
-		$level = 0;
+		$level = 1;
+		$bearingBefore = $valueDistance;
 		$bearing = 5;
 
-		while($valueDistance >= $bearing){
-			$bearingBefore = $bearing;
-			$bearing = $bearing * 2;
-			$level++;
+		if($valueDistance>0){
+
+			while($valueDistance >= $bearing){
+				$bearingBefore = $bearing;
+				$bearing = $bearing * 2;
+				$level++;
+			}
+			/* Variable contenant le niveau du user */
+			$value = ($valueDistance * 100)/$bearing; 
+			/* Nombre de km restant */
+			$leftKm = $bearing-$valueDistance; 
+		}else{
+			$value=0;
+			$level=0;
+			$leftKm=$bearing;
 		}
-		/* Récupère la distance restante pour faire la comparaison dans le cercle */
-		$distanceLeft = $valueDistance - $bearingBefore;
-		/* Permet de faire la différence de valeur entre les deux niveaux pour calculer et tracer le cercle */
-		$radiusCircle = $bearing - $bearingBefore;
-		/* Variable contenant le niveau du user */
-		$value = ($distanceLeft/$radiusCircle) * 100; 
-		/* Nombre de km restant */
-		$leftKm = $bearing - $valueDistance; 
-		$tableResult[0] = $value;
-		$tableResult[1] = $level;
-		$tableResult[2] = $leftKm;
+		$tableResult['value'] = $value;
+		$tableResult['level'] = $level;
+		$tableResult['leftKm'] = $leftKm;
 
 		return $tableResult; 
 	}
