@@ -19,6 +19,17 @@
 			return $activity =$mapper->load(array('user_id=? AND date=? AND activity_id=? AND input_id=?', $params['user_id'], $params['date'], $params['activity_id'], $params['input_id']));
 		}
 
+		function getAllActivitiesUser($params){
+			$options = array();
+			if(isset($params['limit']))	$options['limit'] = $params['limit'];
+			$mapper=$this->getMapper('user_has_activity');
+			return $activity =$mapper->find(array('user_id=? ORDER BY date DESC', $params['user_id']), $options);
+		}
+
+		function getSumDistanceUser($params){
+			 return $this->dB->exec("SELECT SUM(`user_has_activity`.`distance`) as `distance` FROM `user_has_activity` INNER JOIN `user` ON `user_has_activity`.`user_id` = `user`.`user_id` WHERE `user`.`user_id`=".intval($params['user_id']));
+		}
+
 		function removeActivityUser($params){
 			$mapper = $this->getMapper('user_has_activity');
 			$user_has_activity = $mapper->load(array('user_id=? AND input_id=? AND date=? AND activity_id=?', $params['user_id'], $params['input_id'], $params['date'], $params['activity']->activity_id));

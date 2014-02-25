@@ -25,8 +25,8 @@
 				$interval = $now->diff($date);
 				$user_infos['user_birthday'] = $interval->y;
 				/* Convertit la ville en minuscule et ajoute une majuscule à la première lettre */
-				$user_infos['user_city'] = strtolower($table['user_city']);
-				$user_infos['user_city'] = ucfirst($table['user_city']);
+				$user_infos['user_city'] = strtolower($user_infos['user_city']);
+				$user_infos['user_city'] = ucfirst($user_infos['user_city']);
 				$f3->set('user', $user_infos);
 
 				/* Récupération des news propres à l'utilisateur */
@@ -79,40 +79,63 @@
 			$this->tpl=array('sync'=>'session.json', 'async'=>'session.json');
 		}
 
-		function datasHeader($f3){
+		function data($f3){
 			$sport = array();
-			$graphs = array();
-			$general = array();
+			$graphs = array(
+				array('couleur'=>'#f3cd33', 'valeur'=>70, 'texte'=>3, 'restant'=>6),
+				array('couleur'=>'#ea9143', 'valeur'=>67, 'texte'=>67),
+				array('couleur'=>'#eb6759', 'valeur'=>4.1, 'texte'=>4.1)
+			);
+			$general = array('distance'=>0, 'calories'=>0, 'duration'=>0);
 			$table = array();
 
-			$datasHeader = new User_model();
-			$datas = $datasHeader->getElementsByDatas('PARAMS.username');
-			while ($donnees = $datas->fetch()) {
-				$sport[] = $donnees;
+			$jours = array('dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi');
+			$mois = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+
+			$activity_model = new Activity_model();
+			$activity = $activity_model->getAllActivitiesUser(array('user_id' => $f3->get('PARAMS.id_user'), 'limit'=>15));
+			
+			$sumDistance = $activity_model->getSumDistanceUser(array('user_id' => $f3->get('PARAMS.id_user')));
+			if(!is_array($sumDistance) || count($sumDistance)==0)	$totalDistance=0;
+			else 						$totalDistance=$sumDistance[0]['distance']/1000;
+
+			$level = testLevel($totalDistance);
+
+			$graphs[0]['valeur'] = $level[0];
+			$graphs[0]['texte'] = $level[1];
+			$graphs[0]['restant'] = round($level[2]);
+
+			$activity_tab = array();
+			foreach($activity as $key => $value){
+				$activity_tab[$key]=$value->cast();
 			}
-			$sport[] = $donnees->cast();
+
+			if(count($activity_tab)==0){
+				$activity_tab[-1]=array('date'=>time()-86400);
+			}
 
 			for ($i=0; $i < 15; $i++) { 
-				//Convertis la date dans le bon format pour le JSON
-				$timeStamp = $sport[$i]['date'];
-				$sport[$i]['date'] = date("d/m", $sport[$i]['date']);
-				//Convertis la distance en km
-				$sport[$i]['distance'] = $sport[$i]['distance'] / 1000;
-				//Date fulldate
-				$date = $jour[date("w",$timeStamp)].' '.date("d",$timeStamp).' '.$mois[date("n",$timeStamp)];
-				$sport[$i]['fulldate'] = $date;
-				$date1 = date("G",$sport[$i]['duration']);
-				$date2 = date("i",$sport[$i]['duration']);
-				$sport[$i]['duration'] = $date1.' heures '.$date2.' minutes';
-				//Si la date existe pas
-				if (count($sport) < 15 && $i > count($sport)) {
-					$sport[$i]['distance'] = 0;
+				// Si la date n'existe pas
+				if(!isset($activity_tab[$i])){
+					$activity_tab[$i]=array('date'=>$activity_tab[$i-1]['date']-86400, 'calories'=>0, 'distance'=>0, 'duration'=>0);
 				}
+				$sport[$i]['date'] = date("d/m", $activity_tab[$i]['date']);
+				$sport[$i]['calories'] = $activity_tab[$i]['calories'];
+				$sport[$i]['km'] = round($activity_tab[$i]['distance'] / 1000, 1);	// km
+				$sport[$i]['fulldate'] = ucfirst($jours[date("w",$activity_tab[$i]['date'])]).' '.date("d",$activity_tab[$i]['date']).' '.$mois[date("n",$activity_tab[$i]['date'])-1];
+				$sport[$i]['duration'] = floor($activity_tab[$i]['duration']/3600).' heures '.floor(($activity_tab[$i]['duration']%3600)/60).' minutes';
+				$general['distance']+=$sport[$i]['km'];
+				$general['calories']+=$sport[$i]['calories'];
+				$general['duration']+=$activity_tab[$i]['duration'];
 			}
 
+			$general['temps'] = floor($general['duration']/3600).'h'.floor(($general['duration']%3600)/60);
 			$table['general'] = $general;
 			$table['graphs'] = $graphs;
-			$table['sport'] = $sport;
+			$table['sport'] = array_reverse($sport);
+
+			echo(json_encode($table));
+			exit;
 
 		}
 	}

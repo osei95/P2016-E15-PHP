@@ -29,7 +29,7 @@
 		/* Permet de faire la différence de valeur entre les deux niveaux pour calculer et tracer le cercle */
 		$radiusCircle = $bearing - $bearingBefore;
 		/* Variable contenant le niveau du user */
-		$value = ($distanceRestante/$radiusCircle) * 100; 
+		$value = ($distanceLeft/$radiusCircle) * 100; 
 		/* Nombre de km restant */
 		$leftKm = $bearing - $valueDistance; 
 		$tableResult[0] = $value;

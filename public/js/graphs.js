@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
-  d3.json("../public/datas.json", function(data){
+  var user_id = $('body').data('user');
+
+  d3.json("/profil/data/"+user_id, function(data){
     var width = 680,
     height = 200,
     τ = 2 * Math.PI; // http://tauday.com/tau-manifesto
