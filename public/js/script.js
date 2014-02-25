@@ -1,5 +1,17 @@
 $(document).ready(function() {
     resize();
+    $(".torangekm").ionRangeSlider({type:"double", postfix: " km"});
+    $(".torangeage").ionRangeSlider({type:"double", postfix: " ans"});
+    $(".torangetaille").ionRangeSlider({type:"double", postfix: " cm"});
+    $(".torangepoids").ionRangeSlider({type:"double", postfix: " kg"});
+    $(".torangecal").ionRangeSlider({type:"double", postfix: " kcal"});
+
+    $(function() {
+        $( "#accordion" ).accordion({
+            "collapsible":true,
+            active: 2
+        });
+    });
 
     window.onresize = function() {
         resize();
@@ -34,5 +46,4 @@ $(document).ready(function() {
     $(document).ready(function() {
 		$(".fancybox").fancybox();
 	});
-
 });
