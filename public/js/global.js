@@ -18,5 +18,9 @@ $.ajax({
 				name : currentPage
 			}
 		});
-    } 
+    }
+});
+
+socket.on('receiveNotification',function(params){
+	console.log(params);
 });
