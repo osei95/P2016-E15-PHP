@@ -879,6 +879,10 @@ td, tr{
     position: relative;
     top: 20px;
 }
+#recherche .section .sportchoice .left p{
+    position:relative;
+    top: 48px;
+}
 #recherche .section input[type="text"]{
     color:#2d3e50;
     font-family: segoe_uiregular;
