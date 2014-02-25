@@ -13,13 +13,13 @@
 	  <link rel="stylesheet" href="../public/css/ionrangeSlider.css">
 	</head>
 	<body id="recherche">
-		<header class="active header_connected " id="2">
+		<header class="active header_connected" data-id="search">
 			<div class="contain">
 				<div>
-					<a href="/profil"></a>
-					<a href="/"></a>
-					<a href="/messages"><span>33</span></a>
-					<a href="#" class="active"></a>
+					<a href="/profil" title="Mon profil"></a>
+					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>') endif;?></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>') endif;?></a>
+					<a href="#" class="active" title="Recherche"></a>
 				</div>
 				<a href="#">Déconnexion</a>
 			</div>
@@ -152,5 +152,7 @@
 	  	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	  	<script type="text/javascript" src="../public/js/ion.rangeSlider.min.js"></script>
 	 	<script type="text/javascript" src="../public/js/script.js"></script>
+	 	<script type="text/javascript" src="http://php.h3.erwan.co:8880/socket.io/socket.io.js"></script>
+	  	<script type="text/javascript" src="../public/js/global.js"></script>
 	</body>
 </html>
