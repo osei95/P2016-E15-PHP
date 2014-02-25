@@ -7,18 +7,18 @@
 	  <meta name="description" content="">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="stylesheet" href="../public/css/reset.css">
-	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css" type="text/css" media="screen" />
 	  <link rel="stylesheet" href="../public/font/stylesheet.css">
 	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
 	<body id="profil" data-id="profil" data-user="<?php echo($user['user_id']); ?>">
-		<header class="active">
+		<header class="active header_connected">
 			<div class="contain">
 				<div>
-					<a href=""></a>
-					<a href=""></a>
-					<a href=""></a>
-					<a href=""></a>
+					<a href="#" title="Mon profil" class="active"></a>
+					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
+					<a href="/search" title="Recherche"></a>
 				</div>
 				<a href="#">Déconnexion</a>
 			</div>

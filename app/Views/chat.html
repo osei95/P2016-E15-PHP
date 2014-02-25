@@ -10,16 +10,16 @@
 	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css" type="text/css" media="screen" />
 	  <link rel="stylesheet" href="../public/font/stylesheet.css">
 	  <link rel="stylesheet" href="../public/css/style-chat.css">
-	  <!--<link rel="stylesheet" href="css/style.css">-->
+	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
 	<body id="profil" data-id="chat">
-		<header class="active">
+		<header class="active header_connected">
 			<div class="contain">
 				<div>
-					<a href="/profil"></a>
-					<a href="/"></a>
-					<a href="#"></a>
-					<a href="/search"></a>
+					<a href="/profil" title="Mon profil"></a>
+					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
+					<a href="#" title="Messagerie"></a>
+					<a href="/search" title="Recherche" class="active"></a>
 				</div>
 				<a href="#">Déconnexion</a>
 			</div>

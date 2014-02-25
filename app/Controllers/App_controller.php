@@ -45,6 +45,13 @@
 						}
 					}
 					$f3->set('supports', $support_list);
+
+					$notifications = $user_model->getAllNotificationsByUserId(array('id' => $f3->get('SESSION.user.user_id')));
+					$notifications_list=array();
+					foreach($notifications as $n){
+						$notifications_list[$n['notification_type']]=$n['notifications'];
+					}
+					$f3->set('notifications', $notifications_list);
 					
 				}else{
 					$this->tpl=array('sync'=>'404.html');

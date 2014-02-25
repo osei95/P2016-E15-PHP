@@ -13,12 +13,12 @@
 	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
 	<body id="profil" data-id="dashboard">
-		<header class="active">
+		<header class="active header_connected">
 			<div class="contain">
 				<div>
 					<a href="/profil" title="Mon profil"></a>
-					<a href="/" title="Mon dashboard"></a>
-					<a href="/messages" title="Messagerie"></a>
+					<a href="/" title="Mon dashboard" class="active"></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
 					<a href="/search" title="Recherche"></a>
 				</div>
 				<a href="/logout">Déconnexion</a>

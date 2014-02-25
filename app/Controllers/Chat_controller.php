@@ -19,6 +19,13 @@
 				$relations = $user_model->getAllRelationsByUserId(array('id' => $f3->get('SESSION.user.user_id')));
 				$f3->set('relations', $relations);
 
+				$notifications = $user_model->getAllNotificationsByUserId(array('id' => $f3->get('SESSION.user.user_id')));
+				$notifications_list=array();
+				foreach($notifications as $n){
+					$notifications_list[$n['notification_type']]=$n['notifications'];
+				}
+				$f3->set('notifications', $notifications_list);
+
 			}else{
 				$f3->reroute('/');
 			}
