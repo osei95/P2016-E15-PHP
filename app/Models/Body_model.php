@@ -17,6 +17,21 @@
 			if(isset($params['height']))	$this->mapper->body_height = $params['height'];
 			$this->mapper->save();
 		}
+
+		function getAllAppareances($params){
+			$mapper=$this->getMapper('appearance');
+			return $mapper->find(array());
+		}
+
+		function getAllTemperaments($params){
+			$mapper=$this->getMapper('temperament');
+			return $mapper->find(array());
+		}
+
+		function getAllSports($params){
+			$mapper=$this->getMapper('sport');
+			return $mapper->find(array());
+		}
 	}
 
 ?>
