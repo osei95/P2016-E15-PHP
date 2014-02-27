@@ -12,6 +12,14 @@
 		}
 
 		public function main($f3){
+
+			if($f3->exists('POST.search')){
+				$f3->set('SESSION.search',$f3->get('POST'));
+				$this->search($f3, array('options'=>$f3->get('POST'), 'page'=>1));
+			}else if($f3->exists('PARAMS.page') && $f3->exists('SESSION.search')){
+				$this->search($f3, array('options'=>$f3->get('SESSION.search'), 'page'=>intval($f3->get('PARAMS.page'))));
+			}
+
 			$user_model = new User_model();
 			$user = $user_model->getUserById(array('id' => $f3->get('SESSION.user.user_id')));
 			if($user){
@@ -41,19 +49,22 @@
 			}
 		}
 
-		public function search($f3){
-			$options = array();
-			$options['gender'] = $f3->get('POST.sex')=='homme'?0:1;
-			list($options['age_min'], $options['age_max']) = explode(';', (strpos($f3->get('POST.age'),';')!==false?$f3->get('POST.age'):'0;120'), 2);
-			$options['city'] = $f3->get('POST.city');
-			list($options['rayon_min'], $options['rayon_max']) = explode(';', (strpos($f3->get('POST.rayon'),';')!==false?$f3->get('POST.rayon'):'1;200'), 2);
-			list($options['height_min'], $options['height_max']) = explode(';', (strpos($f3->get('POST.taille'),';')!==false?$f3->get('POST.taille'):'130;220'), 2);
-			list($options['weight_min'], $options['weight_max']) = explode(';', (strpos($f3->get('POST.poids'),';')!==false?$f3->get('POST.poids'):'30;300'), 2);
-			$options['appearance'] = $f3->get('POST.apparence');
-			$options['temperament'] = $f3->get('POST.caractere');
+		private function search($f3, $params){
+
+			$options['gender'] = $params['options']['sex']=='homme'?0:1;
+			list($options['age_min'], $options['age_max']) = explode(';', (strpos($params['options']['age'],';')!==false?$params['options']['age']:'0;120'), 2);
+			$options['city'] = $params['options']['city'];
+			list($options['rayon_min'], $options['rayon_max']) = explode(';', (strpos($params['options']['rayon'],';')!==false?$params['options']['rayon']:'1;200'), 2);
+			list($options['height_min'], $options['height_max']) = explode(';', (strpos($params['options']['taille'],';')!==false?$params['options']['taille']:'130;220'), 2);
+			list($options['weight_min'], $options['weight_max']) = explode(';', (strpos($params['options']['poids'],';')!==false?$params['options']['poids']:'30;300'), 2);
+			if($params['options']['apparence']!='all')	$options['apparence'] = $params['options']['apparence'];
+			if($params['options']['caractere']!='all')	$options['temperament'] = $params['options']['caractere'];
 			$options['sports'] = is_array($f3->get('POST.sport'))?$f3->get('POST.sport'):array();
-			list($options['km_min'], $options['km_max']) = explode(';', (strpos($f3->get('POST.km'),';')!==false?$f3->get('POST.km'):'10;100'), 2);
-			list($options['cal_min'], $options['cal_max']) = explode(';', (strpos($f3->get('POST.cal'),';')!==false?$f3->get('POST.cal'):'10;100'), 2);
+			list($options['km_min'], $options['km_max']) = explode(';', (strpos($params['options']['km'],';')!==false?$params['options']['km']:'10;100'), 2);
+			list($options['cal_min'], $options['cal_max']) = explode(';', (strpos($params['options']['cal'],';')!==false?$params['options']['cal']:'10;100'), 2);
+
+			$options['offset'] = ($params['page']-1)*12;
+			$options['row_count'] = 12;
 
 			$f3->set('options', $options);
 
@@ -66,9 +77,12 @@
 			$user_model = new User_model();
 			$results = $user_model->searchUsers($options);
 
-			$f3->set('results', $results);
+			$options['type']='count';
+			$count = $user_model->searchUsers($options);
 
-			$this->main($f3);
+			$f3->set('count_results', (is_array($count) && count($count)>0?$count[0]['count']:0));
+			$f3->set('current_page', $params['page']);
+			$f3->set('results', $results);
 		}
 		
 	}

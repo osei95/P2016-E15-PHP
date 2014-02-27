@@ -93,14 +93,19 @@
 		/* Search */
 		function searchUsers($params){
 			$values = array();
-			$query = 'SELECT user_infos.*, get_distance_gps_points(city_user.city_lat, city_user.city_lng, city_search.city_lat, city_search.city_lng) distance FROM user_infos';
+			if(isset($params['type']) && $params['type']=='count'){
+				$query = 'SELECT DISTINCT COUNT(user_infos.user_id) as count';
+			}else{
+				$query = 'SELECT DISTINCT user_infos.*, get_distance_gps_points(city_user.city_lat, city_user.city_lng, city_search.city_lat, city_search.city_lng) distance';
+			}
+			$query.= ' FROM user_infos';
 			$query.= ' LEFT JOIN cities_list city_user ON user_infos.user_city=city_user.city_id';
 			$query.= ' LEFT JOIN cities_list city_search ON city_search.city_slug=:city';	$values[':city']=$params['city'];
 			$query.= ' WHERE user_gender=:gender';				$values[':gender']=$params['gender'];
 			$query.= ' AND user_age>=:age_min';					$values[':age_min']=$params['age_min'];
 			$query.= ' AND user_age<=:age_max';					$values[':age_max']=$params['age_max'];
-			$query.= ' AND appearance_name=:appearance';		$values[':appearance']=$params['appearance'];
-			$query.= ' AND temperament_name=:temperament';		$values[':temperament']=$params['temperament'];
+			if(isset($params['appearance'])):	$query.= ' AND appearance_name=:appearance';		$values[':appearance']=$params['appearance'];	endif;
+			if(isset($params['temperament'])):	$query.= ' AND temperament_name=:temperament';		$values[':temperament']=$params['temperament'];	endif;
 			$query.= ' AND body_weight>=:weight_min';			$values[':weight_min']=$params['weight_min'];
 			$query.= ' AND body_weight<=:weight_max';			$values[':weight_max']=$params['weight_max'];
 			$query.= ' AND body_height>=:height_min';			$values[':height_min']=$params['height_min'];
@@ -113,6 +118,9 @@
 			if(!empty($params['city'])){
 				$query.= ' AND get_distance_gps_points(city_user.city_lat, city_user.city_lng, city_search.city_lat, city_search.city_lng)>=:rayon_min';				$values[':rayon_min']=$params['rayon_min'];
 				$query.= ' AND get_distance_gps_points(city_user.city_lat, city_user.city_lng, city_search.city_lat, city_search.city_lng)<=:rayon_max';				$values[':rayon_max']=$params['rayon_max'];
+			}
+			if(!isset($params['type']) || !$params['type']=='count'){
+				$query.= ' LIMIT '.$params['offset'].', '.$params['row_count'];
 			}
 			return $this->dB->exec($query, $values);	
 		}

@@ -75,6 +75,7 @@
 						<div class="left"><p>APPARENCE :</p></div>
 						<div class="right">
 							<select name="apparence">
+								<option value="all">Toutes les apparences</option>
 								<?php 
 								foreach($appareances as $a){
 									echo('<option value="'.$a->appearance_name.'" '.(isset($options['appearance']) && $options['appearance']==$a->appearance_name?'selected':'').'>'.$a->appearance_name.'</option>');
@@ -87,6 +88,7 @@
 						<div class="left"><p>CARACTERE :</p></div>
 						<div class="right">
 							<select name="caractere">
+								<option value="all">Tous les caractères</option>
 								<?php 
 								foreach($temperaments as $t){
 									echo('<option value="'.$t->temperament_name.'" '.(isset($options['temperament']) && $options['temperament']==$t->temperament_name?'selected':'').'>'.$t->temperament_name.'</option>');
@@ -123,17 +125,18 @@
 					</div>
 				  </div>
 				</div>
-				<input type="submit" value="RECHERCHER">
+				<input type="submit" name="search" value="RECHERCHER">
 			</form>
 		</section>
 		<?php if(isset($results)): ?>
 		<section class="contain" id="result">
 			<div class="chat-infos">
 				<span class="chat-icon-women"></span>
-				<p><?php echo(count($results).' résultat'.(count($results)>0?'s':'')); ?></p>
+				<p><?php echo($count_results.' résultat'.($count_results>1?'s':'')); ?></p>
 				<div class="separator"></div>
 				<a href="/search" id="edit-search">Modifier ma recherche</a>
 			</div>
+			<?php if(count($results)>0): ?>
 			<div class="list-result clearfix">
 				<?php foreach($results as $r): ?>
 					<div>
@@ -147,6 +150,14 @@
 					</div>
 				<?php endforeach; ?>
 			</div>
+			<div class="pagination">
+				<?php for($cpt=1; $cpt<ceil($count_results/12+1); $cpt++): ?>
+				<a href="/search/<?php echo($cpt); ?>" class="<?php echo($current_page==$cpt?'active':''); ?>"><?php echo($cpt); ?></a>
+				<?php endfor; ?>
+			</div>
+			<?php else: ?>
+				<p class="no-result">Pas de résultat. Essayez de modifier votre recherche !</p>
+			<?php endif; ?>
 		</section>
 		<?php endif; ?>
 		<footer>
