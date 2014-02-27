@@ -100,7 +100,7 @@
 			}
 			$query.= ' FROM user_infos';
 			$query.= ' LEFT JOIN cities_list city_user ON user_infos.user_city=city_user.city_id';
-			$query.= ' LEFT JOIN cities_list city_search ON city_search.city_slug=:city';	$values[':city']=$params['city'];
+			$query.= ' LEFT JOIN cities_list city_search ON city_search.city_slug=:city';	$values[':city']=$params['city_slug'];
 			$query.= ' WHERE user_gender=:gender';				$values[':gender']=$params['gender'];
 			$query.= ' AND user_age>=:age_min';					$values[':age_min']=$params['age_min'];
 			$query.= ' AND user_age<=:age_max';					$values[':age_max']=$params['age_max'];
@@ -115,7 +115,7 @@
 				else 		$query.=' OR';
 				$query.=' sport_name=:sport_'.$cpt;				$values[':sport_'.$cpt]=$params['sports'][$cpt];
 			}
-			if(!empty($params['city'])){
+			if(!empty($params['city_slug'])){
 				$query.= ' AND get_distance_gps_points(city_user.city_lat, city_user.city_lng, city_search.city_lat, city_search.city_lng)>=:rayon_min';				$values[':rayon_min']=$params['rayon_min'];
 				$query.= ' AND get_distance_gps_points(city_user.city_lat, city_user.city_lng, city_search.city_lat, city_search.city_lng)<=:rayon_max';				$values[':rayon_max']=$params['rayon_max'];
 			}

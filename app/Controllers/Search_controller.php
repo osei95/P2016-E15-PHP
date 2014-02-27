@@ -53,6 +53,7 @@
 
 			$options['gender'] = $params['options']['sex']=='homme'?0:1;
 			list($options['age_min'], $options['age_max']) = explode(';', (strpos($params['options']['age'],';')!==false?$params['options']['age']:'0;120'), 2);
+			$options['city_slug'] = $params['options']['city_slug'];
 			$options['city'] = $params['options']['city'];
 			list($options['rayon_min'], $options['rayon_max']) = explode(';', (strpos($params['options']['rayon'],';')!==false?$params['options']['rayon']:'1;200'), 2);
 			list($options['height_min'], $options['height_max']) = explode(';', (strpos($params['options']['taille'],';')!==false?$params['options']['taille']:'130;220'), 2);
@@ -83,6 +84,17 @@
 			$f3->set('count_results', (is_array($count) && count($count)>0?$count[0]['count']:0));
 			$f3->set('current_page', $params['page']);
 			$f3->set('results', $results);
+		}
+
+		public function cities($f3){
+			$app_model = new App_model();
+			$cities = $app_model->getCitiesByName(array('name'=>remove_accents(strtoupper($f3->get('POST.name')))));
+			/*$cities_list = array();
+			foreach($cities as $c){
+				array_push($cities_list, array('name'=>$c['city_name'], 'slug'=>$c['city_slug']));
+			}*/
+			echo(json_encode($cities));
+			exit;
 		}
 		
 	}
