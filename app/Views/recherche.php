@@ -30,7 +30,7 @@
 		</header>
 		<section class="">
 				<h1 class="titleN2">Rechercher une sportive</h1>
-				<form action="#"></form>
+				<form action="#" name="myform"></form>
 					<h2 class="item_title"><p class="contain">Votre recherche</p></h2>
 					<div class="section ma_recherche contain">
 						<div class="line clearfix">
@@ -46,10 +46,15 @@
 								<input type="text" class="torangeage" name="taille" value="18;99">
 							</div>
 						</div>
-						<div class="line clearfix">
+						<div class="line clearfix villechoice">
 							<div class="left"><p>VILLE :</p></div>
 							<div class="right">
-								<input type="text" placeholder="Entrez une ville...">
+								<input type="text" name="ville" placeholder="Entrez une ville..." id="autoincrement" value="ggfdg">
+								<ul class="villeauto">
+									<li data-slug="Marseille">Marseille</li>
+									<li data-slug="Lyon">Lyon</li>
+									<li data-slug="Nantes">Nantes</li>
+								</ul>
 							</div>
 						</div>
 						<div class="line clearfix">

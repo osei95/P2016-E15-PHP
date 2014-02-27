@@ -5,12 +5,18 @@ $(document).ready(function() {
     $(".torangetaille").ionRangeSlider({type:"double", postfix: " cm"});
     $(".torangepoids").ionRangeSlider({type:"double", postfix: " kg"});
     $(".torangecal").ionRangeSlider({type:"double", postfix: " kcal"});
-
     $(function() {
         $( "#accordion" ).accordion({
             "collapsible":true,
             active: 2
         });
+    });
+    $("#autoincrement").focus(function(){
+        $(".villeauto").css("display","block");
+    });
+    $(".villeauto li").click(function(){
+        $("#autoincrement").val($(this).text());
+        $(".villeauto").css("display","none");
     });
 
     window.onresize = function() {
@@ -46,4 +52,6 @@ $(document).ready(function() {
     $(document).ready(function() {
 		$(".fancybox").fancybox();
 	});
+
+    
 });
