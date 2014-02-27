@@ -57,7 +57,7 @@
 			list($options['rayon_min'], $options['rayon_max']) = explode(';', (strpos($params['options']['rayon'],';')!==false?$params['options']['rayon']:'1;200'), 2);
 			list($options['height_min'], $options['height_max']) = explode(';', (strpos($params['options']['taille'],';')!==false?$params['options']['taille']:'130;220'), 2);
 			list($options['weight_min'], $options['weight_max']) = explode(';', (strpos($params['options']['poids'],';')!==false?$params['options']['poids']:'30;300'), 2);
-			if($params['options']['apparence']!='all')	$options['apparence'] = $params['options']['apparence'];
+			if($params['options']['appearance']!='all')	$options['appearance'] = $params['options']['appearance'];
 			if($params['options']['caractere']!='all')	$options['temperament'] = $params['options']['caractere'];
 			$options['sports'] = is_array($f3->get('POST.sport'))?$f3->get('POST.sport'):array();
 			list($options['km_min'], $options['km_max']) = explode(';', (strpos($params['options']['km'],';')!==false?$params['options']['km']:'10;100'), 2);
