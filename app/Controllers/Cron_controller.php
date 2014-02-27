@@ -8,7 +8,7 @@
 
 		function importActivityUsers($f3){
 			$input_model = new Input_model();
-			$inputs = $input_model->getInputs();
+			$inputs = $input_model->getInputs(array('user_fake'=>0));
 			if(is_array($inputs)){
 				foreach($inputs as $input){
 					$input_controller = new Input_controller();
@@ -26,7 +26,7 @@
 
 		function importBodyUsers($f3){
 			$input_model = new Input_model();
-			$inputs = $input_model->getInputs();
+			$inputs = $input_model->getInputs(array('user_fake'=>0));
 			if(is_array($inputs)){
 				foreach($inputs as $input){
 					if($input['input_shortname']=='FITBIT' || $input['input_shortname']=='RUNKEEPER' || $input['input_shortname']=='JAWBONE'){
