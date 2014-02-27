@@ -15,13 +15,13 @@
 			<div class="contain">
 				<div class="fleft">
 				</div>
-				<?php
-					if(isset($errors_login))	echo '<p class="error">'.current($errors_login).'</p>';
-				?>
 				<form action="/login" method="POST" class="fright">
-					<input type="text" name="username" placeholder="Pseudonyme" value="<?php if(isset($infos['username']) && isset($errors_login))	echo $infos['username'];?>">
+					<input type="text" name="username" placeholder="Pseudonyme" value="<?php if(isset($infos['username']) && isset($errors_auth))	echo $infos['username'];?>">
 					<input type="password" name="password" placeholder="Mot de passe">
 					<input type="submit" value="Connexion">
+					<?php
+						if(isset($errors_auth))	echo '<p class="error">'.current($errors_auth).'</p>';
+					?>
 				</form>
 			</div>
 		</header>

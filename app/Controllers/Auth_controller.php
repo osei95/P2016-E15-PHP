@@ -66,7 +66,7 @@
 		function register($f3){
 			$infos = array();
 			$errors = array();
-			if($f3->exists('SESSION.registration_auth.username') && $f3->exists('SESSION.registration_auth.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.city') && $f3->exists('POST.postcode') && $f3->exists('POST.gender') && $f3->exists('POST.description') && $f3->exists('POST.birthday_day') && $f3->exists('POST.birthday_month') && $f3->exists('POST.birthday_year') && $f3->exists('POST.sport') && $f3->exists('POST.appearance')){
+			if($f3->exists('SESSION.registration_auth.username') && $f3->exists('SESSION.registration_auth.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.city') && $f3->exists('POST.postcode') && $f3->exists('POST.gender') && $f3->exists('POST.description') && $f3->exists('POST.birthday_day') && $f3->exists('POST.birthday_month') && $f3->exists('POST.birthday_year') && $f3->exists('POST.sport') && $f3->exists('POST.appearance') && $f3->exists('POST.temperament')){
 				$user_model = new User_model();
 				$infos = $f3->get('POST');
 				$infos['username'] = $f3->get('SESSION.registration_auth.username');
@@ -104,6 +104,9 @@
 				}
 				if(intval($infos['appearance'])<1){
 					$errors['appearance'] = 'Veuillez indiquer votre corpulence.';
+				}
+				if(intval($infos['temperament'])<1){
+					$errors['temperament'] = 'Veuillez indiquer votre temperament.';
 				}
 			}elseif($f3->exists('POST.username') && $f3->exists('POST.password') && $f3->exists('POST.input')){
 				$user_model = new User_model();

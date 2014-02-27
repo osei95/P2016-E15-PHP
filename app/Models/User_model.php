@@ -41,6 +41,7 @@
 			$mapper->user_birthday = $params['birthday'];
 			$mapper->user_sport = $params['sport'];
 			$mapper->user_appearance = $params['appearance'];
+			$mapper->user_temperament = $params['temperament'];
 			$mapper->user_key = $key;
 			$mapper->save();
 			return $mapper;
