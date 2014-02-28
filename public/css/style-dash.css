@@ -574,11 +574,12 @@ width: 300px;
 }
 
 #news article .profil .name{
+    display: block;
 	color: #ffffff;
 	text-align: center;
 	font-size: 19px;
 	font-family: segoe_uilight;
-	
+	text-decoration: none;
 }
 
 #news article .profil .date{

@@ -17,8 +17,8 @@
 			$user = $user_model->getUserByUsername(array('username' => $username));
 			if($user){
 				$user_infos = $user->cast();
-				$user_infos['body_weight'] = $user_infos['body_weight'] / 1000;
-				$user_infos['body_height'] = $user_infos['body_height'] / 1000;
+				$user_infos['body_weight'] = $user_infos['body_weight'] / 10;
+				$user_infos['body_height'] = $user_infos['body_height'] / 100;
 				/* Fonction permettant de calculer l'age */
 				$date = new DateTime($user_infos['user_birthday']);
 				$now = new DateTime();
@@ -26,7 +26,7 @@
 				$user_infos['user_birthday'] = $interval->y;
 				/* Convertit la ville en minuscule et ajoute une majuscule à la première lettre */
 				$user_infos['user_city'] = strtolower($user_infos['user_city']);
-				$user_infos['user_city'] = ucfirst($user_infos['user_city']);
+				$user_infos['user_city'] = ucwords(strtolower($user_infos['user_city_name']));
 				$f3->set('user', $user_infos);
 
 				/* Récupération des news propres à l'utilisateur */
@@ -100,7 +100,7 @@
 			$mois = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
 
 			$activity_model = new Activity_model();
-			$activity = $activity_model->getAllActivitiesUser(array('user_id' => $f3->get('PARAMS.id_user'), 'limit'=>15));
+			$activity = $activity_model->getAllActivitiesUser(array('user_id' => $f3->get('PARAMS.id_user'), 'time'=>time(), 'limit'=>15));
 			
 			$sumDistance = $activity_model->getSumDistanceUser(array('user_id' => $f3->get('PARAMS.id_user')));
 			if(!is_array($sumDistance) || count($sumDistance)==0)	$totalDistance=0;
@@ -117,23 +117,25 @@
 				$activity_tab[$key]=$value->cast();
 			}
 
-			if(count($activity_tab)==0){
-				$activity_tab[-1]=array('date'=>time()-86400);
+			$today = time();
+
+			/* On crée le tableau sans activité */
+			for ($i=0; $i < 15; $i++) { 
+				$sport[$i]=array('timestamp'=>$today-($i*86400), 'calories'=>0, 'km'=>0, 'duration'=>0);
+				$sport[$i]['date']=date("d/m", $sport[$i]['timestamp']);
+				$sport[$i]['fulldate']=ucfirst($jours[date("w",$sport[$i]['timestamp'])]).' '.date("d",$sport[$i]['timestamp']).' '.$mois[date("n",$sport[$i]['timestamp'])-1];
 			}
 
-			for ($i=0; $i < 15; $i++) { 
-				// Si la date n'existe pas
-				if(!isset($activity_tab[$i])){
-					$activity_tab[$i]=array('date'=>$activity_tab[$i-1]['date']-86400, 'calories'=>0, 'distance'=>0, 'duration'=>0);
+			foreach($activity_tab as $a){
+				if($a['date']<=$today && $a['date']>=$today-(14*86400)){
+					$offset=ceil(($today-$a['date'])/86400);
+					$sport[$offset]['calories']=($a['calories']>0?$a['calories']:0);
+					$sport[$offset]['km']=round($a['distance']/1000, 1);
+					$sport[$offset]['duration']=floor($a['duration']/3600).' heures '.floor(($a['duration']%3600)/60).' minutes';
+					$general['distance']+=$sport[$offset]['km'];
+					$general['calories']+=$sport[$offset]['calories'];
+					$general['duration']+=$a['duration'];
 				}
-				$sport[$i]['date'] = date("d/m", $activity_tab[$i]['date']);
-				$sport[$i]['calories'] = $activity_tab[$i]['calories'];
-				$sport[$i]['km'] = round($activity_tab[$i]['distance'] / 1000, 1);	// km
-				$sport[$i]['fulldate'] = ucfirst($jours[date("w",$activity_tab[$i]['date'])]).' '.date("d",$activity_tab[$i]['date']).' '.$mois[date("n",$activity_tab[$i]['date'])-1];
-				$sport[$i]['duration'] = floor($activity_tab[$i]['duration']/3600).' heures '.floor(($activity_tab[$i]['duration']%3600)/60).' minutes';
-				$general['distance']+=$sport[$i]['km'];
-				$general['calories']+=$sport[$i]['calories'];
-				$general['duration']+=$activity_tab[$i]['duration'];
 			}
 
 			$general['temps'] = floor($general['duration']/3600).'h'.floor(($general['duration']%3600)/60);
