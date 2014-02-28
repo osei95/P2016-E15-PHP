@@ -832,6 +832,7 @@ td, tr{
     width: 320px;
     margin-left: 50px;
     vertical-align: top;
+    position: relative;
 }
 #recherche .section .line>.left p{
     color:#2d3e50;
@@ -879,10 +880,6 @@ td, tr{
     position: relative;
     top: 20px;
 }
-#recherche .section .sportchoice .left p{
-    position:relative;
-    top: 48px;
-}
 #recherche .section input[type="text"]{
     color:#2d3e50;
     font-family: segoe_uiregular;
@@ -891,7 +888,156 @@ td, tr{
     background: transparent;
     border-radius: 0;
     width: 320px;
+    height: 30px;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
+}
+#recherche .section .sportchoice .left p{
+    position:relative;
+    top: 48px;
+}
+#recherche .city_autocomplete ul{
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    z-index: 3;
+}
+#recherche .city_autocomplete ul li{
+    font-family: segoe_uiregular;
+    color: white;
+    border-bottom: 1px solid #929292;
+    background: #2d3e50;
+    display: block;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    font-size: .8em;
+    padding: 0 10px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+}
+#recherche .city_autocomplete ul{
+    display:none;
+}
+#recherche .city_autocomplete ul li:hover{
+    background:#455d77;
+    cursor: pointer;
+}
+#result .chat-infos{
+    font-family: segoe_uibold;
+}
+
+#result .chat-icon-women{
+    background-image: url(images/header-icon4.png);
+    background-repeat: no-repeat;
+    padding: 3px 15px;
+    
+}
+
+#result .chat-infos p{
+    width: 120px;
+    text-align: center;
+    display: inline-block;
+    
+}
+#result .separator{
+    border-top: 1px solid #2d3e50;
+    display: inline-block;
+    position: relative;
+    top:-3px;
+    width: 640px;
+}
+
+#result .separator-bottom{
+    border-top: 1px solid #2d3e50;
+    display: inline-block;
+    position: relative;
+    margin: 30px auto;
+    width: 100%;
+}
+#result input[type="submit"].tfbutton {
+margin: 0;
+padding: 8px 15px;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+outline: none;
+cursor: pointer;
+text-align: center;
+text-decoration: none;
+color: #ffffff;
+position: relative;
+left: -10px;
+top: 1px;
+border: 1px solid #2d3e50;
+border-right: 0px;
+background-image: url(images/search-icon.png);
+background-position: center;
+background-repeat: no-repeat;
+background-color: #2d3e50;
+}
+#result .chat-infos>a{
+    color: white;
+    font-family: segoe_uiregular;
+    background: #2d3e50;
+    border-radius: 3px;
+    padding: 5px 20px;
+    text-decoration: none;
+    font-size: .9em;
+    float: right;
+}
+#result .titleN2{
+    color: #2d3e50;
+    margin: 40px 0;
+}
+#result .list-result{
+    text-align: left;
+    margin: 20px 0;
+}
+#result .list-result>div{
+    display: inline-block;
+    width: 320px;
+    height: 115px;
+    border: 1px solid #e2867e;
+    margin: 20px 0;
+    position: relative;
+    margin-left: 22px;
+}
+#result .list-result>div:nth-child(3n-2){
+    margin-left: 0;
+}
+#result .list-result>div>img{
+    height: 115px;
+    width: 115px;
+}
+#result .list-result>div>div{
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+    width: 200px;
+}
+#result .list-result>div h2{
+    color:#e2867e;
+    font-family: segoe_uibold;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+#result .list-result>div p{
+    color:#727171;
+    font-family: segoe_uilight;
+    margin: 2px 0 0 5px;
+}
+#result .list-result>div a{
+    font-family: segoe_uilight;
+    color: white;
+    background: #e2867e;
+    text-decoration: none;
+    padding: 2px 20px;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 5px;
+    display: block;
+    margin-left: 35px;
+    font-size: .9em;
 }
