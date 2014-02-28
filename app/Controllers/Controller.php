@@ -9,7 +9,7 @@
 
          $f3=\Base::instance();
 
-         if($f3->get('PATTERN')!='/' && strpos($f3->get('PATTERN'),'/register')===false && strpos($f3->get('PATTERN'),'/login')===false && strpos($f3->get('PATTERN'),'/cron')===false && !$f3->get('SESSION.user')){
+         if($f3->get('PATTERN')!='/' && strpos($f3->get('PATTERN'),'/register')===false && strpos($f3->get('PATTERN'),'/login')===false && strpos($f3->get('PATTERN'),'/cron')===false && strpos($f3->get('PATTERN'),'/search/cities')===false && !$f3->get('SESSION.user')){
             $f3->reroute('/');
          }
 

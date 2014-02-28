@@ -1,30 +1,13 @@
 $(document).ready(function() {
     resize();
-    if($('#recherche').length>0){
-        $('.torangekm').ionRangeSlider({type:"double", postfix: " km"});
-        $('.torangeage').ionRangeSlider({type:"double", postfix: " ans"});
+    if($('#recherche').length>0 || $('#inscription').length>0){
+
         $('.torangetaille').ionRangeSlider({type:"double", postfix: " cm"});
         $('.torangepoids').ionRangeSlider({type:"double", postfix: " kg"});
-        $('.torangecal').ionRangeSlider({type:"double", postfix: " kcal"});
-
-        $('#accordion').accordion({
-            'collapsible' : true,
-            active: 2
-        });
-
-        $('.search-results section.search-fields form').addClass('hidden');
-
-        $('#edit-search').on('click', function(evt){
-            evt.preventDefault();
-            $('.search-results section.search-fields form').toggleClass('hidden');
-        });
 
         $('.city_autocomplete input[name=city]').on('focus', function(){
             $('.city_autocomplete ul').css('display','block');
         });
-        /*$('.city_autocomplete input[name=city]').on('focusout', function(){
-            $('.city_autocomplete ul').css("display","none');
-        });*/
         $('.city_autocomplete input[name=city]').on('keyup', function(){
             $.ajax({
                 dataType: 'json',
@@ -43,7 +26,7 @@ $(document).ready(function() {
                     }
                     console.log(data);
                 },
-                always : function(data){
+                error : function(data){
                     console.log(data);
                 }
             });
@@ -54,6 +37,27 @@ $(document).ready(function() {
             $('.city_autocomplete input[name=city_slug]').val($(this).data('slug'));
             $('.city_autocomplete ul').css('display','none');
         });
+
+        if($('#recherche').length>0){
+            $('.torangekm').ionRangeSlider({type:"double", postfix: " km"});
+            $('.torangeage').ionRangeSlider({type:"double", postfix: " ans"});
+            $('.torangecal').ionRangeSlider({type:"double", postfix: " kcal"});
+
+            $('#accordion').accordion({
+                'collapsible' : true,
+                active: 2
+            });
+
+            $('.search-results section.search-fields form').addClass('hidden');
+
+            $('#edit-search').on('click', function(evt){
+                evt.preventDefault();
+                $('.search-results section.search-fields form').toggleClass('hidden');
+            });
+
+        }else if($('#inscription').length>0){
+
+        }
     }
 
     window.onresize = function() {

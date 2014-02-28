@@ -1,58 +1,187 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Home</title>
-</head>
-<body>
-	<h1>Inscription</h1>
-	<?php 
-		if(isset($errors_register))	echo '<p class="error">'.current($errors_register).'</p>';
-	?>
-	<form action="/register" method="POST">
-		<label for="firstname">Prénom</label>
-		<input type="text" name="firstname" id="firstname" value="<?php echo(($user_infos['firstname']==null)?'':$user_infos['firstname']) ?>" />
-		<br/><br/>
-		<label for="lastname">Nom</label>
-		<input type="text" name="lastname" id="lastname" value="<?php echo(($user_infos['lastname']==null)?'':$user_infos['lastname']) ?>" />
-		<br/><br/>
-		<label for="email">Adresse E-mail</label>
-		<input type="text" name="email" id="email" value="<?php echo(($user_infos['email']==null)?'':$user_infos['email']) ?>" />
-		<br/><br/>
-		<input type="radio" name="gender" id="female" value="1" <?php echo(($user_infos['gender']==1)?'checked':'') ?> />
-		<label for="female">Femme</label>
-		<input type="radio" name="gender" id="male" value="0" <?php echo(($user_infos['gender']==0)?'checked':'') ?> />
-		<label for="male">Homme</label>
-		<br/><br/>
-		<label for="email">Description</label>
-		<textarea name="description" id="description"><?php echo(($user_infos['description']==null)?'':$user_infos['description']) ?></textarea>
-		<br/><br/>
-		<label for="city">Ville</label>
-		<input type="text" name="city" id="city" value="<?php echo(($user_infos['city']==null)?'':$user_infos['city']) ?>" />
-		<br/><br/>
-		<label for="postcode">Code postal</label>
-		<input type="text" name="postcode" id="postcode" value="<?php echo(($user_infos['postcode']==null)?'':$user_infos['postcode']) ?>" />
-		<br/><br/>
-		<label for="birthday_day">Date de naissance</label>
-		<input type="text" name="birthday_day" id="birthday_day" value="<?php echo(($user_infos['birthday']==null)?'':$user_infos['birthday']['day']) ?>" />
-		<input type="text" name="birthday_month" id="birthday_month" value="<?php echo(($user_infos['birthday']==null)?'':$user_infos['birthday']['month']) ?>" />
-		<input type="text" name="birthday_year" id="birthday_year" value="<?php echo(($user_infos['birthday']==null)?'':$user_infos['birthday']['year']) ?>" />
-		<br/><br/>
-		<label for="sport">Sport principal</label>
-		<select name="sport" id="sport">
-			<option value="1">Football</value>
-		</select>
-		<br/><br/>
-		<label for="appearance">Corpulance</label>
-		<select name="appearance" id="appearance">
-			<option value="1">Mince</value>
-		</select>
-		<label for="appearance">Temperament</label>
-		<select name="temperament" id="temperament">
-			<option value="1">Enthousiaste</value>
-		</select>
-		<br/><br/>
-		<input type="submit" value="Envoyer"/>
-	</form>
-</body>
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="../public/css/reset.css">
+	  <link rel="stylesheet" href="../public/font/stylesheet.css">
+	  <link rel="stylesheet" href="../public/css/style-sign.css">
+	  <link rel="stylesheet" href="../public/css/ion.rangeSlider.skinNice.css">
+	  <link rel="stylesheet" href="../public/css/ionrangeSlider.css">
+	</head>
+	<body id="inscription">
+		<header class="active">
+		</header>
+		<section class="">
+				<h1 class="titleN2">Inscription rapide et gratuite</h1>
+				<form action="#" name="myform"></form>
+					<h2 class="item_title"><p class="contain">Informations personnelles</p></h2>
+					<div class="section ma_recherche contain">
+					
+					<div class="line clearfix">
+							<div class="left"><p>PRENOM :</p></div>
+							<div class="right">
+								<input type="text" name="ville" placeholder="Votre prénom" id="autoincrement">
+							</div>
+					</div>
+					
+					<div class="line clearfix">
+							<div class="left"><p>NOM :</p></div>
+							<div class="right">
+								<input type="text" name="ville" placeholder="Votre nom" id="autoincrement" value="">
+							</div>
+					</div>
+					
+					<div class="line clearfix">
+							<div class="left"><p>DATE DE NAISSANCE :</p></div>
+							<div class="right">
+							
+								<input type="date" class="input_date" name="anniversaire">
+							</div>
+					</div>
+					
+					
+						<div class="line clearfix">
+							<div class="left"><p>SEXE :</p></div>
+							<div class="right">
+								<input type="radio" name="sex" id="homme" value="homme"><label for="homme">Homme</label>
+								<input type="radio" name="sex" id="femme" value="femme"><label for="femme">Femme</label>
+							</div>
+						</div>
+						
+						<div class="line clearfix city_autocomplete">
+							<div class="left"><p>VILLE :</p></div>
+							<div class="right">
+								<input type="text" name="city" autocomplete="off" <?php echo(isset($options['city'])?'value="'.$options['city'].'"':'placeholder="Entrez une ville..."'); ?>>
+								<input type="hidden" name="city_slug" <?php echo(isset($options['city_slug'])?'value="'.$options['city_slug'].'"':''); ?>>
+								<ul>
+								</ul>
+							</div>
+						</div>
+						
+						<div class="line clearfix">
+							<div class="left"><p>DESCRIPTION :</p></div>
+							<div class="right">
+								<textarea class="description"></textarea>
+							</div>
+						</div>
+						
+					</div>
+					<div id="accordion">
+
+					  <h3 class="item_title"><p class="contain">Critères physiques</p></h3>
+					  <div id="physique" class="section contain">
+							<div class="line clearfix">
+							<div class="left"><p>TAILLE :</p></div>
+							<div class="right">
+								<input type="text" class="torangetaille" name="taille" value="130;220">
+							</div>
+						</div>
+						<div class="line clearfix">
+							<div class="left"><p>POIDS :</p></div>
+							<div class="right">
+								<input type="text" class="torangepoids" name="poids" value="30;300">
+							</div>
+						</div>
+						<div class="line clearfix">
+							<div class="left"><p>APPARENCE :</p></div>
+							<div class="right">
+								<select name="apparence">
+									<option value="filiforme">filiforme</option>
+									<option value="normal">normal</option>
+									<option value="gros">gros</option>
+								</select>
+							</div>
+						</div>
+						<div class="line clearfix">
+							<div class="left"><p>CARACTERE :</p></div>
+							<div class="right">
+								<select name="caractere">
+									<option value="enthousiaste">enthousiaste</option>
+									<option value="joyeux">joyeux</option>
+									<option value="dépressif">dépressif</option>
+								</select>
+							</div>
+						</div>
+						
+						
+						<div class="line clearfix">
+							<div class="left"><p>PHOTO DE PROFIL :</p></div>
+							<div class="right">
+								<div class="file_upload">
+									<input type="file" id="file_upload" name="file_upload">
+									<label for="file_upload">SÉLECTIONNER une photo</label>
+								</div>
+							</div>
+					</div>
+						
+					  </div>
+					  <h3 class="item_title"><p class="contain">Critères sportifs</p></h3>
+					  <div id="sportif" class="section contain">
+					   	<div class="line clearfix sportchoice">
+							<div class="left"><p>SPORT PRINCIPAL :</p></div>
+							<div class="right">
+								<input type="checkbox" name="sport" id="football" value="football"><label for="football">Football</label>
+								<input type="checkbox" name="sport" id="Handball" value="handball"><label for="handball">Handball</label><br>
+								<input type="checkbox" name="sport" id="tennis" value="tennis"><label for="tennis">Tennis</label>
+								<input type="checkbox" name="sport" id="course" value="course"><label for="course">Course à pied</label><br>
+								<input type="checkbox" name="sport" id="rugby" value="rugby"><label for="rugby">Rugby</label>
+								<input type="checkbox" name="sport" id="natation" value="natation"><label for="natation">Natation</label>
+							</div>
+						</div>
+						<!--<div class="line clearfix sportchoice">
+							<div class="left"><p>AUTRES SPORT PRATIQUéS :</p></div>
+								<div class="right">
+									<input type="checkbox" name="sport" id="football" value="football"><label for="football">Football</label>
+									<input type="checkbox" name="sport" id="Handball" value="handball"><label for="handball">Handball</label><br>
+									<input type="checkbox" name="sport" id="tennis" value="tennis"><label for="tennis">Tennis</label>
+									<input type="checkbox" name="sport" id="course" value="course"><label for="course">Course à pied</label><br>
+									<input type="checkbox" name="sport" id="rugby" value="rugby"><label for="rugby">Rugby</label>
+									<input type="checkbox" name="sport" id="natation" value="natation"><label for="natation">Natation</label>
+								</div>
+							</div>
+					  	</div>-->
+
+						
+					  </div>  
+					</div>
+					<input type="submit" value="JE M'INSCRIS">
+				</form>
+		</section>
+		<footer>
+			<div class="contain">
+				<div>
+					<div>
+						<p>© 2014 Run & Meet - Tous droits réservés</p>
+					</div>
+					<div>
+						<p class="footer-title">Nous suivre sur</p>
+						<div>
+							<a href=""></a>
+							<a href=""></a>
+							<a href=""></a>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p class="footer-title">A propos de Run & Meet</p>
+							<ul>
+								<li><a href="">A propos</a></li>
+								<li><a href="">Conditions d'utilisation</a></li>
+								<li><a href="">Protection des données</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	  	<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
+	  	<script type="text/javascript" src="../public/js/ion.rangeSlider.min.js"></script>
+	  	<script type="text/javascript" src="../public/js/script.js"></script>
+	</body>
 </html>

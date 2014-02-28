@@ -781,22 +781,22 @@ td, tr{
 }
 
 
-/* ----------------------------- RECHERCHE ----------------------------- */
-#recherche{
+/* ----------------------------- INSCRIPTION ----------------------------- */
+#inscription{
     background:#eeeff1;
 }
-#recherche .titleN2{
+#inscription .titleN2{
     color:#2d3e50;
     margin: 40px 0;
 }
-#recherche .item_title{
+#inscription .item_title{
     background: #2d3e50;
     width: 100%;
     padding: 20px 0;
     border-bottom: 1px solid #576573;
     outline: 0;
 }
-#recherche .item_title p{
+#inscription .item_title p{
     color:white;
     font-family: segoe_uilight;
     padding: 2px 50px;
@@ -804,42 +804,43 @@ td, tr{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-#recherche h2.item_title p{
-    background: url(images/header-icon4_white.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 200px center;
+#inscription h2.item_title p{
+    background: url(images/header-icon4_white.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 250px center;
 }
-#recherche #accordion>h3.item_title:nth-child(1) p{
+#inscription #accordion>h3.item_title:nth-child(1) p{
     background: url(images/header-icon1_white.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 200px center;
 }
-#recherche #accordion>h3.item_title:nth-child(3) p{
+#inscription #accordion>h3.item_title:nth-child(3) p{
     background: url(images/gym.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 200px center;
 }
-#recherche .section{
-    padding: 30px 0;
+#inscription .section{
+    padding: 30px 0 50px 0;
 }
-#recherche .section .line{
+#inscription .section .line{
     display: block;
     width: 100%;
-    height: 70px;
+    height: 80px;
     line-height: 70px;
+
 }
-#recherche .section .line>.left{
+#inscription .section .line>.left{
     text-align: right;
     display: inline-block;
     width: 35%;
 }
-#recherche .section .line>.right{
+#inscription .section .line>.right{
     display: inline-block;
     width: 320px;
     margin-left: 50px;
     vertical-align: top;
     position: relative;
 }
-#recherche .section .line>.left p{
+#inscription .section .line>.left p{
     color:#2d3e50;
     font-family: segoe_uilight;
     text-transform: uppercase;
 }
-#recherche input[type="submit"]{
+#inscription input[type="submit"]{
     background: #2d3e50;
     display: block;
     color: white;
@@ -851,7 +852,7 @@ td, tr{
     margin:40px auto;
     box-shadow: 0px 3px 0px #18232e;
 }
-#recherche input[type="submit"]:active{
+#inscription input[type="submit"]:active{
     top: 3px;
     box-shadow: inherit;
     -moz-box-shadow: inherit;
@@ -859,7 +860,7 @@ td, tr{
     outline: none;
     position: relative;
 }
-#recherche .line select{
+#inscription .line select{
     width: 320px;
     background: transparent;
     color:#2d3e50;
@@ -867,20 +868,20 @@ td, tr{
     border-radius: 0;
     border:1px solid #2d3e50;
 }
-#recherche .line input[type="radio"]+label, #recherche .line input[type="checkbox"]+label{
+#inscription .line input[type="radio"]+label, #inscription .line input[type="checkbox"]+label{
     color:#2d3e50;
     font-family: segoe_uiregular;
     margin: 0 40px 0 5px;
 }
-#recherche .section .sportchoice{
+#inscription .section .sportchoice{
     height: 110px;
     line-height: 25px;
 }
-#recherche .section .sportchoice .right{
+#inscription .section .sportchoice .right{
     position: relative;
     top: 20px;
 }
-#recherche .section input[type="text"]{
+#inscription .section input[type="text"]{
     color:#2d3e50;
     font-family: segoe_uiregular;
     padding: 0 5px;
@@ -888,22 +889,76 @@ td, tr{
     background: transparent;
     border-radius: 0;
     width: 320px;
-    height: 30px;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
+    height: 30px;
 }
-#recherche .section .sportchoice .left p{
+
+#inscription .section input[type="date"]{
+    color:#2d3e50;
+    font-family: segoe_uiregular;
+    padding: 0 5px;
+    border:1px solid #2d3e50;
+    background: transparent;
+    border-radius: 0;
+    width: 320px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    height: 30px;
+}
+
+#inscription .section textarea{
+    color:#2d3e50;
+    font-family: segoe_uiregular;
+    padding: 0 5px;
+    border:1px solid #2d3e50;
+    background: transparent;
+    border-radius: 0;
+    width: 320px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    height: 80px;
+    resize:none;
+}
+
+#inscription .section .file_upload input {
+position: relative;
+cursor: pointer;
+opacity: 0;
+width: 0px;
+}
+
+#inscription .section .file_upload label {
+font-family: segoe_uibold;
+text-transform: uppercase;
+border: 1px solid black;
+font-size: 12px;
+color: #fff;
+background-image: url(images/image-icon-w.png);
+background-repeat: no-repeat;
+background-position: 30px 10px;
+background-color: #2d3e50;
+padding: 10px 80px;
+margin-left: -3px;
+cursor: pointer;
+}
+
+
+
+#inscription .section .sportchoice .left p{
     position:relative;
     top: 48px;
 }
-#recherche .city_autocomplete ul{
+#inscription .villeauto{
     position: absolute;
     top: 50px;
     width: 100%;
     z-index: 3;
 }
-#recherche .city_autocomplete ul li{
+#inscription .villeauto li{
     font-family: segoe_uiregular;
     color: white;
     border-bottom: 1px solid #929292;
@@ -918,150 +973,39 @@ td, tr{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-#recherche .city_autocomplete ul{
+#inscription .villeauto{
     display:none;
 }
-#recherche .city_autocomplete ul li:hover{
+#inscription .villeauto li:hover{
     background:#455d77;
     cursor: pointer;
 }
-#result .chat-infos{
-    font-family: segoe_uibold;
-}
 
-#result .chat-icon-women{
-    background-image: url(images/header-icon4.png);
-    background-repeat: no-repeat;
-    padding: 3px 15px;
-    
-}
-
-#result .chat-infos p{
-    width: 120px;
-    text-align: center;
-    display: inline-block;
-    
-}
-#result .separator{
-    border-top: 1px solid #2d3e50;
-    display: inline-block;
-    position: relative;
-    top:-3px;
-    width: 640px;
-}
-
-#result .separator-bottom{
-    border-top: 1px solid #2d3e50;
-    display: inline-block;
-    position: relative;
-    margin: 30px auto;
-    width: 100%;
-}
-#result input[type="submit"].tfbutton {
-margin: 0;
-padding: 8px 15px;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 16px;
-outline: none;
-cursor: pointer;
-text-align: center;
-text-decoration: none;
-color: #ffffff;
-position: relative;
-left: -10px;
-top: 1px;
-border: 1px solid #2d3e50;
-border-right: 0px;
-background-image: url(images/search-icon.png);
-background-position: center;
-background-repeat: no-repeat;
-background-color: #2d3e50;
-}
-#result .chat-infos>a{
-    color: white;
-    font-family: segoe_uiregular;
-    background: #2d3e50;
-    border-radius: 3px;
-    padding: 5px 20px;
-    text-decoration: none;
-    font-size: .9em;
-    float: right;
-}
-#result .titleN2{
-    color: #2d3e50;
-    margin: 40px 0;
-}
-#result .list-result{
-    text-align: left;
-    margin: 20px 0;
-}
-#result .list-result>div{
-    display: inline-block;
-    width: 320px;
-    height: 115px;
-    border: 1px solid #e2867e;
-    margin: 20px 0;
-    position: relative;
-    margin-left: 22px;
-}
-#result .list-result>div:nth-child(3n-2){
-    margin-left: 0;
-}
-#result .list-result>div>img{
-    height: 115px;
-    width: 115px;
-}
-#result .list-result>div>div{
-    display: inline-block;
-    height: 100%;
-    vertical-align: top;
-    width: 200px;
-}
-#result .list-result>div h2{
-    color:#e2867e;
-    font-family: segoe_uibold;
-    margin-left: 5px;
-    margin-top: 5px;
-}
-#result .list-result>div p{
-    color:#727171;
-    font-family: segoe_uilight;
-    margin: 2px 0 0 5px;
-}
-#result .list-result>div a{
-    font-family: segoe_uilight;
-    color: white;
-    background: #e2867e;
-    text-decoration: none;
-    padding: 2px 20px;
-    border-radius: 3px;
+#inscription .city_autocomplete ul{
     position: absolute;
-    bottom: 5px;
+    top: 50px;
+    width: 100%;
+    z-index: 3;
+}
+#inscription .city_autocomplete ul li{
+    font-family: segoe_uiregular;
+    color: white;
+    border-bottom: 1px solid #929292;
+    background: #2d3e50;
     display: block;
-    margin-left: 35px;
-    font-size: .9em;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    font-size: .8em;
+    padding: 0 10px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
 }
-#result .pagination{
-    margin-bottom:20px;
-    text-align: center;
+#inscription .city_autocomplete ul{
+    display:none;
 }
-#result .pagination a{
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    vertical-align: middle;
-    color:#2d3e50;
-    font-family: segoe_uibold;
-    border: 2px solid #2d3e50;
-    border-radius:50%;
-    text-decoration: none;
-    text-align: center;
-}
-#result .pagination a.active{
-    background:#2d3e50;
-    color: #FFF;
-}
-#result .pagination a+a{
-    margin-left: 5px;
+#inscription .city_autocomplete ul li:hover{
+    background:#455d77;
+    cursor: pointer;
 }
