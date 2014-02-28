@@ -33,7 +33,7 @@
 
 					/* Récupération des news */
 					$news_model = new News_model();
-					$news = $news_model->getAllRelationsNews(array('user_id' => $f3->get('SESSION.user.user_id')));
+					$news = $news_model->getAllRelationsNews(array('user_id' => $f3->get('SESSION.user.user_id'), 'news_date'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()))));
 					$f3->set('news', $news);
 
 					/* Récupération des supports propres à l'utilisateur */

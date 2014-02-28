@@ -31,7 +31,7 @@
 
 				/* Récupération des news propres à l'utilisateur */
 				$news_model = new News_model();
-				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id));
+				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id, 'news_date' => mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()))));
 				$f3->set('news', $news);
 
 				/* Récupération des supports propres à l'utilisateur */
@@ -100,7 +100,7 @@
 			$mois = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
 
 			$activity_model = new Activity_model();
-			$activity = $activity_model->getAllActivitiesUser(array('user_id' => $f3->get('PARAMS.id_user'), 'time'=>time(), 'limit'=>15));
+			$activity = $activity_model->getAllActivitiesUser(array('user_id' => $f3->get('PARAMS.id_user'), 'time'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time())), 'limit'=>15));
 			
 			$sumDistance = $activity_model->getSumDistanceUser(array('user_id' => $f3->get('PARAMS.id_user')));
 			if(!is_array($sumDistance) || count($sumDistance)==0)	$totalDistance=0;
@@ -117,7 +117,7 @@
 				$activity_tab[$key]=$value->cast();
 			}
 
-			$today = time();
+			$today = mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()));
 
 			/* On crée le tableau sans activité */
 			for ($i=0; $i < 15; $i++) { 
@@ -128,7 +128,7 @@
 
 			foreach($activity_tab as $a){
 				if($a['date']<=$today && $a['date']>=$today-(14*86400)){
-					$offset=ceil(($today-$a['date'])/86400);
+					$offset=ceil(($today-$a['date'])/86400-1);
 					$sport[$offset]['calories']=($a['calories']>0?$a['calories']:0);
 					$sport[$offset]['km']=round($a['distance']/1000, 1);
 					$sport[$offset]['duration']=floor($a['duration']/3600).' heures '.floor(($a['duration']%3600)/60).' minutes';

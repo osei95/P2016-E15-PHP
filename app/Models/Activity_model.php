@@ -23,7 +23,7 @@
 			$options = array();
 			if(isset($params['limit']))	$options['limit'] = $params['limit'];
 			$mapper=$this->getMapper('user_has_activity');
-			return $activity =$mapper->find(array('user_id=? AND date<? ORDER BY date DESC', $params['user_id'], $params['time']), $options);
+			return $activity =$mapper->find(array('user_id=? AND date<=? ORDER BY date DESC', $params['user_id'], $params['time']), $options);
 		}
 
 		function getSumDistanceUser($params){
