@@ -14,5 +14,10 @@
 			$mapper=$this->getMapper('cities_list');
 			return $this->dB->exec('SELECT city_name, city_slug FROM cities_list WHERE city_name LIKE :city_name ORDER BY CHAR_LENGTH(city_name)', array(':city_name'=>$params['name'].'%'));
 		}
+
+		function getCityBySlug($params){
+			$mapper=$this->getMapper('cities_list');
+			return $mapper->load(array('city_slug=?', $params['city_slug']));
+		}
 	}
 ?>

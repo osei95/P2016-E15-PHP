@@ -28,7 +28,9 @@
 				$user_infos['firstname'] = null;
 				$user_infos['lastname'] = null;
 				$user_infos['gender'] = null;
-				$user_infos['birthday'] = null;
+				$user_infos['birthday_day'] = null;
+				$user_infos['birthday_month'] = null;
+				$user_infos['birthday_year'] = null;
 				$user_infos['city'] = null;
 				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;

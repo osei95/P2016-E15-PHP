@@ -868,6 +868,18 @@ td, tr{
     border-radius: 0;
     border:1px solid #2d3e50;
 }
+.birthday .right{
+    padding-top: 20px;
+}
+#inscription .line [name=birthday_day],#inscription .line [name=birthday_month]{
+    float: left;
+    width: 75px;
+    margin-right:10px;
+}
+#inscription .line [name=birthday_year]{
+    float: left;
+    width: 150px;
+}
 #inscription .line input[type="radio"]+label, #inscription .line input[type="checkbox"]+label{
     color:#2d3e50;
     font-family: segoe_uiregular;
@@ -952,34 +964,6 @@ cursor: pointer;
     position:relative;
     top: 48px;
 }
-#inscription .villeauto{
-    position: absolute;
-    top: 50px;
-    width: 100%;
-    z-index: 3;
-}
-#inscription .villeauto li{
-    font-family: segoe_uiregular;
-    color: white;
-    border-bottom: 1px solid #929292;
-    background: #2d3e50;
-    display: block;
-    width: 100%;
-    height: 35px;
-    line-height: 35px;
-    font-size: .8em;
-    padding: 0 10px;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-}
-#inscription .villeauto{
-    display:none;
-}
-#inscription .villeauto li:hover{
-    background:#455d77;
-    cursor: pointer;
-}
 
 #inscription .city_autocomplete ul{
     position: absolute;
@@ -1008,4 +992,10 @@ cursor: pointer;
 #inscription .city_autocomplete ul li:hover{
     background:#455d77;
     cursor: pointer;
+}
+#inscription .error{
+    display: block;
+    text-align: center;
+    font-family: segoe_uilight;
+    color:red;
 }

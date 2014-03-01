@@ -37,7 +37,6 @@
 			$mapper->user_firstname = $params['firstname'];
 			$mapper->user_lastname = $params['lastname'];
 			$mapper->user_city = $params['city'];
-			$mapper->user_postcode = $params['postcode'];
 			$mapper->user_birthday = $params['birthday'];
 			$mapper->user_sport = $params['sport'];
 			$mapper->user_appearance = $params['appearance'];

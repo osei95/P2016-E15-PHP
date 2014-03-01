@@ -17,29 +17,60 @@
 		</header>
 		<section class="">
 				<h1 class="titleN2">Inscription rapide et gratuite</h1>
-				<form action="#" name="myform"></form>
+				<form action="/register" method="POST">
 					<h2 class="item_title"><p class="contain">Informations personnelles</p></h2>
 					<div class="section ma_recherche contain">
+						<?php 
+							if(isset($errors_register)):
+								echo '<p class="error">'.current($errors_register).'</p>';
+							endif;
+						?>
 					
 					<div class="line clearfix">
 							<div class="left"><p>PRENOM :</p></div>
 							<div class="right">
-								<input type="text" name="ville" placeholder="Votre prénom" id="autoincrement">
+								<input type="text" name="firstname" placeholder="Votre prénom" value="<?php echo(($user_infos['firstname']==null)?'':$user_infos['firstname']) ?>">
 							</div>
 					</div>
 					
 					<div class="line clearfix">
 							<div class="left"><p>NOM :</p></div>
 							<div class="right">
-								<input type="text" name="ville" placeholder="Votre nom" id="autoincrement" value="">
+								<input type="text" name="lastname" placeholder="Votre nom" value="<?php echo(($user_infos['lastname']==null)?'':$user_infos['lastname']) ?>">
+							</div>
+					</div>
+
+					<div class="line clearfix">
+							<div class="left"><p>EMAIL :</p></div>
+							<div class="right">
+								<input type="text" name="email" placeholder="Votre adresse email" value="<?php echo(($user_infos['email']==null)?'':$user_infos['email']) ?>">
 							</div>
 					</div>
 					
-					<div class="line clearfix">
+					<div class="line clearfix birthday">
 							<div class="left"><p>DATE DE NAISSANCE :</p></div>
 							<div class="right">
-							
-								<input type="date" class="input_date" name="anniversaire">
+								<select name="birthday_day">
+									<?php 
+									for($d=1;$d<=31;$d++):
+										echo '<option value="'.$d.'" '.($user_infos['birthday_day']==$d?'selected':'').'>'.($d<10?'0':'').$d.'</option>';
+									endfor;
+									?>
+								</select>
+								<select name="birthday_month">
+									<?php 
+									for($m=1;$m<=12;$m++):
+										echo '<option value="'.$m.'" '.($user_infos['birthday_month']==$m?'selected':'').'>'.($m<10?'0':'').$m.'</option>';
+									endfor;
+									?>
+								</select>
+								<select name="birthday_year">
+									<?php 
+									for($y=(date('Y')-18);$y>=(date('Y')-108);$y--):
+										echo '<option value="'.$y.'" '.($user_infos['birthday_year']==$y?'selected':'').'>'.$y.'</option>';
+									endfor;
+									?>
+								</select>
 							</div>
 					</div>
 					
@@ -47,16 +78,16 @@
 						<div class="line clearfix">
 							<div class="left"><p>SEXE :</p></div>
 							<div class="right">
-								<input type="radio" name="sex" id="homme" value="homme"><label for="homme">Homme</label>
-								<input type="radio" name="sex" id="femme" value="femme"><label for="femme">Femme</label>
+								<input type="radio" name="gender" id="homme" value="homme" <?php echo(($user_infos['gender']==0)?'checked':'') ?>><label for="homme">Homme</label>
+								<input type="radio" name="gender" id="femme" value="femme" <?php echo(($user_infos['gender']==1)?'checked':'') ?>><label for="femme">Femme</label>
 							</div>
 						</div>
 						
 						<div class="line clearfix city_autocomplete">
 							<div class="left"><p>VILLE :</p></div>
 							<div class="right">
-								<input type="text" name="city" autocomplete="off" <?php echo(isset($options['city'])?'value="'.$options['city'].'"':'placeholder="Entrez une ville..."'); ?>>
-								<input type="hidden" name="city_slug" <?php echo(isset($options['city_slug'])?'value="'.$options['city_slug'].'"':''); ?>>
+								<input type="text" name="city" autocomplete="off" <?php echo(isset($user_infos['city'])?'value="'.$user_infos['city'].'"':'placeholder="Entrez une ville..."'); ?>>
+								<input type="hidden" name="city_slug" <?php echo(isset($user_infos['city_slug'])?'value="'.$user_infos['city_slug'].'"':''); ?>>
 								<ul>
 								</ul>
 							</div>
@@ -65,7 +96,7 @@
 						<div class="line clearfix">
 							<div class="left"><p>DESCRIPTION :</p></div>
 							<div class="right">
-								<textarea class="description"></textarea>
+								<textarea name="description" class="description"><?php echo(($user_infos['description']==null)?'':$user_infos['description']) ?></textarea>
 							</div>
 						</div>
 						
@@ -77,32 +108,36 @@
 							<div class="line clearfix">
 							<div class="left"><p>TAILLE :</p></div>
 							<div class="right">
-								<input type="text" class="torangetaille" name="taille" value="130;220">
+								<input type="text" class="torangetaille" name="height" data-from="<?php echo(isset($user_infos['height'])?$user_infos['height']:'130'); ?>" value="130;220">
 							</div>
 						</div>
 						<div class="line clearfix">
 							<div class="left"><p>POIDS :</p></div>
 							<div class="right">
-								<input type="text" class="torangepoids" name="poids" value="30;300">
+								<input type="text" class="torangepoids" name="weight" data-from="<?php echo(isset($user_infos['weight'])?$user_infos['weight']:'30'); ?>" value="30;300">
 							</div>
 						</div>
 						<div class="line clearfix">
 							<div class="left"><p>APPARENCE :</p></div>
 							<div class="right">
-								<select name="apparence">
-									<option value="filiforme">filiforme</option>
-									<option value="normal">normal</option>
-									<option value="gros">gros</option>
+								<select name="appearance">
+									<?php 
+									foreach($appareances as $a){
+										echo('<option value="'.$a->appearance_id.'" '.(isset($user_infos['appearance']) && $user_infos['appearance']==$a->appearance_id?'selected':'').'>'.$a->appearance_name.'</option>');
+									}
+									?>
 								</select>
 							</div>
 						</div>
 						<div class="line clearfix">
 							<div class="left"><p>CARACTERE :</p></div>
 							<div class="right">
-								<select name="caractere">
-									<option value="enthousiaste">enthousiaste</option>
-									<option value="joyeux">joyeux</option>
-									<option value="dépressif">dépressif</option>
+								<select name="temperament">
+									<?php 
+									foreach($temperaments as $t){
+										echo('<option value="'.$t->temperament_id.'" '.(isset($user_infos['temperament']) && $user_infos['temperament']==$t->temperament_id?'selected':'').'>'.$t->temperament_name.'</option>');
+									}
+									?>
 								</select>
 							</div>
 						</div>
@@ -112,7 +147,7 @@
 							<div class="left"><p>PHOTO DE PROFIL :</p></div>
 							<div class="right">
 								<div class="file_upload">
-									<input type="file" id="file_upload" name="file_upload">
+									<input type="file" id="file_upload" name="profil_photo">
 									<label for="file_upload">SÉLECTIONNER une photo</label>
 								</div>
 							</div>
@@ -124,26 +159,14 @@
 					   	<div class="line clearfix sportchoice">
 							<div class="left"><p>SPORT PRINCIPAL :</p></div>
 							<div class="right">
-								<input type="checkbox" name="sport" id="football" value="football"><label for="football">Football</label>
-								<input type="checkbox" name="sport" id="Handball" value="handball"><label for="handball">Handball</label><br>
-								<input type="checkbox" name="sport" id="tennis" value="tennis"><label for="tennis">Tennis</label>
-								<input type="checkbox" name="sport" id="course" value="course"><label for="course">Course à pied</label><br>
-								<input type="checkbox" name="sport" id="rugby" value="rugby"><label for="rugby">Rugby</label>
-								<input type="checkbox" name="sport" id="natation" value="natation"><label for="natation">Natation</label>
+								<?php
+								for($cpt=0; $cpt<count($sports); $cpt++){
+									echo('<input type="checkbox" name="sport[]" id="'.$sports[$cpt]->sport_name.'" value="'.$sports[$cpt]->sport_id.'" '.(isset($user_infos['sport']) && in_array($sports[$cpt]->sport_id, $user_infos['sport'])?'checked':'').'><label for="'.$sports[$cpt]->sport_name.'">'.$sports[$cpt]->sport_name.'</label>');
+									if($cpt%2!=0)	echo('<br>');
+								}
+								?>
 							</div>
 						</div>
-						<!--<div class="line clearfix sportchoice">
-							<div class="left"><p>AUTRES SPORT PRATIQUéS :</p></div>
-								<div class="right">
-									<input type="checkbox" name="sport" id="football" value="football"><label for="football">Football</label>
-									<input type="checkbox" name="sport" id="Handball" value="handball"><label for="handball">Handball</label><br>
-									<input type="checkbox" name="sport" id="tennis" value="tennis"><label for="tennis">Tennis</label>
-									<input type="checkbox" name="sport" id="course" value="course"><label for="course">Course à pied</label><br>
-									<input type="checkbox" name="sport" id="rugby" value="rugby"><label for="rugby">Rugby</label>
-									<input type="checkbox" name="sport" id="natation" value="natation"><label for="natation">Natation</label>
-								</div>
-							</div>
-					  	</div>-->
 
 						
 					  </div>  

@@ -2,10 +2,7 @@ $(document).ready(function() {
     resize();
     if($('#recherche').length>0 || $('#inscription').length>0){
 
-        $('.torangetaille').ionRangeSlider({type:"double", postfix: " cm"});
-        $('.torangepoids').ionRangeSlider({type:"double", postfix: " kg"});
-
-        $('.city_autocomplete input[name=city]').on('focus', function(){
+        $('.city_autocomplete input[name=city_]').on('focus', function(){
             $('.city_autocomplete ul').css('display','block');
         });
         $('.city_autocomplete input[name=city]').on('keyup', function(){
@@ -42,6 +39,8 @@ $(document).ready(function() {
             $('.torangekm').ionRangeSlider({type:"double", postfix: " km"});
             $('.torangeage').ionRangeSlider({type:"double", postfix: " ans"});
             $('.torangecal').ionRangeSlider({type:"double", postfix: " kcal"});
+            $('.torangetaille').ionRangeSlider({type:"double", postfix: " cm"});
+            $('.torangepoids').ionRangeSlider({type:"double", postfix: " kg"});
 
             $('#accordion').accordion({
                 'collapsible' : true,
@@ -56,7 +55,8 @@ $(document).ready(function() {
             });
 
         }else if($('#inscription').length>0){
-
+            $('.torangetaille').ionRangeSlider({type:"single", postfix: " cm"});
+            $('.torangepoids').ionRangeSlider({type:"single", postfix: " kg"});
         }
     }
 
