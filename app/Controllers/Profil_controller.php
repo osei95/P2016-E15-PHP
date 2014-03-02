@@ -61,25 +61,31 @@
 		}
 
 		function support($f3){
+			$this->tpl['async']='action.json';
 			$news_model = new News_model();
 			$support = $news_model->getSupportByUserId(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
 			if(!$support){
-				$news_model->createSupport(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+				$action = $news_model->createSupport(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+				$f3->set('action', array('name'=>'support'));
 			}else{
-				$news_model->removeSupport(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+				$action = $news_model->removeSupport(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+				$f3->set('action', array('name'=>'unsupport'));
 			}
-			$f3->reroute('/');
+			if(!$f3->get('AJAX'))	$f3->reroute('/');
 		}
 
 		function follow($f3){
+			$this->tpl['async']='action.json';
 			$user_model = new User_model();
 			$follow = $user_model->isFollow(array('from' => $f3->get('SESSION.user.user_id'), 'to' => $f3->get('PARAMS.id_user')));
 			if(!$follow){
-				$user_model->follow(array('from' => $f3->get('SESSION.user.user_id'), 'to' => $f3->get('PARAMS.id_user')));
+				$action = $user_model->follow(array('from' => $f3->get('SESSION.user.user_id'), 'to' => $f3->get('PARAMS.id_user')));
+				$f3->set('action', array('name'=>'follow'));
 			}else{
-				$user_model->unfollow(array('from' => $f3->get('SESSION.user.user_id'), 'to' => $f3->get('PARAMS.id_user')));
+				$action = $user_model->unfollow(array('from' => $f3->get('SESSION.user.user_id'), 'to' => $f3->get('PARAMS.id_user')));
+				$f3->set('action', array('name'=>'unfollow'));
 			}
-			$f3->reroute('/');
+			if(!$f3->get('AJAX'))	$f3->reroute('/');
 		}
 
 		function session($f3){

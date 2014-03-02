@@ -1,5 +1,46 @@
-$(document).ready(function() {
-    resize();
+$(function(){
+
+    $('.fancybox').fancybox();
+
+    /* Landing page */
+    if($('#landing').length>0){
+        resize();
+        $(window).on('resize', function(){
+            resize();
+        });
+
+        $(document).on('scroll', function() {
+            if($(document).scrollTop()+$(window).height()>(860+250)){
+                $('#landing>section:nth-child(3)>div>div>img').animate({right:'0', opacity:1}, 1500);
+            }
+            if($(document).scrollTop()+$(window).height()>(860+500+250)){
+                $('#landing>section:nth-child(4)>div>div>img').animate({left:'0', opacity:1}, 1500);
+            }
+        });
+    }
+
+    /* Page profil */
+    if($('#profil').length>0){
+        $('#suivre').on('click', function(evt){
+            evt.preventDefault();
+            var _this = $(this);
+            $.getJSON(_this.attr('href'), function(data){
+                if(data.action.name=='follow')  _this.addClass('active');
+                else                            _this.removeClass('active');
+            });
+        });
+
+        $('.support').on('click', function(evt){
+            evt.preventDefault();
+            var _this = $(this);
+            $.getJSON(_this.attr('href'), function(data){
+                if(data.action.name=='support') _this.addClass('active');
+                else                            _this.removeClass('active');
+            });
+        });
+    }
+
+    /* Page recherche et inscription */
     if($('#recherche').length>0 || $('#inscription').length>0){
 
         $('.city_autocomplete input[name=city_]').on('focus', function(){
@@ -21,7 +62,6 @@ $(document).ready(function() {
                         );
                         if(cpt==5) break;
                     }
-                    console.log(data);
                 },
                 error : function(data){
                     console.log(data);
@@ -35,6 +75,7 @@ $(document).ready(function() {
             $('.city_autocomplete ul').css('display','none');
         });
 
+        /* Page recherche */
         if($('#recherche').length>0){
             $('.torangekm').ionRangeSlider({type:"double", postfix: " km"});
             $('.torangeage').ionRangeSlider({type:"double", postfix: " ans"});
@@ -54,39 +95,13 @@ $(document).ready(function() {
                 $('.search-results section.search-fields form').toggleClass('hidden');
             });
 
+        /* Page inscription */
         }else if($('#inscription').length>0){
             $('.torangetaille').ionRangeSlider({type:"single", postfix: " cm"});
             $('.torangepoids').ionRangeSlider({type:"single", postfix: " kg"});
         }
     }
 
-    window.onresize = function() {
-        resize();
-    };
-    
-    $('a[href^="index.php#"]').click(function() {  
-      link = $(this).attr('href'); 
-      if($(link ).length>=1)
-        hauteur=$(link).offset().top;
-      else
-        hauteur = $('section#'+link.substr(10,link.length-1)).offset().top;
-        console.log(hauteur);
-      $('body').animate({scrollTop: hauteur}, 600);
-      return false;  
-    });
-
-    $(document).scroll(function() {
-        if($(document).scrollTop()+$(window).height()>(860+250)){
-            $('#landing>section:nth-child(3)>div>div>img').animate({right:'0', opacity:1}, 1500);
-        }
-        if($(document).scrollTop()+$(window).height()>(860+500+250)){
-            $('#landing>section:nth-child(4)>div>div>img').animate({left:'0', opacity:1}, 1500);
-        }
-    });
-
-    $(document).ready(function() {
-		$('.fancybox').fancybox();
-	});
 });
 
 function resize(){
