@@ -35,7 +35,9 @@
 				$user_infos['firstname'] = (($name==null || (is_array($name) && count($name)==0))?null:$name[0]);
 				$user_infos['lastname'] = (($name==null || (is_array($name) && count($name)<2))?null:$name[1]);
 				$user_infos['gender'] = (isset($fitbit_infos['user']['gender']) && valid($fitbit_infos['user']['gender'],array('','NA'))?(($fitbit_infos['user']['gender']=='MALE')?0:1):null);
-				$user_infos['birthday'] = $birthday;
+				$user_infos['birthday_day'] = $birthday['day'];
+				$user_infos['birthday_month'] = $birthday['month'];
+				$user_infos['birthday_year'] = $birthday['year'];
 				$user_infos['city'] = null;
 				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;

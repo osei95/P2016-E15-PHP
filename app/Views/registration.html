@@ -17,7 +17,7 @@
 		</header>
 		<section class="">
 				<h1 class="titleN2">Inscription rapide et gratuite</h1>
-				<form action="/register" method="POST">
+				<form action="/register" method="POST" enctype="multipart/form-data">
 					<h2 class="item_title"><p class="contain">Informations personnelles</p></h2>
 					<div class="section ma_recherche contain">
 						<?php 
@@ -78,8 +78,8 @@
 						<div class="line clearfix">
 							<div class="left"><p>SEXE :</p></div>
 							<div class="right">
-								<input type="radio" name="gender" id="homme" value="homme" <?php echo(($user_infos['gender']==0)?'checked':'') ?>><label for="homme">Homme</label>
-								<input type="radio" name="gender" id="femme" value="femme" <?php echo(($user_infos['gender']==1)?'checked':'') ?>><label for="femme">Femme</label>
+								<input type="radio" name="gender" id="homme" value="0" <?php echo(($user_infos['gender']==0)?'checked':'') ?>><label for="homme">Homme</label>
+								<input type="radio" name="gender" id="femme" value="1" <?php echo(($user_infos['gender']==1)?'checked':'') ?>><label for="femme">Femme</label>
 							</div>
 						</div>
 						
@@ -146,6 +146,11 @@
 						<div class="line clearfix">
 							<div class="left"><p>PHOTO DE PROFIL :</p></div>
 							<div class="right">
+								<?php if(isset($SESSION['registration_form']['photo_profil'])): ?>
+								<div class="photo_profil">
+									<img src="<?php echo $SESSION['registration_form']['photo_profil']; ?>">
+								</div>
+								<?php endif; ?>
 								<div class="file_upload">
 									<input type="file" id="file_upload" name="profil_photo">
 									<label for="file_upload">SÉLECTIONNER une photo</label>

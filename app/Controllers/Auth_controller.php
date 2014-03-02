@@ -72,7 +72,8 @@
 			$errors = array();
 
 			$infos = $f3->get('POST');
-			//var_dump($f3->exists('SESSION.registration_auth.username'),$f3->exists('SESSION.registration_auth.password') ,$f3->exists('POST.firstname') ,$f3->exists('POST.lastname') , $f3->exists('POST.email') , $f3->exists('POST.city_slug'), $f3->exists('POST.postcode') ,$f3->exists('POST.gender') , $f3->exists('POST.description') , $f3->exists('POST.birthday_day') ,$f3->exists('POST.birthday_month'),$f3->exists('POST.birthday_year'),$f3->exists('POST.sport'),$f3->exists('POST.appearance'),$f3->exists('POST.temperament'));
+
+			$base_server = '/var/www/clients/client10/web64/web/web/web';
 
 			if($f3->exists('SESSION.registration_auth.username') && $f3->exists('SESSION.registration_auth.password') && $f3->exists('POST.firstname') && $f3->exists('POST.lastname') && $f3->exists('POST.email') && $f3->exists('POST.city_slug') && $f3->exists('POST.gender') && $f3->exists('POST.description') && $f3->exists('POST.birthday_day') && $f3->exists('POST.birthday_month') && $f3->exists('POST.birthday_year') && $f3->exists('POST.appearance') && $f3->exists('POST.temperament') && $f3->exists('POST.weight') && $f3->exists('POST.height')){
 				$user_model = new User_model();
@@ -92,6 +93,8 @@
 				}elseif($user_model->getUserByEmail(array('email' => $infos['email']))!=null){
 					$errors['email'] = 'Cette adresse mail est déjà utilisée par un autre membre.';
 				}
+
+				/* Récupération de l'id de la ville selectionnée */
 				$app_model = new App_model();
 				$city=$app_model->getCityBySlug(array('city_slug'=>$infos['city_slug']));
 				if(!isset($city->city_id)){
@@ -103,7 +106,25 @@
 				if(intval($infos['birthday_day'])<1 || intval($infos['birthday_day'])>31 || intval($infos['birthday_month'])<1 || intval($infos['birthday_month'])>12 || intval($infos['birthday_year'])<date('Y')-120 || intval($infos['birthday_year'])>date('Y')-16){
 					$errors['birthday'] = 'Veuillez vérifier la saisie de votre date de naissance.';
 				}else{
-					$infos['birthday'] = intval($infos['birthday_year']).'-'.intval($infos['birthday_month']).'-'.intval($infos['birthday_day']);
+
+					/* Vérification de l'âge */
+					$today['mois'] = date('n');
+					$today['jour'] = date('j');
+					$today['annee'] = date('Y');
+					$age = $today['annee'] - $infos['birthday_year'];
+					if ($today['mois'] <= $infos['birthday_month']) {
+						if ($infos['birthday_month'] == $today['mois']) {
+							if ($infos['birthday_day'] > $today['jour'])	$age--;
+						}else{
+							$age--;
+						}
+					}
+
+					if($age<18){
+						$errors['birthday'] = 'Vous devez avoir 18 ans pour vous inscrire !';
+					}else{
+						$infos['birthday'] = intval($infos['birthday_year']).'-'.intval($infos['birthday_month']).'-'.intval($infos['birthday_day']);
+					}
 				}
 				if(!isset($infos['sport']) || !is_array($infos['sport']) || count($infos['sport'])<1 || intval($infos['sport'][0])<1){
 					$errors['sport'] = 'Veuillez indiquer le sport que vous pratiquez.';
@@ -120,6 +141,47 @@
 				if(intval($infos['height'])<130 || intval($infos['height'])>210){
 					$errors['height'] = 'Veuillez indiquer votre taille.';
 				}
+ 
+				if(isset($_FILES['profil_photo']) && $_FILES['profil_photo']['error']==0){
+					
+					$directory = '/medias/users/tempory/';
+
+					/* Upload de la photo de profil */
+					$f3->set('UPLOADS', $base_server.$directory);
+					$files = \Web::instance()->receive(function($file){
+						if(!in_array($file['type'], array('image/jpeg', 'image/png', 'image/gif', 'image/bmp'))){	// Filtrage selon le type mime
+							$errors['image'] = 'Le fichier selectionné n\'est pas une photo valide.';
+							return false;
+						}
+						if($file['size']>5*1024*1024){	// Limit size to 5 MB
+							$errors['image'] = 'La photo ne doit pas faire plus de 5MB.';
+							return false;
+						}
+			 	      	return true;
+			    	},true,true);
+			    	$complete_path = array_keys($files)[0];
+			    	$relative_path = str_replace($base_server, '', $complete_path);
+			    	if($files[$complete_path]==true){
+
+			    		/* On retaille la photo au format 200x200 */
+			    		$img = new Image(''.$relative_path);
+			    		$img->resize(200, 200, true);
+			    		$rezized_image_str = $img->dump();
+			    		$rezized_image = imagecreatefromstring($rezized_image_str);
+
+			    		/* Suppression de la précédente image si elle existe */
+			    		if($f3->exists('SESSION.registration_form.photo_profil')){
+			    			@unlink($base_server.$f3->get('SESSION.registration_form.photo_profil'));
+			    		}
+
+			    		/* Enregistrement de l'image retaillée */
+			    		imagejpeg($rezized_image, $complete_path);
+
+			    		$f3->set('SESSION.registration_form', array('photo_profil' => $relative_path));
+			    	}
+			    }else if(!isset($_FILES['profil_photo'])){
+			    	$errors['data'] = 'Merci de choisir une photo de profil.';
+			    }
 			}elseif($f3->exists('POST.username') && $f3->exists('POST.password') && $f3->exists('POST.input')){
 				$user_model = new User_model();
 				$this->tpl=array('sync'=>'home.html');
@@ -170,6 +232,8 @@
 					$input_api_controller->importBody($f3, array('user_id' => $user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
 				}
 				$input_api_controller->importActivity($f3, array('user_id' =>$user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
+				mkdir($base_server.'/medias/users/'.$user->user_id);
+				rename($base_server.$f3->get('SESSION.registration_form.photo_profil'), $base_server.'/medias/users/'.$user->user_id.'/profil.jpg');
 				$f3->reroute('/profil');
 			}else{
 				$f3->set('user_infos', $infos);

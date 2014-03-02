@@ -819,7 +819,7 @@ td, tr{
 #inscription .section .line{
     display: block;
     width: 100%;
-    height: 80px;
+    min-height: 80px;
     line-height: 70px;
 
 }
@@ -885,6 +885,21 @@ td, tr{
     font-family: segoe_uiregular;
     margin: 0 40px 0 5px;
 }
+
+#inscription .photo_profil{
+    height: 140px;
+    width: 140px;
+    border-radius: 75px;
+    border: 5px solid #4c5b6a;
+    overflow: hidden;
+    margin: auto;
+}
+
+#inscription .photo_profil img{
+    height: 140px;
+    width: 140px;
+}
+
 #inscription .section .sportchoice{
     height: 110px;
     line-height: 25px;
