@@ -47,76 +47,81 @@
 
 		function importActivity($f3, $params){
 			$vars = $f3->get('MOVES');
-			$today = date('Ymd');
-			$activity_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $params['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['activities'].'/'.$today));
-			$activity_model = new Activity_model();
 
-			$activities = array();
+			// On importe l'activité du jour et du jour précédent
+			$dates = array(date('Ymd'), date('Ymd',time()-86400)); 
 
-			if(is_array($activity_infos)){	// Si on a une activité ce jour
-				foreach($activity_infos as $items){
-					$date = $items['date'];
-					if($date==$today || (isset($params['date']) && $params['date']=='all') && is_array($items['summary'])){
-						foreach($items['summary'] as $item){
-							switch($item['activity']){
-								case 'wlk':
-									$type = 'walk';
-									break;
-								case 'run':
-									$type = 'run';
-									break;
-								case 'cyc':
-									$type = 'bike';
-									break;
-								default :
-									$type = '';
-							}
+			foreach($dates as $today){
+				$activity_infos = $this->oauth_controller->oauth_2_0_request(array('access_token' => $params['access_token'], 'url' => $vars['endpoints']['base'].$vars['endpoints']['activities'].'/'.$today));
+				$activity_model = new Activity_model();
+
+				$activities = array();
+
+				if(is_array($activity_infos)){	// Si on a une activité ce jour
+					foreach($activity_infos as $items){
+						$date = $items['date'];
+						if($date==$today || (isset($params['date']) && $params['date']=='all') && is_array($items['summary'])){
+							foreach($items['summary'] as $item){
+								switch($item['activity']){
+									case 'wlk':
+										$type = 'walk';
+										break;
+									case 'run':
+										$type = 'run';
+										break;
+									case 'cyc':
+										$type = 'bike';
+										break;
+									default :
+										$type = '';
+								}
 
 
-							if(!isset($activities[$type]))	$activities[$type] = array('calories' => 0, 'distance' => 0, 'duration' => 0);
+								if(!isset($activities[$type]))	$activities[$type] = array('calories' => 0, 'distance' => 0, 'duration' => 0);
 
-							$activities[$type]['calories']=((isset($item['calories']))?$item['calories']:-1);
-							$activities[$type]['distance']=$item['distance'];
-							$activities[$type]['duration']=$item['duration'];
+								$activities[$type]['calories']=((isset($item['calories']))?$item['calories']:-1);
+								$activities[$type]['distance']=$item['distance'];
+								$activities[$type]['duration']=$item['duration'];
 
-							foreach($activities as $type => $act){
-								$activity = $activity_model->getActivityByShortName(array('activity_shortname' => $type));
+								foreach($activities as $type => $act){
+									$activity = $activity_model->getActivityByShortName(array('activity_shortname' => $type));
 
-								if($activity){
+									if($activity){
 
-									$timestamp_date = strtotime($date);
+										$timestamp_date = strtotime($date);
 
-									$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'input_id' => $params['input_id']));
-									
-									if($current_activity==false || $act['distance'] > $current_activity->distance || $act['calories'] > $current_activity->calories || $act['duration'] > $current_activity->duration){
-										// On poste la nouvelle actualité si la distance parcourue est > à 1km
-
-										if($current_activity==false){
-											$current_activity = new stdClass();
-											$current_activity->distance=0;
-											$current_activity->calories=0;
-											$current_activity->duration=0;
-										}
-
-										$new_distance = ($act['distance']-$current_activity->distance)/1000;
-										$new_calories = $act['calories']-$current_activity->calories;
-										$new_duration = $act['duration']-$current_activity->duration;
-
-										if($new_distance>1){
-
-											//$date_time_date = DateTime::createFromFormat('Ymd', $date);
-											//$timestamp_date = $date_time_date->getTimestamp();
-
-											$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity' => $activity));
-											$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
-
-											$news_model = new News_model();
-											$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity_distance', 'content' => 'a parcouru '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
+										$current_activity = $activity_model->getActivityUserByDate(array('user_id' => $params['user_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'input_id' => $params['input_id']));
 										
-											if($new_calories>1){
-												$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity_calories', 'content' => ' a perdu '.number_format($new_calories,1).' calories'.($new_calories>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
+										if($current_activity==false || $act['distance'] > $current_activity->distance || $act['calories'] > $current_activity->calories || $act['duration'] > $current_activity->duration){
+											// On poste la nouvelle actualité si la distance parcourue est > à 1km
+
+											if($current_activity==false){
+												$current_activity = new stdClass();
+												$current_activity->distance=0;
+												$current_activity->calories=0;
+												$current_activity->duration=0;
 											}
 
+											$new_distance = ($act['distance']-$current_activity->distance)/1000;
+											$new_calories = $act['calories']-$current_activity->calories;
+											$new_duration = $act['duration']-$current_activity->duration;
+
+											if($new_distance>1){
+
+												//$date_time_date = DateTime::createFromFormat('Ymd', $date);
+												//$timestamp_date = $date_time_date->getTimestamp();
+
+												$activity_model->removeActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity' => $activity));
+												$activity_model->addActivityUser(array('user_id' => $params['user_id'], 'input_id' => $params['input_id'], 'date' => $timestamp_date, 'activity_id' => $activity->activity_id, 'activity_input_id' => $params['user_has_input_id'], 'duration' => $act['duration'], 'distance' => $act['distance'], 'calories' => $act['calories']));
+
+												$news_model = new News_model();
+												$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity_distance', 'content' => 'a parcouru '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.number_format($new_distance,1).'km'.($new_distance>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
+											
+												if($new_calories>1){
+													$news_model->createNews(array('from' => $params['user_id'], 'to' => 'friends', 'type' => 'activity_calories', 'content' => ' a perdu '.number_format($new_calories,1).' calories'.($new_calories>1?'s':'').' en '.(($new_duration>0)?gmdate('H',$new_duration).'h':'').gmdate('i',$new_duration).'minutes.', 'date' => time()));
+												}
+
+											}
 										}
 									}
 								}
@@ -125,7 +130,6 @@
 					}
 				}
 			}
-
 		}
 	}
 
