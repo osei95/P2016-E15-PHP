@@ -30,7 +30,12 @@ socket.on('loadedPage',function(params){
 	}
 });
 
+/* On scroll en bas des messages si une conversation est chargée au démarrage */
+if($('#conversation-block .conversation-actions>div').length>0){
+	$('#conversation-block .conversation-actions').animate({ scrollTop: $('#conversation-block .conversation-actions')[0].scrollHeight}, 1000);
+}
 
+/* L'appui sur la touche entré dans le textarea permet l'envoi du message */
 $('#conversation-tfchat textarea.conversation-tftextarea').keydown(function(evt) {
     if (evt.keyCode == 13) {
     	evt.preventDefault();
@@ -38,13 +43,13 @@ $('#conversation-tfchat textarea.conversation-tftextarea').keydown(function(evt)
     }
 });
 
-
+/* Notification de messages */
 socket.on('notifyMessageIM',function(params){
 	var friend_id = params.from;
 	$('.friends-talk .details[data-id='+friend_id+']').addClass('notification');
 });
 
-
+/* Reception de messages */
 socket.on('receiveMessageIM',function(params){
 
 	/* On cache le loader */
