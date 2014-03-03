@@ -40,7 +40,17 @@ header{
     position: relative;
 }
 #landing header form{
+    position: relative;
     margin-top:15px;
+}
+#landing header p.error{
+    position: absolute;
+    left: -185px;
+    color: red;
+    margin: auto;
+    display: inline-block;
+    font-family: segoe_uiregular;
+    top: 5px;
 }
 #landing header form input[type="password"],
 #landing header form input[type="text"]{
