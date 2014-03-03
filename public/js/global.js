@@ -26,6 +26,9 @@ socket.on('receiveNotification',function(params){
 		case 'message':
 			var iconPosition = 3
 			break;
+		case 'relation':
+			var iconPosition = 2
+			break;
 	}
 	var selector = 'header .contain div>a:nth-child('+iconPosition+')';
 

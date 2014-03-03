@@ -31,7 +31,7 @@
 					<div><img src="/medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
 					<?php if($user['user_id']!=$SESSION['user']['user_id']):?>
 					<a id="suivre" href="follow/<?php echo($user['user_id']); ?>" class="<?php echo ($supports['follow']?'active':'') ?>">Suivre</a>
-					<a id="discuter" href="/messages/<?php echo($user['user_username']); ?>">Discuter</a>
+					<a id="discuter" href="/messages/<?php echo($user['user_username']); ?>" data-id="<?php echo($user['user_id']); ?>">Discuter</a>
 					<?php endif; ?>
 				</div>
 				<div class="fright">

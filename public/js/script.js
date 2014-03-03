@@ -21,6 +21,8 @@ $(function(){
 
     /* Page profil */
     if($('#profil').length>0){
+
+        /* Suivi de l'activité d'une personne */
         $('#suivre').on('click', function(evt){
             evt.preventDefault();
             var _this = $(this);
@@ -30,6 +32,7 @@ $(function(){
             });
         });
 
+        /* Encourgagements */
         $('.support').on('click', function(evt){
             evt.preventDefault();
             var _this = $(this);
@@ -37,6 +40,33 @@ $(function(){
                 if(data.action.name=='support') _this.addClass('active');
                 else                            _this.removeClass('active');
             });
+        });
+
+        /* Demande de discussion */
+        $('#discuter').on('click', function(evt){
+            evt.preventDefault();
+            var id_user = $(this).data('id');
+            console.log(id_user);
+            socket.emit('talkRequest', {
+                to : {
+                    id : id_user
+                }
+            });
+        })
+
+        /* Réponse à la demande de discussion */
+        socket.on('talkRequestResponse',function(params){
+            if(typeof(params.relationship)!='undefined'){
+                if(params.relationship===true){
+                    window.location.href = $('a#discuter').attr('href');
+                }else if(params.action=='addGoal'){
+                    alert('Voulez-vous ajouter un objectif ?');
+                }else if(params.action=='sentNotification'){
+                    alert('Demande envoyée');
+                }else if(params.action=='notificationAlreadySent'){
+                    alert('Demande déjà envoyée');
+                }
+            }
         });
     }
 
