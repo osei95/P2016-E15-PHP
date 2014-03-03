@@ -1051,3 +1051,370 @@ background-color: #2d3e50;
     margin-left: 35px;
     font-size: .9em;
 }
+#result .pagination{
+    margin-bottom:20px;
+    text-align: center;
+}
+#result .pagination a{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    color:#2d3e50;
+    font-family: segoe_uibold;
+    border: 2px solid #2d3e50;
+    border-radius:50%;
+    text-decoration: none;
+    text-align: center;
+}
+#result .pagination a.active{
+    background:#2d3e50;
+    color: #FFF;
+}
+#result .pagination a+a{
+    margin-left: 5px;
+}
+
+/* ----------------------------- PAGE 404 ----------------------------- */
+#page_404 section h1{
+    margin-top:20px;
+    display: block;
+    color:#2d3e50;
+    font-family: segoe_uibold;
+    font-size: 4em;
+    text-align: center;
+}
+#page_404 section h1 .erreur{
+    font-size: 1.5em;
+}
+#page_404 section a{
+    margin:40px 0;
+    display: block;
+    color:#2d3e50;
+    font-family: segoe_uibold;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+/*------ PAGE OBJECTIFS -------*/
+
+#recherche .objectif-F .titleN2{
+    color:#000;
+    margin: 40px 0;
+}
+
+#middle-nav {
+    text-align: center;
+}
+
+#middle-nav li {
+    text-align: center;
+    display:inline-block;
+    padding: 20px 92px 20px 92px;
+    font-family: segoe_uilight;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: #2d3e50;
+}
+
+#middle-nav li a {
+    color:#2d3e50;
+    text-decoration: none;
+    
+}
+
+#middle-nav li a.actif {
+    color:#2d3e50;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    
+}
+
+.bottom-border {
+    
+    border-bottom: 1px solid #2d3e50;
+    margin-bottom: 15px; 
+    
+}
+
+
+
+#objectifs-F .titleN2 {
+color: #e2867e;
+margin: 40px 0;
+}
+
+#objectifs-F #middle-nav li a {
+    color:#e2867e;
+    text-decoration: none;
+    
+}
+
+#objectifs-F #middle-nav li a.actif {
+    color:#e2867e;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    
+}
+
+#objectifs-F .bottom-border {
+    
+    border-bottom: 1px solid #e2867e;
+    margin-bottom: 15px; 
+    
+}
+
+
+
+.objectifs-feed {
+    
+    margin-bottom: 150px;
+    
+}
+
+.mes-objectifs>div:nth-child(2){
+    margin-left: 20px;
+    padding: 2.3% 0 0% 0;
+}
+
+.mes-objectifs .fright{
+    padding: 3.4% 0 0% 0;
+    
+}
+
+.mes-objectifs .fright a{
+    margin: 0 10px 0 10px;
+    padding: 10px 45px 10px 45px;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 3px;
+    
+}
+
+.mes-objectifs .fright .button{
+    background-repeat: no-repeat;
+    padding: 10px 23px 10px 23px;
+    background-position: 15px center;
+    background-color: #2d3e50;
+    
+}
+
+.mes-objectifs .fright .accept{
+    background-image: url(images/accept-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #239e58;
+    
+}
+
+.mes-objectifs .fright .refus{
+    background-image: url(images/refus-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #e84c3d;
+    
+}
+
+.mes-objectifs .fright .chat{
+    background-image: url(images/chat-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #222222;
+    
+}
+
+.mes-objectifs .fright .target{
+    background-image: url(images/target-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #e2867e;
+    
+}
+
+
+
+
+.mes-objectifs{
+    padding: 20px 0;
+}
+.mes-objectifs>div:first-child>div{
+    height: 80px;
+    width: 80px;
+    border-radius: 50px;
+    border: 5px solid #4c5b6a;
+    overflow: hidden;
+    margin: auto;
+}
+.mes-objectifs>div:first-child>div>img{
+    width: 100%;
+    min-height: 100%;
+}
+.mes-objectifs>div:nth-child(2){
+    margin-left: 20px;
+}
+
+.mes-objectifs .normal p{
+    color:#8a8a8a;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .normal p strong{
+    font-family: segoe_uibold;
+    color:#2d3e50;
+    font-weight: normal;
+}
+
+
+.mes-objectifs .fix p{
+    color:#e2867e;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .fix strong{
+    font-family: segoe_uibold;
+    color:#e2867e;
+    font-weight: normal;
+}
+
+.mes-objectifs .done p{
+    color:#e84c3d;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .done strong{
+    font-family: segoe_uibold;
+    color:#e84c3d;
+    font-weight: normal;
+}
+
+
+.mes-objectifs .finish p{
+    color:#239e58;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .finish strong{
+    font-family: segoe_uibold;
+    color:#239e58;
+    font-weight: normal;
+}
+
+.mes-objectifs>div:nth-child(2) a{
+    text-decoration: none;
+    color: #2d3e50;
+    font-family: segoe_uibold;
+    padding: 5px 15px 5px 35px;
+    border: 1px solid #2d3e50;
+    margin-top: 20px;
+    font-size: .9em;
+    background: url(images/encourager.png) no-repeat 15px center;
+}
+.mes-objectifs>div.fright p{
+    font-family: segoe_uibold;
+    color:#2d3e50;
+    text-align: right;
+    margin-top: 10px;
+}
+.mes-objectifs>div.fright span{
+    font-family: segoe_uibold;
+    color: #2d3e50;
+    text-align: right;
+    margin-top: 20px;
+    padding-left: 20px;
+    background: url(images/encourager.png) no-repeat 5px center;
+    display: inline-block;
+    float: right;
+}
+
+/* -------------------------- Dashboard ----------------------------- */
+
+#profil.woman .obj-box{
+    width: 500px;
+    background: #e2867e;
+    padding: 20px;
+}
+#profil .obj-box h2{
+    text-transform: uppercase;
+    font-family: segoe_uilight;
+    font-size: 1.2em;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+}
+#profil .obj-box h3{
+    color: white;
+    font-family: segoe_uilight;
+    padding-left: 40px;
+    margin: 20px 0;
+}
+#profil .obj-box h3.cible{
+    background: url(images/female-icon.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 140px center;
+}
+#profil .obj-box h3.objectif{
+    background: url(images/gym.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 160px center;
+}
+#profil .obj-box h3.resultat{
+    background: url(images/pres-icon.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 160px center;
+}
+#profil .obj-box .name{
+    color: white;
+    text-align:center;
+    font-family: segoe_uilight;
+}
+#profil .obj-box .photo{
+    height: 75px;
+    width: 75px;
+    border-radius: 75px;
+    border: 5px solid #e69891;
+    overflow: hidden;
+    margin: 10px auto;
+}
+#profil .obj-box .photo img{
+    height: 100%;
+    width: 100%;
+}
+#profil .obj-box .distance, #profil .obj-box .duree{
+    width: 49%;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-family: segoe_uilight;
+    margin: 5px 0;
+}
+#profil .obj-box .distance h4{
+    padding-left: 30px;
+    background: url(images/distance-icon.png) no-repeat left center;
+    display: inline-block;
+}
+#profil .obj-box .duree h4{
+    padding-left: 30px;
+    background: url(images/duree-icon.png) no-repeat left center;
+    display: inline-block;
+}
+#profil .obj-box .distance p, #profil .obj-box .duree p{
+    font-family: segoe_uiregular;
+}
+#profil .fancybox-skin{
+    padding: 0 !important;
+}
+#profil .fancybox-close{
+    top: 0 ;
+    right: 0 ;
+    background: url(images/cross.png) no-repeat center center;
+}
+#profil #news>article:nth-child(2n-1){
+    background: #2d3e50;
+}
+#profil #news>article:nth-child(2n) .live-news{
+    color: #2d3e50;
+}
+#profil #news>article:nth-child(2n) .live-news .separator{
+    border-color: #2d3e50;
+}
+#profil #news>article:nth-child(2n) .live-news a{
+    border-color: #2d3e50;
+    color: #2d3e50;
+}

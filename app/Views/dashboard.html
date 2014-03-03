@@ -1,10 +1,313 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Home</title>
-</head>
-<body>
-	<h1>Bonjour <?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
-</body>
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="css/reset.css">
+	  <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+	  <link rel="stylesheet" href="font/stylesheet.css">
+	  <link rel="stylesheet" href="css/style-dash.css">
+	  <link rel="stylesheet" href="css/style.css">
+	  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	  <script type="text/javascript" src="fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+	  <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+	  <script type="text/javascript" src="js/script.js"></script>
+
+	</head>
+	<body id="profil" class="woman">
+		<header class="header_connected">
+			<div class="contain">
+				<div>
+					<a href="" class=""><span>2</span></a>
+					<a href="" class=""></a>
+					<a href="" class=""></a>
+					<a href="" class="active"></a>
+				</div>
+				<a href="#">Déconnexion</a>
+			</div>
+		</header>
+		<section id="informations-dash">
+		<div class="dash-head">
+		
+			<div class="contain clearfix dash-container">
+				<div class="fleft">
+					<div class="presentation">
+						<h1 class="title-dash">John Williams</h1>
+						<div class="presentation-infos">
+							<p><span>24 </span>Rencontres</p>
+							<p><span>10 </span>Followers</p>
+						</div>
+					</div>
+					<div><img src="images/profil1.jpg" alt=""></div>
+				</div>
+				
+				<div class="fright">
+					<h2 class="objectifs-dash">Mes objectifs</h2>
+
+					<div class="details">
+							<div class="targets">
+								<div class="pics">
+									<img src="images/profil1.jpg" alt="">
+								</div>
+					</div> <!--End of targets -->
+							<div class="status">
+								<span class="actif"></span>
+							</div> <!--End of status -->
+							
+							<div class="name">
+								<p>Eva Longoria</p>
+							</div> <!--End of name -->
+							
+							<div class="link">
+								<a class="fancybox" href="#obj1">Voir les détails</a>
+							</div> <!--End of link -->
+					</div>
+					
+					<div class="details">
+							<div class="targets">
+								<div class="pics">
+									<img src="images/profil1.jpg" alt="">
+								</div>
+					</div> <!--End of targets -->
+							<div class="status">
+								<span class="actif"></span>
+							</div> <!--End of status -->
+							
+							<div class="name">
+								<p>Eva Longoria</p>
+							</div> <!--End of name -->
+							
+							<div class="link">
+								<a class="fancybox" href="#obj2">Voir les détails</a>
+							</div> <!--End of link -->
+					</div>
+					
+					<div class="details">
+							<div class="targets">
+								<div class="pics">
+									<img src="images/profil1.jpg" alt="">
+								</div>
+							</div> <!--End of targets -->
+							<div class="status">
+								<span class="actif"></span>
+							</div> <!--End of status -->
+							
+							<div class="name">
+								<p>Eva Longoria</p>
+							</div> <!--End of name -->
+							
+							<div class="link">
+								<a class="fancybox" href="obj3">Voir les détails</a>
+							</div> <!--End of link -->
+					</div>
+					</div>
+	
+				</div>
+				
+			</div>
+		</div>
+		</section>
+		
+		<nav>
+			<div class="contain clearfix">
+				<ul id="middle-nav">
+					<li><a href="#">Toutes les actualités</a></li>
+					<li><a class="actif" href="#">Personnes rencontrées</a></li>
+					<li><a href="#">Personnes suivies</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<section id="news">
+			
+				<article class="bg-km"> <!-- Start of a the article -->
+				<div class="contain clearfix">
+						<div class="profil fleft">
+							<p class="name">Eva Mendes</p>
+							
+							<div class="friend-pics">
+								<div class="targets">
+									<div class="pics">
+										<img src="images/profil1.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<p class="date">28 Janvier 2014</p>
+						</div>
+				
+					
+					<div class="live-news fleft">
+						<p><span>Eva Mendes</span> a parcouru 15 kms en 1 heure et 23 minutes</p>
+						<div class="separator"></div>
+						<div class="link">
+							<a href="#">J'encourage</a>
+						</div> <!--End of link -->
+					</div>
+				</div>
+				</article> <!-- End of a the article -->
+			
+				<article class="bg-cal"> <!-- Start of a the article -->
+				<div class="contain clearfix">
+						<div class="profil fright">
+							<p class="name">Jennifer Lopez</p>
+							
+							<div class="friend-pics">
+								<div class="targets">
+									<div class="pics">
+										<img src="images/profil1.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<p class="date">28 Janvier 2014</p>
+						</div>
+				
+					
+					<div class="live-news fright">
+						<p><span>Jennifer Lopez</span> Jennifer Lopez a perdu 1359 calories en 1 journée</p>
+						<div class="separator"></div>
+						<div class="link">
+							<a href="#">J'encourage</a>
+						</div> <!--End of link -->
+					</div>
+				</div>
+				</article> <!-- End of a the article -->
+				
+				<article class="bg-event"> <!-- Start of a the article -->
+				<div class="contain clearfix">
+						<div class="profil fleft">
+							<p class="name">Mila Kunis</p>
+							
+							<div class="friend-pics">
+								<div class="targets">
+									<div class="pics">
+										<img src="images/profil1.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<p class="date">28 Janvier 2014</p>
+						</div>
+				
+					
+					<div class="live-news fleft">
+						<p><span>Mila Kunis</span> a participé au marathon de Los Angeles</p>
+						<div class="separator"></div>
+						<div class="link">
+							<a href="#">J'encourage</a>
+						</div> <!--End of link -->
+					</div>
+				</div>
+				</article> <!-- End of a the article -->
+			
+				<article class="bg-friend"> <!-- Start of a the article -->
+				<div class="contain clearfix">
+						<div class="profil fright">
+							<p class="name">Noémie Lenoir</p>
+							
+							<div class="friend-pics">
+								<div class="targets">
+									<div class="pics">
+										<img src="images/profil1.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<p class="date">28 Janvier 2014</p>
+						</div>
+				
+					
+					<div class="live-news fright">
+						<p><span>Noémie Lenoir</span> a accepté votre invitation à discuter</p>
+						<div class="separator"></div>
+						<div class="link">
+							<a href="#">J'encourage</a>
+						</div> <!--End of link -->
+					</div>
+				</div>
+				</article> <!-- End of a the article -->
+
+				<article class="bg-km"> <!-- Start of a the article -->
+				<div class="contain clearfix">
+						<div class="profil fleft">
+							<p class="name">Nicole Scherzinger</p>
+							
+							<div class="friend-pics">
+								<div class="targets">
+									<div class="pics">
+										<img src="images/profil1.jpg" alt="">
+									</div>
+								</div>
+							</div>
+							<p class="date">28 Janvier 2014</p>
+						</div>
+				
+					
+					<div class="live-news fleft">
+						<p><span>Nicole Scherzinger</span> a parcouru 9 kms en 1 heure et 2 minutes</p>
+						<div class="separator"></div>
+						<div class="link">
+							<a href="#">J'encourage</a>
+						</div> <!--End of link -->
+					</div>
+				</div>
+				</article> <!-- End of a the article -->
+			
+
+			
+		
+		</section>
+		<div style="display:none">
+			<div id="obj1" class="obj-box clearfix">
+				<h2>Objectif à atteindre</h2>
+				<h3 class="cible">Votre cible</h3>
+				<p class="name">Emily Ratiohsky</p>
+				<div class="photo"><img src="images/profil2.jpg" alt=""></div>
+				<h3 class="objectif">Votre objectif</h3>
+				<div class="distance">
+					<h4>Distance à parcourir</h4>
+					<p>15 Km</p>
+				</div>
+				<div class="duree">
+					<h4>Durée de l'objectif</h4>
+					<p>10 jours</p>
+				</div>
+				<h3 class="resultat">Votre résultat</h3>
+			</div>
+			<div id="obj2" class="obj-box">
+				<h2>Objectif à atteindre</h2>
+				<h3 class="cible">Votre cible</h3>
+				<p class="name">Emily Ratiohsky</p>
+				<div class="photo"><img src="images/profil2.jpg" alt=""></div>
+				<h3 class="objectif">Votre objectif</h3>
+				<div class="distance">
+					<h4>Distance à parcourir</h4>
+					<p>15 Km</p>
+				</div>
+				<div class="duree">
+					<h4>Durée de l'objectif</h4>
+					<p>10 jours</p>
+				</div>
+				<h3 class="resultat">Votre résultat</h3>
+			</div>
+			<div id="obj3" class="obj-box">
+				<h2>Objectif à atteindre</h2>
+				<h3 class="cible">Votre cible</h3>
+				<p class="name">Emily Ratiohsky</p>
+				<div class="photo"><img src="images/profil2.jpg" alt=""></div>
+				<h3 class="objectif">Votre objectif</h3>
+				<div class="distance">
+					<h4>Distance à parcourir</h4>
+					<p>15 Km</p>
+				</div>
+				<div class="duree">
+					<h4>Durée de l'objectif</h4>
+					<p>10 jours</p>
+				</div>
+				<h3 class="resultat">Votre résultat</h3>
+			</div>
+		</div>
+		
+	</body>
 </html>
