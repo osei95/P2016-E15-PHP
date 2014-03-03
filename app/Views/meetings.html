@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="../public/css/reset.css">
+	  <link rel="stylesheet" href="../public/font/stylesheet.css">
+	  <link rel="stylesheet" href="../public/css/style.css">
+	  <link rel="stylesheet" href="../public/css/ion.rangeSlider.skinNice.css">
+	  <link rel="stylesheet" href="../public/css/ionrangeSlider.css">
+	</head>
+	<body id="rencontres">
+		<header class="active header_connected " id="2">
+			<div class="contain">
+				<div>
+					<a href="/profil" title="Mon profil"></a>
+					<a href="#" title="Mes rencontres" class="active"></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
+					<a href="/search" title="Recherche"></a>
+				</div>
+				<a href="#">Déconnexion</a>
+			</div>
+		</header>
+		<section class="">
+			<h1 class="titleN2">Liste des rencontres</h1>
+			<nav>
+				<div class="contain clearfix navigation_rencontres">
+					<ul id="middle-nav" class="bottom-border">
+						<li><a href="#" id="meetings">Mes rencontres</a></li>
+						<li><a class="actif" href="#" id="goals">Mes objectifs</a></li>
+						<li><a href="#" id="invitations">Mes invitations</a></li>
+					</ul>
+				</div>
+			</nav>
+			<section class="objectifs-H">
+				<div class="contain objectifs-feed clearfix" id="main-contain">
+					<?php if(is_array($goals)): ?>
+					<ul>
+					<?php foreach($goals as $g): ?>
+						<?php $value = ceil($g['goal_value']/100); ?>
+						<?php $duration = ceil(($g['goal_deadline']-$g['goal_date'])/86400); ?>
+						<?php 
+							$goal_class = 'normal';
+		                    $goal_butons = '';
+							if($g['goal_accepted']==0){
+		                        $goal_class = 'fix';
+		                        $goal_message = '<strong>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</strong> vous a fixé un objectif de <strong>'.$value.' '.($value>1?'kms':'km').'</strong> à parcourir en <strong>'.$duration.' '.($duration>1?'jours':'jour').'</strong>';
+		                        $goal_butons = '<a href="#" class="accept">Accepter</a><a class="refus" href="#">Refuser</a>';
+		                    }else if($g['goal_accepted']==-1){
+		                        $goal_class = 'fix';
+		                        $goal_message = 'Vous avez refusé l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                    }else if($g['goal_achievement']>=100){
+		                        $goal_class = 'finish';
+		                        $goal_message = 'Vous avez rempli l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                        $goal_butons = '<a href="#" class="chat">Discuter</a>';
+		                    }else if($g['goal_deadline']<time()){
+		                        $goal_class = 'done';
+		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                    }else{
+		                        $goal_message = 'Vous avez accepté le défi de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                        $goal_butons = '<a href="#" class="button">Voir les détails</a>';
+		                    }
+	                    ?>
+						<li class="mes-objectifs clearfix">
+							<div class="fleft">
+								<div><img src="/medias/users/<?php echo $g['user_from_id']; ?>/profil.jpg" alt=""></div>
+							</div>
+							<div class="fleft <?php echo $goal_class; ?>">
+								<p class=""><?php echo $goal_message; ?></p>
+							</div>
+							<div class="fright">
+								<?php echo $goal_butons; ?>
+							</div>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+					<?php endif; ?>
+				</div>
+			</section>
+		</section>
+		<footer>
+			<div class="contain">
+				<div>
+					<div>
+						<p>© 2014 Run & Meet - Tous droits réservés</p>
+					</div>
+					<div>
+						<p class="footer-title">Nous suivre sur</p>
+						<div>
+							<a href=""></a>
+							<a href=""></a>
+							<a href=""></a>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p class="footer-title">A propos de Run & Meet</p>
+							<ul>
+								<li><a href="">A propos</a></li>
+								<li><a href="">Conditions d'utilisation</a></li>
+								<li><a href="">Protection des données</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	  	<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
+	  	<script type="text/javascript" src="../public/js/ion.rangeSlider.min.js"></script>
+	  	<script type="text/javascript" src="../public/js/script.js"></script>
+	</body>
+</html>

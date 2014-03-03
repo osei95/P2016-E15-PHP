@@ -77,8 +77,11 @@
 		/* Relations */
 
 		function getAllRelationsByUserId($params){
-			$mapper=$this->getMapper('relationship');
-			return $this->dB->exec("SELECT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname` FROM `user` INNER JOIN `relationship` ON `user`.`user_id` = CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from`  END WHERE (request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).") AND request_state=".intval($params['state']));
+			return $this->dB->exec("SELECT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname`, `user`.`user_gender`, `user`.`user_city_name`, `user`.`user_age`, `relationship`.`request_state`, `relationship`.`request_time` FROM `user_infos` `user` INNER JOIN `relationship` ON `user`.`user_id` = CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from`  END WHERE (request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).") AND request_state=".intval($params['state'])." ORDER BY request_time DESC");
+		}
+
+		function getAllRequestsByUserId($params){
+			return $this->dB->exec("SELECT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname`, `user`.`user_gender`, `relationship`.`request_state`, `relationship`.`request_time` FROM `user_infos` `user` INNER JOIN `relationship` ON `user`.`user_id` = `relationship`.`request_from` WHERE request_to=".intval($params['user_id'])." AND request_state=".intval($params['state'])." ORDER BY request_time DESC");
 		}
 
 		function addRelation($params){

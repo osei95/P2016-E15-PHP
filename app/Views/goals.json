@@ -1,0 +1,23 @@
+{
+	<?php foreach($goals as $key => $g): ?>
+	"<?php echo $key; ?>" : {
+		"user" : {
+			"id" : "<?php echo $g['user_from_id']; ?>",
+			"username" : "<?php echo $g['user_from_username']; ?>",
+			"firstname" : "<?php echo $g['user_from_firstname']; ?>",
+			"lastname" : "<?php echo $g['user_from_lastname']; ?>",
+			"gender" : "<?php echo $g['user_from_gender']; ?>"
+		},
+		"goal" : {
+			"type" : "<?php echo $g['goal_unit']; ?>",
+			"value" : "<?php echo ceil($g['goal_value']/100); ?>",
+			"achievement" : "<?php echo $g['goal_achievement']; ?>",
+			"date" : "<?php echo $g['goal_date']; ?>",
+			"deadline" : "<?php echo $g['goal_deadline']; ?>",
+			"duration" : "<?php echo ceil(($g['goal_deadline']-$g['goal_date'])/86400); ?>",
+			"accepted" : "<?php echo $g['goal_accepted']; ?>"
+		}
+	}
+	<?php if($key!=count($goals)-1) echo ','; ?>
+	<?php endforeach; ?>
+}

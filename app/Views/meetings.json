@@ -1,0 +1,16 @@
+{
+	<?php foreach($meetings as $key => $m): ?>
+	"<?php echo $key; ?>" : {
+		"user" : {
+			"id" : "<?php echo $m['user_id'] ?>",
+			"username" : "<?php echo $m['user_username']?>",
+			"firstname" : "<?php echo $m['user_firstname']?>",
+			"lastname" : "<?php echo $m['user_lastname']?>",
+			"gender" : "<?php echo $m['user_gender']?>",
+			"city" : "<?php echo $m['user_city_name']?>",
+			"age" : "<?php echo $m['user_age']?>"
+		}
+	}
+	<?php if($key!=count($meetings)-1) echo ','; ?>
+	<?php endforeach; ?>
+}
