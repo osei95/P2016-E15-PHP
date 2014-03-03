@@ -19,26 +19,92 @@ $(function(){
         });
     }
 
+     /* Landing Dashboard */
+    if($('#profil[data-id=dashboard]').length>0){
+        var  busy = false;
+        $(window).on('scroll', function(){
+           if($(window).scrollTop() + $(window).height() == $(document).height() && !busy) {
+                busy = true;
+                $.ajax({
+                    dataType: 'json',
+                    type : 'POST',
+                    url: '/news',
+                    data: { 
+                        type : $('.navigation_news a.actif').attr('id'),
+                        offset : $('#news article').length-1,
+                        limit : 8
+                    },
+                    success: function(data){
+                        if(Object.keys(data).length>0){
+                            addNews({
+                                news : data,
+                                conteneur : '#news'
+                            });
+                            busy = false;
+                        }else{
+                            $('#news').append($('<p>').addClass('loading').text('-- Toutes les actualités sont chargées --'));
+                        }
+                    },
+                    error : function(data){
+                        console.log(data);
+                    }
+                });
+            }
+        })
+
+       $('.navigation_news a').on('click', function(evt){
+            evt.preventDefault();
+            var $this = $(this);
+
+            busy = false;   // On réactive le chargement ajax
+
+            /* On affiche la bonne section */
+            $('.navigation_news a').removeClass('actif');
+            $this.addClass('actif');
+
+            $.ajax({
+                dataType: 'json',
+                type : 'POST',
+                url: '/news',
+                data: { 
+                    type : $this.attr('id'), 
+                    offset : 0,
+                    limit : 8
+                },
+                success: function(data){
+                    $('#news').empty();
+                    addNews({
+                        news : data,
+                        conteneur : '#news'
+                    })
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+       });
+    }
+
     /* Page profil */
-    if($('#profil').length>0){
+    if($('#profil[data-id=profil]').length>0){
 
         /* Suivi de l'activité d'une personne */
         $('#suivre').on('click', function(evt){
             evt.preventDefault();
-            var _this = $(this);
-            $.getJSON(_this.attr('href'), function(data){
-                if(data.action.name=='follow')  _this.addClass('active');
-                else                            _this.removeClass('active');
+            var $this = $(this);
+            $.getJSON($this.attr('href'), function(data){
+                if(data.action.name=='follow')  $this.addClass('active');
+                else                            $this.removeClass('active');
             });
         });
 
         /* Encourgagements */
         $('.support').on('click', function(evt){
             evt.preventDefault();
-            var _this = $(this);
-            $.getJSON(_this.attr('href'), function(data){
-                if(data.action.name=='support') _this.addClass('active');
-                else                            _this.removeClass('active');
+            var $this = $(this);
+            $.getJSON($this.attr('href'), function(data){
+                if(data.action.name=='support') $this.addClass('active');
+                else                            $this.removeClass('active');
             });
         });
 
@@ -137,5 +203,55 @@ $(function(){
 function resize(){
     if(window.innerHeight>670){
         $('#landing>section:nth-child(2)').css('height',window.innerHeight-60+'px');
+    }
+}
+
+function addNews(params){
+    var data = params.news;
+    for(var key in data){
+        /* Génération des classes dynamiques */
+        var support_class = data[key].news.support?'active':'';
+        var activity_class = 'bg-';
+        switch(data[key].news.type){
+            case 'activity_calories':
+                activity_class+='cal';
+                break;
+            case 'activity_event':
+                activity_class+='event';
+                break;
+            case 'activity_friend':
+                activity_class+='friend';
+                break;
+            default :
+                activity_class+='km';
+        }
+
+        /* Création de la news */
+        var news = $('<article>').addClass(activity_class).append( 
+            $('<div>').addClass('contain clearfix').append([ 
+                $('<div>').addClass('profil fleft').append([ 
+                    $('<a>').attr('href', '/profil/'+data[key].user.username).addClass('name').text(data[key].user.firstname+' '+data[key].user.lastname), 
+                    $('<div>').addClass('friend-pics').append(
+                        $('<div>').addClass('friend-pics').append(
+                            $('<div>').addClass('targets').append(
+                                $('<div>').addClass('pics').append(
+                                    $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg')
+                                )
+                            )
+                        )
+                    ),
+                    $('<p>').addClass('date').text(data[key].news.date)
+                ]),
+                $('<div>').addClass('live-news fleft').append([
+                    $('<p>').html( '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>'+data[key].news.content),
+                    $('<div>').addClass('separator'),
+                    $('<div>').addClass('link').append( 
+                        $('<a>').attr('href', 'support/'+key).addClass(support_class).text('J\'encourage')
+                    )
+                ])
+            ])
+        );
+        /* Ajout de la news */
+        $(params.conteneur).append(news);
     }
 }

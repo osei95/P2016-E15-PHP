@@ -33,7 +33,7 @@
 
 					/* Récupération des news */
 					$news_model = new News_model();
-					$news = $news_model->getAllRelationsNews(array('user_id' => $f3->get('SESSION.user.user_id'), 'news_date'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()))));
+					$news = $news_model->getAllNews(array('user_id' => $f3->get('SESSION.user.user_id'), 'news_date'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time())), 'offset'=>0, 'limit'=>10));
 					$f3->set('news', $news);
 
 					/* Récupération des supports propres à l'utilisateur */
@@ -75,10 +75,35 @@
 			$f3->reroute('/');
 		}
 
-		function chat($f3){
-			$f3->set('from', ($f3->exists('PARAMS.name')?2:1));
-			$f3->set('to', ($f3->exists('PARAMS.name')?1:2));
-			echo View::instance()->render('chat.html');
+		function news($f3){
+			$this->tpl=array('sync'=>'news.json', 'async'=>'news.json');
+
+			$user_model = new User_model();
+			$user = $user_model->getUserById(array('id' => $f3->get('SESSION.user.user_id')));
+			if($user){
+
+				$type = $f3->exists('POST.type')?$f3->get('POST.type'):'all_news';
+				$offset = $f3->exists('POST.offset')?$f3->get('POST.offset'):0;
+				$limit = $f3->exists('POST.limit')?$f3->get('POST.limit'):5;
+
+				/* Récupération des news */
+				$news_model = new News_model();
+				if($type=='relations_news')			$news = $news_model->getAllRelationsNews(array('user_id' => $user->user_id, 'news_date'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time())), 'offset'=>$offset, 'limit'=>$limit));
+				elseif($type=='followings_news')	$news = $news_model->getAllFollowingsNews(array('user_id' => $user->user_id, 'news_date'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time())), 'offset'=>$offset, 'limit'=>$limit));
+				elseif($type=='all_news')			$news = $news_model->getAllNews(array('user_id' => $user->user_id, 'news_date'=>mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time())), 'offset'=>$offset, 'limit'=>$limit));
+				$f3->set('news', $news);
+
+				/* Récupération des supports propres à l'utilisateur */
+				$supports = $news_model->getAllSupportsByUserId(array('user_id' => $user->user_id));
+				$support_list=array('news' => array());
+				if(is_array($supports)){
+					foreach($supports as $s){
+						array_push($support_list['news'], $s->news_id);
+					}
+				}
+				$f3->set('supports', $support_list);
+				
+			}
 		}
 		
 	}
