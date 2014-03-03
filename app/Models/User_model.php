@@ -77,7 +77,22 @@
 		/* Relations */
 
 		function getAllRelationsByUserId($params){
-			 return $this->dB->exec("SELECT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname` FROM `following` `following_from` INNER JOIN `user` ON `following_from`.`following_to` = `user`.`user_id` WHERE EXISTS( SELECT `following_to`.`following_from`, `following_to`.`following_to` FROM `following` `following_to` WHERE `following_from`.`following_from` = `following_to`.`following_to` AND `following_to`.`following_from` = `following_from`.`following_to`) AND `following_from`.`following_from`=".intval($params['id']));
+			$mapper=$this->getMapper('relationship');
+			return $this->dB->exec("SELECT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname` FROM `user` INNER JOIN `relationship` ON `user`.`user_id` = CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from`  END WHERE (request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).") AND request_state=".intval($params['state']));
+		}
+
+		function addRelation($params){
+			$mapper=$this->getMapper('relationship');
+			$mapper->request_from = $params['from'];
+			$mapper->request_to = $params['to'];
+			$mapper->request_state	 = $params['state'];
+			$mapper->request_time = $params['time'];
+			$mapper->save();
+		}
+
+		function isRelation($params){
+			$mapper=$this->getMapper('relationship');
+			return $mapper->load(array('((request_from=? AND request_to=?) OR (request_from=? AND request_to=?)) AND request_state=1', $params['from'], $params['to'], $params['to'], $params['from']));
 		}
 
 		/* Notifications */
