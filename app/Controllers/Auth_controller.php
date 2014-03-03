@@ -181,6 +181,11 @@
 			    	}
 			    }else if(!isset($_FILES['profil_photo'])){
 			    	$errors['data'] = 'Merci de choisir une photo de profil.';
+			    }else if(!$f3->exists('SESSION.registration_form.photo_profil')){
+			    	$errors['data'] = 'Une erreur s\'est produite lors du chargement de votre photo de profil. Veuillez recommencer.';
+			    }else{
+			    	// Si c'est un deuxième chargement et que la photo est en session
+			    	$relative_path = $f3->get('SESSION.registration_form.photo_profil');
 			    }
 			}elseif($f3->exists('POST.username') && $f3->exists('POST.password') && $f3->exists('POST.input')){
 				$user_model = new User_model();
@@ -233,7 +238,7 @@
 				}
 				$input_api_controller->importActivity($f3, array('user_id' =>$user->user_id, 'input_shortname' => $registration_infos['input_name'], 'input_id' => $input->input_id, 'user_has_input_id' => $input->user_has_input_id, 'access_token' => $registration_infos['access_token'], 'access_token_secret' => (isset($registration_infos['access_secret_token'])?$registration_infos['access_secret_token']:''), 'date' => 'all'));
 				mkdir($base_server.'/medias/users/'.$user->user_id);
-				rename($base_server.$f3->get('SESSION.registration_form.photo_profil'), $base_server.'/medias/users/'.$user->user_id.'/profil.jpg');
+				rename($base_server.$relative_path, $base_server.'/medias/users/'.$user->user_id.'/profil.jpg');
 				$f3->reroute('/profil');
 			}else{
 				$f3->set('user_infos', $infos);

@@ -73,7 +73,7 @@ $(function(){
     /* Page recherche et inscription */
     if($('#recherche').length>0 || $('#inscription').length>0){
 
-        $('.city_autocomplete input[name=city_]').on('focus', function(){
+        $('.city_autocomplete input[name=city]').on('focus', function(){
             $('.city_autocomplete ul').css('display','block');
         });
         $('.city_autocomplete input[name=city]').on('keyup', function(){
