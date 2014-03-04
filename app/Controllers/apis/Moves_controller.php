@@ -60,7 +60,7 @@
 				if(is_array($activity_infos)){	// Si on a une activité ce jour
 					foreach($activity_infos as $items){
 						$date = $items['date'];
-						if($date==$today || (isset($params['date']) && $params['date']=='all') && is_array($items['summary'])){
+						if(($date==$today || (isset($params['date'])) && $params['date']=='all') && is_array($items['summary']) && count($items['summary']>0)){
 							foreach($items['summary'] as $item){
 								switch($item['activity']){
 									case 'wlk':
