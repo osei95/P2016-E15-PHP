@@ -112,6 +112,14 @@
 			$graphs[0]['texte'] = $level['level'];
 			$graphs[0]['restant'] = round($level['leftKm'], 1);
 
+			$valueDate = time() - (15 * 86400);
+			$sum15DistanceUser = new Activity_model();
+			$valueDistanceuser = $sum15DistanceUser->getSum15DistanceUser(array('user_id' => $f3->get('PARAMS.id_user'),'limit'=>$valueDate));
+
+
+			$graphs[2]['valeur'] = $valueDistanceuser;
+			$graphs[2]['texte'] = $valueDistanceuser;
+
 			$activity_tab = array();
 			foreach($activity as $key => $value){
 				$activity_tab[$key]=$value->cast();
