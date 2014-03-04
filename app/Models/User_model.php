@@ -46,6 +46,10 @@
 			return $mapper;
 		}
 
+		function getProfilPhotoFollowers($params){
+			$mapper = $this->getMapper('relationship');
+			return $mapper->find(array('request_from=? AND request_state=?', $params['user_id'],$params['request']));
+		}
 
 		/* Followers */
 

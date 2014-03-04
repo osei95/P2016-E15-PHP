@@ -31,7 +31,7 @@
 		}
 
 		function getSum15DistanceUser($params){
-			return $this->dB->("SELECT SUM(`distance`) FROM user_has_activity WHERE user_id =".$params['user_id']." AND `date` >".$params['limit']);
+			return $this->dB->exec("SELECT SUM(`distance`) FROM user_has_activity WHERE user_id =".$params['user_id']." AND `date` >".$params['limit']"");
 		}
 
 		function removeActivityUser($params){

@@ -29,6 +29,11 @@
 				$user_infos['user_city'] = ucwords(strtolower($user_infos['user_city_name']));
 				$f3->set('user', $user_infos);
 
+				/* Récupération des photos des followers */
+				$photos_model = new User_model();
+				$photos = $photos_model->getProfilPhotoFollowers(array('user_id' => $f3->get('SESSION.user.user_id'),'request'=>1));
+				$f3->set('usersPhoto',$photos);
+
 				/* Récupération des news propres à l'utilisateur */
 				$news_model = new News_model();
 				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id, 'news_date' => mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()))));
@@ -122,9 +127,9 @@
 			$sum15DistanceUser = new Activity_model();
 			$valueDistanceuser = $sum15DistanceUser->getSum15DistanceUser(array('user_id' => $f3->get('PARAMS.id_user'),'limit'=>$valueDate));
 
-
-			$graphs[2]['valeur'] = $valueDistanceuser;
-			$graphs[2]['texte'] = $valueDistanceuser;
+			$valueDistanceuser[0]['distance'] = $valueDistanceuser[0]['distance'] / 1000;
+			$graphs[2]['valeur'] = round($valueDistanceuser[0]['distance'], 1);
+			$graphs[2]['texte'] = round($valueDistanceuser[0]['distance'], 1);
 
 			$activity_tab = array();
 			foreach($activity as $key => $value){
