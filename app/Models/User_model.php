@@ -49,6 +49,7 @@
 		function getProfilPhotoFollowers($params){
 			$mapper = $this->getMapper('relationship');
 			return $mapper->find(array('request_from=? AND request_state=?', $params['user_id'],$params['request']));
+			//ORDER BY request_time DESC
 		}
 
 		/* Followers */
