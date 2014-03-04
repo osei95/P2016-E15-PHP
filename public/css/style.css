@@ -357,7 +357,7 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
 }
 .header_connected .contain div>a>span{
     border: 1px solid white;
-    background: red;
+    background: #e2867e;
     color: white;
     border-radius: 10px;
     height: 20px;
@@ -1175,17 +1175,17 @@ margin: 40px 0;
 
 .mes-objectifs>div:nth-child(2){
     margin-left: 20px;
-    padding: 2.3% 0 0% 0;
+    padding-top: 15px;
 }
 
 .mes-objectifs .fright{
-    padding: 3.4% 0 0% 0;
+    padding-top: 25px;
     
 }
 
 .mes-objectifs .fright a{
-    margin: 0 10px 0 10px;
-    padding: 10px 45px 10px 45px;
+    margin: 0 5px;
+    padding: 5px 30px;
     font-family: segoe_uibold;
     text-decoration: none;
     color: #fff;
@@ -1196,7 +1196,7 @@ margin: 40px 0;
 
 .mes-objectifs .fright .button{
     background-repeat: no-repeat;
-    padding: 10px 23px 10px 23px;
+    padding: 5px 30px;
     background-position: 15px center;
     background-color: #2d3e50;
     
@@ -1238,11 +1238,11 @@ margin: 40px 0;
 
 
 .mes-objectifs{
-    padding: 20px 0;
+    padding: 12px 0;
 }
 .mes-objectifs>div:first-child>div{
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
     border-radius: 50px;
     border: 5px solid #4c5b6a;
     overflow: hidden;
@@ -1331,12 +1331,12 @@ margin: 40px 0;
 
 /* -------------------------- Dashboard ----------------------------- */
 
-#profil.woman .obj-box{
+.obj-box{
     width: 500px;
     background: #e2867e;
     padding: 20px;
 }
-#profil .obj-box h2{
+.obj-box h2{
     text-transform: uppercase;
     font-family: segoe_uilight;
     font-size: 1.2em;
@@ -1344,27 +1344,27 @@ margin: 40px 0;
     text-align: center;
     margin-bottom: 40px;
 }
-#profil .obj-box h3{
+.obj-box h3{
     color: white;
     font-family: segoe_uilight;
     padding-left: 40px;
     margin: 20px 0;
 }
-#profil .obj-box h3.cible{
+.obj-box h3.cible{
     background: url(images/female-icon.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 140px center;
 }
-#profil .obj-box h3.objectif{
+.obj-box h3.objectif{
     background: url(images/gym.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 160px center;
 }
-#profil .obj-box h3.resultat{
+.obj-box h3.resultat{
     background: url(images/pres-icon.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 160px center;
 }
-#profil .obj-box .name{
+.obj-box .name{
     color: white;
     text-align:center;
     font-family: segoe_uilight;
 }
-#profil .obj-box .photo{
+.obj-box .photo{
     height: 75px;
     width: 75px;
     border-radius: 75px;
@@ -1372,11 +1372,11 @@ margin: 40px 0;
     overflow: hidden;
     margin: 10px auto;
 }
-#profil .obj-box .photo img{
+.obj-box .photo img{
     height: 100%;
     width: 100%;
 }
-#profil .obj-box .distance, #profil .obj-box .duree{
+.obj-box .distance, .obj-box .duree{
     width: 49%;
     display: inline-block;
     text-align: center;
@@ -1384,26 +1384,84 @@ margin: 40px 0;
     font-family: segoe_uilight;
     margin: 5px 0;
 }
-#profil .obj-box .distance h4{
+.obj-box .distance h4{
     padding-left: 30px;
     background: url(images/distance-icon.png) no-repeat left center;
     display: inline-block;
 }
-#profil .obj-box .duree h4{
+.obj-box .duree h4{
     padding-left: 30px;
     background: url(images/duree-icon.png) no-repeat left center;
     display: inline-block;
 }
-#profil .obj-box .distance p, #profil .obj-box .duree p{
+.obj-box .distance p, #profil .obj-box .duree p{
     font-family: segoe_uiregular;
 }
-#profil .fancybox-skin{
+.fancybox-skin{
     padding: 0 !important;
 }
-#profil .fancybox-close{
+.fancybox-close{
     top: 0 ;
     right: 0 ;
     background: url(images/cross.png) no-repeat center center;
+}
+.obj-box .age, .obj-box .taille, .obj-box .poids{
+    width: 32.5%;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-family: segoe_uilight;
+    margin: 5px 0;
+}
+.obj-box .taille h4{
+    padding-bottom: 40px;
+    background: url(images/box-icon1.png) no-repeat center 30px;
+}
+.obj-box .poids h4{
+    padding-bottom: 40px;
+    background: url(images/box-icon2.png) no-repeat center 35px;
+}
+.obj-box .age h4{
+    padding-bottom: 40px;
+    background: url(images/box-icon3.png) no-repeat center 35px;
+}
+.obj-box .line>.left {
+    text-align: right;
+    display: inline-block;
+    width: 40%;
+}
+.obj-box .line{
+    margin-bottom: 10px;
+}
+.obj-box .line>.right {
+    display: inline-block;
+    width: 210px;
+    margin-left: 50px;
+    vertical-align: top;
+    position: relative;
+}
+.obj-box .line>.left p {
+    color: white;
+    font-family: segoe_uilight;
+    text-transform: uppercase;
+    font-size: .9em;
+    position: relative;
+    top: 25px;
+}
+.obj-box .irs-single{
+    color: white;
+    font-size: .8em;
+}
+.obj-box .irs-slider{
+    background: white;
+    top: 19px;
+}
+.obj-box .irs-line{
+    background: white;
+    height: 2px;
+}
+#recherche .obj-box input[type="submit"]{
+    margin-bottom: 0;
 }
 #profil #news>article:nth-child(2n-1){
     background: #2d3e50;

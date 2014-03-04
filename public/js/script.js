@@ -1,10 +1,5 @@
 $(document).ready(function() {
-    resize();
-    $(".torangekm").ionRangeSlider({type:"double", postfix: " km"});
-    $(".torangeage").ionRangeSlider({type:"double", postfix: " ans"});
-    $(".torangetaille").ionRangeSlider({type:"double", postfix: " cm"});
-    $(".torangepoids").ionRangeSlider({type:"double", postfix: " kg"});
-    $(".torangecal").ionRangeSlider({type:"double", postfix: " kcal"});
+    $(".fancybox").fancybox();
     $(function() {
         $( "#accordion" ).accordion({
             "collapsible":true,
@@ -18,16 +13,6 @@ $(document).ready(function() {
         $("#autoincrement").val($(this).text());
         $(".villeauto").css("display","none");
     });
-
-    window.onresize = function() {
-        resize();
-    };
-    
-    function resize(){
-        if(window.innerHeight>670){
-            $("#landing>section:nth-child(2)").css('height',window.innerHeight-60+'px');
-        }
-    }
     
     $('a[href^="index.php#"]').click(function() {  
       link = $(this).attr('href'); 
@@ -40,18 +25,36 @@ $(document).ready(function() {
       return false;  
     });
 
-    $(document).scroll(function() {
-        if($(document).scrollTop()+$(window).height()>(860+250)){
-            $("#landing>section:nth-child(3)>div>div>img").animate({right:'0', opacity:1}, 1500);
-        }
-        if($(document).scrollTop()+$(window).height()>(860+500+250)){
-            $("#landing>section:nth-child(4)>div>div>img").animate({left:'0', opacity:1}, 1500);
-        }
-    });
 
-    $(document).ready(function() {
-		$(".fancybox").fancybox();
-	});
+    if($("body").attr("id")=="landing"){
+        resize();
+        
+        window.onresize = function() {
+            resize();
+        };
+
+        $(document).scroll(function() {
+            if($(document).scrollTop()+$(window).height()>(860+250)){
+                $("#landing #concept .fleft img").animate({right:'0', opacity:1}, 1500);
+            }
+            if($(document).scrollTop()+$(window).height()>(860+500+250)){
+                $("#landing>section:nth-child(4)>div>div>img").animate({left:'0', opacity:1}, 1500);
+            }
+        });
+    }
+    function resize(){
+        if(window.innerHeight>670){
+            $("#landing>section:nth-child(2)").css('height',window.innerHeight-60+'px');
+        }
+    }
+
+    $(".torangekm").ionRangeSlider({type:"double", postfix: " km"});
+    $(".torangeage").ionRangeSlider({type:"double", postfix: " ans"});
+    $(".torangetaille").ionRangeSlider({type:"double", postfix: " cm"});
+    $(".torangepoids").ionRangeSlider({type:"double", postfix: " kg"});
+    $(".torangecal").ionRangeSlider({type:"double", postfix: " kcal"});
+    $(".torangejours").ionRangeSlider({type:"single", postfix: " jours"});
+    $(".torangekmbis").ionRangeSlider({type:"single", postfix: " km"});
 
     
 });
