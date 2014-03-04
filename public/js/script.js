@@ -223,7 +223,11 @@ $(function(){
                     console.log(data);
                     switch($this.attr('id')){
                         case 'meetings':
-                            console.log(data);
+                            $('#main-contain').append(
+                                $('<section>').addClass('contain').attr('id', 'result').append( 
+                                    $('<div>').addClass('list-result clearfix')
+                                )
+                            );
                             for(var key in data){
                                 var meeting = $('<div>').append([
                                     $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg'),
@@ -234,53 +238,80 @@ $(function(){
                                         $('<a>').attr('href', '/profil/'+data[key].user.username).text('Voir le profil'),
                                     ])
                                 ]);
-                                $('#main-contain').append(meeting);
+                                $('#main-contain section.contain .list-result').append(meeting);
                             }
                             break;
                          case 'goals':
-                          console.log(data);
+                         case 'invitations':
+                            //console.log(data);
+                            $('#main-contain').append(
+                                $('<ul>').addClass('list')
+                            );
                             if(Object.keys(data).length>0){
-                                $('#main-contain').append(
-                                    $('<ul>').addClass('list')
-                                );
                                 for(var key in data){
-                                    var goal_class = 'normal';
-                                    var goal_message = '';
-                                    var goal_butons;
-                                    if(data[key].goal.accepted==0){
-                                        goal_class = 'fix';
-                                        goal_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
-                                        goal_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
-                                    }else if(data[key].goal.accepted==-1){
-                                        goal_class = 'fix';
-                                        goal_message = 'Vous avez refusé l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                    }else if(data[key].goal.achievement>=100){
-                                        goal_class = 'finish';
-                                        goal_message = 'Vous avez rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                        goal_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
-                                    }else if(data[key].goal.deadline<Math.round((new Date()).getTime()/1000)){
-                                        goal_class = 'done';
-                                        goal_message = 'Vous n’avez pas rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    var line_class = 'normal';
+                                    var line_message = '';
+                                    var line_butons ='';
+                                    if($this.attr('id')=='goals'){
+                                        if(data[key].goal.accepted==0){
+                                            line_class = 'fix';
+                                            line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
+                                            line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
+                                        }else if(data[key].goal.accepted==-1){
+                                            line_class = 'fix';
+                                            line_message = 'Vous avez refusé l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                        }else if(data[key].goal.achievement>=100){
+                                            line_class = 'finish';
+                                            line_message = 'Vous avez rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            line_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
+                                        }else if(data[key].goal.deadline<Math.round((new Date()).getTime()/1000)){
+                                            line_class = 'done';
+                                            line_message = 'Vous n’avez pas rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                        }else{
+                                            line_message = 'Vous avez accepté le défi de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            line_butons = $('<a>').attr('href', '#').addClass('button').text('Voir les détails');
+                                        }
                                     }else{
-                                        goal_message = 'Vous avez accepté le défi de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                        goal_butons = $('<a>').attr('href', '#').addClass('button').text('Voir les détails');
+                                        if(data[key].invitation.state==0){
+                                            line_class = 'normal';
+                                            if(data[key].invitation.from=='me'){
+                                                line_message = 'Vous avez envoyé une invitation à <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            }else{
+                                                 line_class = 'fix';
+                                                line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
+                                                line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a envoyé une invitation';
+                                            }
+                                        }else if(data[key].invitation.state==-1){
+                                            line_class = 'fix';
+                                            if(data[key].invitation.from=='me'){
+                                                line_message = 'Vous avez refusé l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            }else{
+                                                line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a refusé votre invitation';
+                                            }
+                                        }else{
+                                            line_class = 'finish';
+                                            line_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
+                                            if(data[key].invitation.from=='me'){
+                                                line_message = 'Vous avez accepté l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            }else{
+                                                line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a accepté votre invitation';
+                                            }
+                                        }
                                     }
-                                    var goal = $('<li>').addClass('mes-objectifs clearfix').append([
+                                    var line = $('<li>').addClass('mes-objectifs clearfix').append([
                                         $('<div>').addClass('fleft').append( 
                                             $('<div>').append(
                                                  $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg')
                                             )
                                         ),
-                                        $('<div>').addClass('fleft '+goal_class).append( 
-                                            $('<p>').html(goal_message)
+                                        $('<div>').addClass('fleft '+line_class).append( 
+                                            $('<p>').html(line_message)
                                         ),
-                                        $('<div>').addClass('fright').append(goal_butons)
+                                        $('<div>').addClass('fright').append(line_butons)
                                     ]);
-                                    $('#main-contain .list').append(goal);
+                                    $('#main-contain .list').append(line);
                                 }
                             }
-                            break;
-                         case 'invitations':
                             break;
                     }
                 },

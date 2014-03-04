@@ -10,7 +10,8 @@
 		},
 		"invitation" : {
 			"state" : "<?php echo $i['request_state']; ?>",
-			"time" : "<?php echo $i['request_time']; ?>"
+			"time" : "<?php echo $i['request_time']; ?>",
+			"from" : "<?php echo $i['from']; ?>"
 		}
 	}
 	<?php if($key!=count($invitations)-1) echo ','; ?>

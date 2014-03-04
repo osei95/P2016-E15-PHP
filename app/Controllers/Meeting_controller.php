@@ -54,7 +54,7 @@
 						break;
 					case 'invitations':
 						$this->tpl=array('sync'=>'invitations.json', 'async'=>'invitations.json');
-						$invitations = $user_model->getAllRequestsByUserId(array('user_id'=>$user->user_id, 'state'=>0));
+						$invitations = $user_model->getAllRelationsByUserId(array('user_id'=>$user->user_id));
 						$f3->set('invitations', $invitations);
 						break;
 					case 'goals':
