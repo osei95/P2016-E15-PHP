@@ -37,11 +37,13 @@ io.sockets.on('connection',function(socket){
 			connection.connect();
 			// On récupère l'id de l'utilisateur avec son token
 			// Penser à la sécurité de la requête !
-			connection.query('SELECT user_id FROM user WHERE user_key="'+current.user.token+'"', function(err, rows, fields) {
+			connection.query('SELECT user_id, user_username, user_gender FROM user WHERE user_key="'+current.user.token+'"', function(err, rows, fields) {
 				if (err) throw err;
 
 				// On enregiste l'utilisateur
 				current.user.id = rows[0]['user_id'];
+				current.user.username = rows[0]['user_username'];
+				current.user.gender = rows[0]['user_gender'];
 
 				var status = '403';
 
@@ -137,17 +139,20 @@ io.sockets.on('connection',function(socket){
 					});
 				if(typeof(users[current.im.to.id])!='undefined'){
 					if(users[current.im.to.id].page.name=='chat'){
+						// Conversation en cours avec cette personne
 						if(users[current.im.to.id].page.params.to==current.user.id){
 							message['message_from_class'] = 'friend';
 							users[current.im.to.id].socket.emit('receiveMessageIM', {
 								messages : [message]
 							});
 						}else{
+							// La personne parle avec quelqu'un d'autre
 							users[current.im.to.id].socket.emit('notifyMessageIM', {
 								from : current.user.id
 							});
 						}
 					}else{
+						// La personne est connectée, mais sur une autre page
 						connection.query('SELECT notification_id FROM notification WHERE user_id='+current.im.to.id+' AND notification_type="message" AND notification_from='+current.user.id+' AND notification_seen=0', function(err, rows, fields) {
 							if (err) throw err;
 							if(rows.length==0){
@@ -161,7 +166,64 @@ io.sockets.on('connection',function(socket){
 							}
 						});
 					}
+				}else{
+					// La personne n'est pas connectée
+					connection.query('SELECT notification_id FROM notification WHERE user_id='+current.im.to.id+' AND notification_type="message" AND notification_from='+current.user.id+' AND notification_seen=0', function(err, rows, fields) {
+						if (err) throw err;
+						if(rows.length==0){
+							connection.query('INSERT INTO notification (user_id, notification_type, notification_content, notification_from) VALUES ('+current.im.to.id+', "message", "", '+current.user.id+')', function(err, rows, fields) {
+								if (err) throw err;
+							});
+						}
+					});
 				}
+			});
+		}
+	});
+
+	/* --------------------------------- */
+	/* ---------- Page profil ---------- */
+	/* --------------------------------- */
+
+	/* Demande de discution */
+	socket.on('talkRequest',function(params){
+		console.log(params);
+
+		if(typeof params.to!='undefined' && typeof params.to.id!='undefined'){
+
+			var user_id_to = params.to.id;
+			var connection = mysql.createConnection(DB_INFOS);
+
+			connection.connect();
+			connection.query('SELECT * FROM relationship WHERE ((request_from='+user_id_to+' AND request_to='+current.user.id+') OR (request_from='+current.user.id+' AND request_to='+user_id_to+'))', function(err, rows, fields) {
+				if (err) throw err;
+				var response = {};
+				response.relationship = false;
+				if(rows.length>0){
+					if(rows[0]['request_state']==1){
+						response.relationship = true;
+					}else{
+						response.action = 'notificationAlreadySent';
+					}
+				}else{
+					// Homme
+					if(current.user.gender===0){
+						connection.query('INSERT INTO relationship (request_from, request_to, request_state, request_time) VALUES ('+current.user.id+', '+user_id_to+', 0, '+new Date().getTime()+')', function(err, rows, fields) {
+							if (err) throw err;
+							if(typeof(users[user_id_to])!='undefined'){
+								users[user_id_to].socket.emit('receiveNotification', {
+									type : 'relation'
+								});
+							}
+							response.action = 'sentNotification';
+						});
+					// Femme
+					}else{
+						response.action = 'addGoal';
+					}
+				}
+				socket.emit('talkRequestResponse', response);
+				connection.end();
 			});
 		}
 	});

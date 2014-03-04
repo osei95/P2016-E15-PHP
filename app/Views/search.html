@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <title>Meet & run</title>
+	  <meta name="description" content="">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="../public/css/reset.css">
+	  <link rel="stylesheet" href="../public/font/stylesheet.css">
+	  <link rel="stylesheet" href="../public/css/style.css">
+	  <link rel="stylesheet" href="../public/css/ion.rangeSlider.skinNice.css">
+	  <link rel="stylesheet" href="../public/css/ionrangeSlider.css">
+	</head>
+	<body id="recherche" class="<?php if(isset($results)){echo('search-results');} ?>" data-id="search">
+		<header class="active header_connected">
+			<div class="contain">
+				<div>
+					<a href="/profil" title="Mon profil"></a>
+					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
+					<a href="#" class="active" title="Recherche"></a>
+				</div>
+				<a href="/logout">Déconnexion</a>
+			</div>
+		</header>
+		<section class="search-fields">
+			<h1 class="titleN2"><?php if(!isset($results)): ?>Rechercher <?php echo($user['user_gender']==1?'un sportif':'une sportive'); else:?>Résultats de la recherche<?php endif;?></h1>
+			<form action="/search" method="POST">
+				<h2 class="item_title"><p class="contain">Votre recherche</p></h2>
+				<div class="section ma_recherche contain">
+					<div class="line clearfix">
+						<div class="left"><p>SEXE :</p></div>
+						<div class="right">
+							<input type="radio" name="sex" id="homme" value="homme" <?php echo(isset($options['gender']) && $options['gender']==0 || !isset($options['gender']) && $user['user_gender']==1?'checked':''); ?>><label for="homme">Homme</label>
+							<input type="radio" name="sex" id="femme" value="femme" <?php echo(isset($options['gender']) && $options['gender']==1 || !isset($options['gender']) && $user['user_gender']==0?'checked':''); ?>><label for="femme">Femme</label>
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>AGE :</p></div>
+						<div class="right">
+							<input type="text" class="torangeage" name="age" data-from="<?php echo(isset($options['age_min'])?$options['age_min']:'18'); ?>" data-to="<?php echo(isset($options['age_max'])?$options['age_max']:'99'); ?>" value="18;99">
+						</div>
+					</div>
+					<div class="line clearfix city_autocomplete">
+						<div class="left"><p>VILLE :</p></div>
+						<div class="right">
+							<input type="text" name="city" autocomplete="off" <?php echo(isset($options['city'])?'value="'.$options['city'].'"':'placeholder="Entrez une ville..."'); ?>>
+							<input type="hidden" name="city_slug" <?php echo(isset($options['city_slug'])?'value="'.$options['city_slug'].'"':''); ?>>
+							<ul>
+							</ul>
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>RAYON :</p></div>
+						<div class="right">
+							<input type="text" class="torangekm" name="rayon" data-from="<?php echo(isset($options['rayon_min'])?$options['rayon_min']:'0'); ?>" data-to="<?php echo(isset($options['rayon_max'])?$options['rayon_max']:'200'); ?>" value="0;200">
+						</div>
+					</div>
+				</div>
+				<div id="accordion">
+
+				  <h3 class="item_title"><p class="contain">Critères physiques</p></h3>
+				  <div id="physique" class="section contain">
+						<div class="line clearfix">
+						<div class="left"><p>TAILLE :</p></div>
+						<div class="right">
+							<input type="text" class="torangetaille" name="taille" data-from="<?php echo(isset($options['height_min'])?$options['height_min']:'130'); ?>" data-to="<?php echo(isset($options['height_max'])?$options['height_max']:'220'); ?>" value="130;220">
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>POIDS :</p></div>
+						<div class="right">
+							<input type="text" class="torangepoids" name="poids" data-from="<?php echo(isset($options['weight_min'])?$options['weight_min']:'30'); ?>" data-to="<?php echo(isset($options['weight_max'])?$options['weight_max']:'300'); ?>" value="30;300">
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>APPARENCE :</p></div>
+						<div class="right">
+							<select name="appearance">
+								<option value="all">Toutes les apparences</option>
+								<?php 
+								foreach($appareances as $a){
+									echo('<option value="'.$a->appearance_name.'" '.(isset($options['appearance']) && $options['appearance']==$a->appearance_name?'selected':'').'>'.$a->appearance_name.'</option>');
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>CARACTERE :</p></div>
+						<div class="right">
+							<select name="caractere">
+								<option value="all">Tous les caractères</option>
+								<?php 
+								foreach($temperaments as $t){
+									echo('<option value="'.$t->temperament_name.'" '.(isset($options['temperament']) && $options['temperament']==$t->temperament_name?'selected':'').'>'.$t->temperament_name.'</option>');
+								}
+								?>
+							</select>
+						</div>
+					</div>
+				  </div>
+				  <h3 class="item_title"><p class="contain">Critères sportifs</p></h3>
+				  <div id="sportif" class="section contain">
+				   	<div class="line clearfix sportchoice">
+						<div class="left"><p>SPORT PRATIQUé :</p></div>
+						<div class="right">
+							<?php
+							for($cpt=0; $cpt<count($sports); $cpt++){
+								echo('<input type="checkbox" name="sport[]" id="'.$sports[$cpt]->sport_name.'" value="'.$sports[$cpt]->sport_name.'" '.(isset($options['sports']) && in_array($sports[$cpt]->sport_name, $sports)?'selected':'').'><label for="'.$sports[$cpt]->sport_name.'">'.$sports[$cpt]->sport_name.'</label>');
+								if($cpt%2!=0)	echo('<br>');
+							}
+							?>
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>KILOMèTRES :</p></div>
+						<div class="right">
+							<input type="text" class="torangekm" name="km" data-from="<?php echo(isset($options['km_min'])?$options['km_min']:'10'); ?>" data-to="<?php echo(isset($options['km_max'])?$options['km_max']:'100'); ?>" value="10;100">
+						</div>
+					</div>
+					<div class="line clearfix">
+						<div class="left"><p>CALORIES :</p></div>
+						<div class="right">
+							<input type="text" class="torangecal" name="cal" data-from="<?php echo(isset($options['cal_min'])?$options['cal_min']:'10'); ?>" data-to="<?php echo(isset($options['cal_max'])?$options['cal_max']:'100'); ?>" value="10;100">
+						</div>
+					</div>
+				  </div>
+				</div>
+				<input type="submit" name="search" value="RECHERCHER">
+			</form>
+		</section>
+		<?php if(isset($results)): ?>
+		<section class="contain" id="result">
+			<div class="chat-infos">
+				<span class="chat-icon-women"></span>
+				<p><?php echo($count_results.' résultat'.($count_results>1?'s':'')); ?></p>
+				<div class="separator"></div>
+				<a href="/search" id="edit-search">Modifier ma recherche</a>
+			</div>
+			<?php if(count($results)>0): ?>
+			<div class="list-result clearfix">
+				<?php foreach($results as $r): ?>
+					<div>
+						<img src="/medias/users/<?php echo($r['user_id']); ?>/profil.jpg" alt="">
+						<div>
+							<h2><?php echo($r['user_firstname'].' '.$r['user_lastname']); ?></h2>
+							<p><?php echo($r['user_city_name']); ?></p>
+							<p><?php echo($r['user_age']); ?>ans</p>
+							<a href="/profil/<?php echo($r['user_username']); ?>">Voir le profil</a>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<div class="pagination">
+				<?php for($cpt=1; $cpt<ceil($count_results/12+1); $cpt++): ?>
+				<a href="/search/<?php echo($cpt); ?>" class="<?php echo($current_page==$cpt?'active':''); ?>"><?php echo($cpt); ?></a>
+				<?php endfor; ?>
+			</div>
+			<?php else: ?>
+				<p class="no-result">Pas de résultat. Essayez de modifier votre recherche !</p>
+			<?php endif; ?>
+		</section>
+		<?php endif; ?>
+		<footer>
+			<div class="contain">
+				<div>
+					<div>
+						<p>© 2014 Run & Meet - Tous droits réservés</p>
+					</div>
+					<div>
+						<p class="footer-title">Nous suivre sur</p>
+						<div>
+							<a href=""></a>
+							<a href=""></a>
+							<a href=""></a>
+						</div>
+					</div>
+					<div>
+						<div>
+							<p class="footer-title">A propos de Run & Meet</p>
+							<ul>
+								<li><a href="">A propos</a></li>
+								<li><a href="">Conditions d'utilisation</a></li>
+								<li><a href="">Protection des données</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	  	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	  	<script type="text/javascript" src="../public/js/ion.rangeSlider.min.js"></script>
+	  	<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
+	 	<script type="text/javascript" src="../public/js/script.js"></script>
+	 	<script type="text/javascript" src="http://php.h3.erwan.co:8880/socket.io/socket.io.js"></script>
+	  	<script type="text/javascript" src="../public/js/global.js"></script>
+	</body>
+</html>

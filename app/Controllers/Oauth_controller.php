@@ -30,13 +30,15 @@
 
 		function oauth_1_0_request($params){    
 
-		  $oauth = new OAuth($params['conskey'], $params['conssec'], OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);   
-          $oauth->setToken($params['oauth_token'], $params['oauth_token_secret']);
-          $oauth->fetch($params['url']);
-          $json_response = $oauth->getLastResponse();
-          $response = json_decode($json_response, true);
-
-		  return $response;
+		  	$response = array();
+		  	try{
+			 	$oauth = new OAuth($params['conskey'], $params['conssec'], OAUTH_SIG_METHOD_HMACSHA1, OAUTH_AUTH_TYPE_AUTHORIZATION);   
+	          	$oauth->setToken($params['oauth_token'], $params['oauth_token_secret']);
+	          	$oauth->fetch($params['url']);
+	          	$json_response = $oauth->getLastResponse();
+	          	$response = json_decode($json_response, true);
+	      	}catch (Exception $e) {}
+		  	return $response;
 		}
 
 		function oauth_2_0_auth($f3, $vars){
@@ -65,12 +67,16 @@
 			        "grant_type" => $vars['grantType']
 			    );
 
-				$ch = curl_init($vars['token_url']);
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$auth_response = json_decode(curl_exec($ch),true);
-				curl_close($ch);
+			    $auth_response = array();
+
+			    try{
+					$ch = curl_init($vars['token_url']);
+					curl_setopt($ch, CURLOPT_POST, 1);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+					$auth_response = json_decode(curl_exec($ch),true);
+					curl_close($ch);
+				}catch (Exception $e) {}
 
 				return $auth_response;
 			}

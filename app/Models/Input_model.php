@@ -34,9 +34,11 @@
 			$user_has_input->save();
 		}
 
-		function getInputs(){
+		function getInputs($params=null){
 			$mapper = $this->getMapper('user_infos');
-			return $mapper->find();
+			$options = array();
+			if(isset($params['user_fake']))	array_push($options, 'user_fake=?', $params['user_fake']);
+			return $mapper->find($options);
 		}
 
 		function getInputByName($params){

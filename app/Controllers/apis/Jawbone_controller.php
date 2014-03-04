@@ -27,7 +27,9 @@
 				$user_infos['firstname'] = (isset($jawbone_infos['data']['first']) && valid($jawbone_infos['data']['first'],array('','NA',false,null))?$jawbone_infos['data']['first']:null);
 				$user_infos['lastname'] = (isset($jawbone_infos['data']['last']) && valid($jawbone_infos['data']['last'],array('','NA',false,null))?$jawbone_infos['data']['last']:null);
 				$user_infos['gender'] = (isset($jawbone_infos['data']['gender']) && valid($jawbone_infos['data']['gender'],array('','NA',false,null))?(($jawbone_infos['data']['gender']=='MALE')?0:1):null);
-				$user_infos['birthday'] = null;
+				$user_infos['birthday_day'] = null;
+				$user_infos['birthday_month'] = null;
+				$user_infos['birthday_year'] = null;
 				$user_infos['city'] = null;
 				$user_infos['postcode'] = null;
 				$user_infos['email'] = null;

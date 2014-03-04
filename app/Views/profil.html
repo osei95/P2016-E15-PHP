@@ -7,20 +7,20 @@
 	  <meta name="description" content="">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="stylesheet" href="../public/css/reset.css">
-	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css" type="text/css" media="screen" />
 	  <link rel="stylesheet" href="../public/font/stylesheet.css">
 	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
 	<body id="profil" data-id="profil" data-user="<?php echo($user['user_id']); ?>">
-		<header class="active">
+		<header class="active header_connected">
 			<div class="contain">
 				<div>
-					<a href=""></a>
-					<a href=""></a>
-					<a href=""></a>
-					<a href=""></a>
+					<a href="#" title="Mon profil" class="active"></a>
+					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
+					<a href="/search" title="Recherche"></a>
 				</div>
-				<a href="#">Déconnexion</a>
+				<a href="/logout">Déconnexion</a>
 			</div>
 		</header>
 		<section id="informations">
@@ -29,8 +29,10 @@
 					<h1 class="titleN2"><?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
 					<span class="actif"></span>
 					<div><img src="/medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
-					<?php if($user['user_id']!=$SESSION['user']['user_id'] && !$supports['follow']):?><a id="suivre" href="follow/<?php echo($user['user_id']); ?>">Suivre</a><?php endif; ?>
-					<?php if($supports['follow'] && $supports['is_follow']):?><a id="discuter" href="#">Discuter</a><?php endif; ?>
+					<?php if($user['user_id']!=$SESSION['user']['user_id']):?>
+					<a id="suivre" href="follow/<?php echo($user['user_id']); ?>" class="<?php echo ($supports['follow']?'active':'') ?>">Suivre</a>
+					<a id="discuter" href="/messages/<?php echo($user['user_username']); ?>" data-id="<?php echo($user['user_id']); ?>">Discuter</a>
+					<?php endif; ?>
 				</div>
 				<div class="fright">
 					<div class="graphs">
@@ -147,11 +149,11 @@
 					<?php foreach($news as $n): ?>
 					<li class="mon-actu clearfix">
 						<div class="fleft">
-							<div><img src="medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
+							<div><img src="/medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
 						</div>
 						<div class="fleft">
 							<p><strong><?php echo($user['user_firstname'].' '.$user['user_lastname']); ?></strong> <?php echo($n['news_content']) ?></p>
-							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="<?php if(in_array($n['news_id'], $supports['news'])) echo('on'); ?>">J'encourage</a><?php endif; ?>
+							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="support <?php if(in_array($n['news_id'], $supports['news'])) echo 'active'; ?>">J'encourage</a><?php endif; ?>
 						</div>
 						<div class="fright">
 							<p><?php echo(date('d/m/Y', $n['news_date'])) ?></p>

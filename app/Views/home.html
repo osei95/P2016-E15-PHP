@@ -15,13 +15,13 @@
 			<div class="contain">
 				<div class="fleft">
 				</div>
-				<?php
-					if(isset($errors_login))	echo '<p class="error">'.current($errors_login).'</p>';
-				?>
 				<form action="/login" method="POST" class="fright">
-					<input type="text" name="username" placeholder="Pseudonyme" value="<?php if(isset($infos['username']) && isset($errors_login))	echo $infos['username'];?>">
+					<input type="text" name="username" placeholder="Pseudonyme" value="<?php if(isset($infos['username']) && isset($errors_auth))	echo $infos['username'];?>">
 					<input type="password" name="password" placeholder="Mot de passe">
 					<input type="submit" value="Connexion">
+					<?php
+						if(isset($errors_auth))	echo '<p class="error">'.current($errors_auth).'</p>';
+					?>
 				</form>
 			</div>
 		</header>
@@ -107,6 +107,7 @@
 		</footer>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	 	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	 	<script type="text/javascript" src="../public/js/jquery.fancybox.pack.js"></script>
 	  	<script type="text/javascript" src="public/js/script.js"></script>
 	</body>
 </html>

@@ -22,5 +22,21 @@ $.ajax({
 });
 
 socket.on('receiveNotification',function(params){
-	console.log(params);
+	switch(params.type){
+		case 'message':
+			var iconPosition = 3
+			break;
+		case 'relation':
+			var iconPosition = 2
+			break;
+	}
+	var selector = 'header .contain div>a:nth-child('+iconPosition+')';
+
+	var nthNotifications = 0;
+	if($(selector+'>span').length>0){
+		nthNotifications=parseInt($(selector+'>span').text());
+		$(selector+'>span').text(nthNotifications+1);
+	}else{
+		$(selector).append($('<span>').text(1));
+	}
 });

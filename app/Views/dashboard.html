@@ -13,12 +13,12 @@
 	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
 	<body id="profil" data-id="dashboard">
-		<header class="active">
+		<header class="active header_connected">
 			<div class="contain">
 				<div>
 					<a href="/profil" title="Mon profil"></a>
-					<a href="/" title="Mon dashboard"></a>
-					<a href="/messages" title="Messagerie"></a>
+					<a href="/" title="Mon dashboard" class="active"></a>
+					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
 					<a href="/search" title="Recherche"></a>
 				</div>
 				<a href="/logout">Déconnexion</a>
@@ -74,11 +74,11 @@
 		</section>
 		
 		<nav>
-			<div class="contain clearfix">
+			<div class="contain clearfix navigation_news">
 				<ul id="middle-nav">
-					<li><a href="#">Toutes les actualités</a></li>
-					<li><a class="actif" href="#">Personnes rencontrées</a></li>
-					<li><a href="#">Personnes suivies</a></li>
+					<li><a class="actif" href="#" id="all_news">Toutes les actualités</a></li>
+					<li><a href="#" id="relations_news">Personnes rencontrées</a></li>
+					<li><a href="#" id="followings_news">Personnes suivies</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -126,7 +126,7 @@
 						<p><span><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></span> <?php echo($n['news_content']) ?></p>
 						<div class="separator"></div>
 						<div class="link">
-							<?php if($n['user_from_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="<?php if(in_array($n['news_id'], $supports['news'])) echo('on'); ?>">J'encourage</a><?php endif; ?>
+							<?php if($n['user_from_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="<?php if(in_array($n['news_id'], $supports['news'])) echo 'active'; ?>">J'encourage</a><?php endif; ?>
 						</div> <!--End of link -->
 					</div>
 				</div>

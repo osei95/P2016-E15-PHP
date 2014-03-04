@@ -574,11 +574,12 @@ width: 300px;
 }
 
 #news article .profil .name{
+    display: block;
 	color: #ffffff;
 	text-align: center;
 	font-size: 19px;
 	font-family: segoe_uilight;
-	
+	text-decoration: none;
 }
 
 #news article .profil .date{
@@ -669,7 +670,13 @@ width: 300px;
 	background-size: cover;
 }
 
-
+#news .loading{
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-family: segoe_uilight;
+    color:#5E5E5E;
+}
 
 
 

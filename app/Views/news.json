@@ -1,0 +1,20 @@
+{
+	<?php foreach($news as $key => $n): ?>
+	"<?php echo $n['news_id']; ?>" : {
+		"news" : {
+			"type" : "<?php echo $n['news_type']; ?>",
+			"content" : "<?php echo $n['news_content']; ?>",
+			"date" : "<?php echo(date('d/m/Y', $n['news_date'])) ?>",
+			"support" : "<?php echo (in_array($n['news_id'], $supports['news']))?true:false; ?>",
+			"type" : "<?php echo $n['news_type']; ?>"
+		},
+		"user" : {
+			"id" : "<?php echo $n['user_from_id']; ?>",
+			"username" : "<?php echo $n['user_from_username']; ?>",
+			"firstname" : "<?php echo $n['user_from_firstname']; ?>",
+			"lastname" : "<?php echo $n['user_from_lastname']; ?>"
+		}
+	}
+	<?php if($key!=count($news)-1) echo ','; ?>
+	<?php endforeach; ?>
+}
