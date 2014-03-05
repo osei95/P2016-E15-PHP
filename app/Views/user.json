@@ -1,0 +1,11 @@
+{
+	"user" : {
+		"id" : "<?php echo $user['user_id']; ?>",
+		"username" : "<?php echo $user['user_username']; ?>",
+		"firstname" : "<?php echo $user['user_firstname']; ?>",
+		"lastname" : "<?php echo $user['user_lastname']; ?>",
+		"gender" : "<?php echo $user['user_gender']; ?>",
+		"weight" : "<?php echo $user['body_weight']; ?>",
+		"height" : "<?php echo $user['body_height']; ?>"
+	}
+}

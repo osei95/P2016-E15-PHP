@@ -257,13 +257,14 @@ $(function(){
                                             line_class = 'fix';
                                             line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
                                             line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
+                                            if($('body.woman').length>0) line_butons.push($('<a>').attr('href', '#').addClass('target').text('Fixer un objectif'));
                                         }else if(data[key].goal.accepted==-1){
                                             line_class = 'fix';
                                             line_message = 'Vous avez refusé l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
                                         }else if(data[key].goal.achievement>=100){
                                             line_class = 'finish';
                                             line_message = 'Vous avez rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                            line_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
+                                            line_butons = $('<a>').attr('href', '/messages/'+data[key].user.username).addClass('chat').text('Discuter');
                                         }else if(data[key].goal.deadline<Math.round((new Date()).getTime()/1000)){
                                             line_class = 'done';
                                             line_message = 'Vous n’avez pas rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
@@ -279,6 +280,7 @@ $(function(){
                                             }else{
                                                  line_class = 'fix';
                                                 line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
+                                                if($('body.woman').length>0) line_butons.push($('<a>').attr('href', '#').addClass('target').text('Fixer un objectif'));
                                                 line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a envoyé une invitation';
                                             }
                                         }else if(data[key].invitation.state==-1){
@@ -290,7 +292,7 @@ $(function(){
                                             }
                                         }else{
                                             line_class = 'finish';
-                                            line_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
+                                            line_butons = $('<a>').attr('href', '/messages/'+data[key].user.username).addClass('chat').text('Discuter');
                                             if(data[key].invitation.from=='me'){
                                                 line_message = 'Vous avez accepté l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
                                             }else{
@@ -298,7 +300,7 @@ $(function(){
                                             }
                                         }
                                     }
-                                    var line = $('<li>').addClass('mes-objectifs clearfix').append([
+                                    var line = $('<li>').addClass('mes-objectifs clearfix').attr('data-user', data[key].user.id).append([
                                         $('<div>').addClass('fleft').append( 
                                             $('<div>').append(
                                                  $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg')
@@ -320,6 +322,31 @@ $(function(){
                 }
             });
        });
+    
+        $('#main-contain').on('click', '.target', function(evt){
+            $this = $(this);
+            var user_id = $this.parents('.mes-objectifs').first().data('user');
+            console.log(user_id);
+            $.ajax({
+                dataType: 'json',
+                type : 'POST',
+                url: '/user',
+                data: { 
+                    id : user_id
+                },
+                success: function(data){
+                    console.log(data);
+                    addGoalPopup({
+                        user : data.user,
+                        conteneur : '.main-section'
+                    })
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+
     }
 
 });
@@ -378,4 +405,63 @@ function addNews(params){
         /* Ajout de la news */
         $(params.conteneur).append(news);
     }
+}
+
+function addGoalPopup(params){
+
+    /* Création de la popup */
+    var popup = $('<div>').append(
+        $('<div>').addClass('obj-box clearfix').attr('id', 'detail1').append([
+            $('<h2>').text('Objectif à atteindre'),
+            $('<h3>').addClass('cible').text('Votre cible'),
+            $('<p>').text(params.user.firstname+' '+params.user.lastname),
+            $('<div>').addClass('photo').append(
+                $('<img>').attr('src', '/medias/users/'+params.user.id+'/profil.jpg')
+            ),
+            $('<div>').addClass('taille').append(
+               $('<h4>').text('Taille'),
+               $('<p>').text(params.user.height)
+            ),
+            $('<div>').addClass('poids').append(
+               $('<h4>').text('Poids'),
+               $('<p>').text(params.user.weight)
+            ),
+            $('<div>').addClass('age').append(
+               $('<h4>').text('Age'),
+               $('<p>').text(params.user.age)
+            ),
+            $('<h3>').addClass('objectif').text('Votre objectif'),
+            $('<form>').append([ 
+                $('<div>').addClass('line clearfix').append([
+                    $('<div>').addClass('left').append(
+                        $('<p>').text('Kilomètres à parcourir :')
+                    ),
+                    $('<div>').addClass('right').append(
+                        $('<input>').attr({
+                            'name' : 'distance',
+                            'type' : 'text',
+                            'value' : '1;200'
+                        }).addClass('torangekmbis')
+                    )
+                ]),
+                $('<div>').addClass('line clearfix').append([
+                    $('<div>').addClass('left').append(
+                        $('<p>').text('Durée de l\'objectif :')
+                    ),
+                    $('<div>').addClass('right').append(
+                        $('<input>').attr({
+                            'name' : 'duration',
+                            'type' : 'text',
+                            'value' : '1;20'
+                        }).addClass('torangejours')
+                    )
+                ]),
+                $('<input>').attr({ 
+                    'type' : 'submit',
+                    'value' : 'ENVOYER'
+                })
+            ])
+        ])
+    );
+    $(params.conteneur).append(popup);   
 }

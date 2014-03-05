@@ -105,6 +105,19 @@
 				
 			}
 		}
+
+		function user($f3){
+			if($f3->exists('POST.id'))	$user_id = $f3->get('POST.id');
+			else 						$user_id = $f3->get('SESSION.user.user_id');
+			
+			$this->tpl=array('sync'=>'user.json', 'async'=>'user.json');
+			$user_model = new User_model();
+			$user = $user_model->getUserById(array('id' => $user_id));
+			if($user){
+				$user_infos = $user->cast();
+				$f3->set('user', $user_infos);
+			}
+		}
 		
 	}
 
