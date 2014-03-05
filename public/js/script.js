@@ -359,6 +359,7 @@ function resize(){
 
 function addNews(params){
     var data = params.news;
+    var news_class = 'fleft';
     for(var key in data){
         /* Génération des classes dynamiques */
         var support_class = data[key].news.support?'active':'';
@@ -377,10 +378,13 @@ function addNews(params){
                 activity_class+='km';
         }
 
+        if(news_class=='fleft') news_class = 'fright';
+        else news_class = 'fleft';
+
         /* Création de la news */
         var news = $('<article>').addClass(activity_class).append( 
             $('<div>').addClass('contain clearfix').append([ 
-                $('<div>').addClass('profil fleft').append([ 
+                $('<div>').addClass('profil '+news_class).append([ 
                     $('<a>').attr('href', '/profil/'+data[key].user.username).addClass('name').text(data[key].user.firstname+' '+data[key].user.lastname), 
                     $('<div>').addClass('friend-pics').append(
                         $('<div>').addClass('friend-pics').append(
