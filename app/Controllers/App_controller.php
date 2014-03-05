@@ -115,8 +115,27 @@
 			$user = $user_model->getUserById(array('id' => $user_id));
 			if($user){
 				$user_infos = $user->cast();
+				$user_infos['body_weight'] = ceil($user_infos['body_weight']/10);
 				$f3->set('user', $user_infos);
 			}
+		}
+
+		function addGoal($f3){
+			if($f3->exists('POST.user_id') && $f3->exists('POST.distance') && $f3->exists('POST.duration')){
+				$user_model = new User_model();
+				$user_to = intval($f3->get('POST.user_id'));
+				$user_from = intval($f3->get('SESSION.user.user_id'));
+				// Le destinataire de l'objectif était celui ayant lancé l'invitation
+				$invitation = $user_model->isInvitation(array('from'=>$user_to, 'to'=>$user_from, 'state'=>0));
+				if($invitation){
+					$distance = intval($f3->get('POST.distance'))*1000;	//conversion km -> m
+					$unit = 'distance';
+					$date = time();
+					$deadline = time()+(intval($f3->get('POST.duration'))*86400);
+					$user_model->addGoalUser(array('from'=>$user_from, 'to'=>$user_to, 'date'=>$date, 'deadline'=>$deadline, 'value'=>$distance, 'unit'=>$unit));
+				}
+			}
+			$f3->reroute('/meetings');
 		}
 		
 	}

@@ -12,6 +12,10 @@
 			"state" : "<?php echo $i['request_state']; ?>",
 			"time" : "<?php echo $i['request_time']; ?>",
 			"from" : "<?php echo $i['from']; ?>"
+		},
+		"goal" : {
+			"state" : "<?php echo $i['goal']['state']; ?>",
+			"id" : "<?php echo $i['goal']['id']; ?>"
 		}
 	}
 	<?php if($key!=count($invitations)-1) echo ','; ?>

@@ -54,8 +54,22 @@
 						break;
 					case 'invitations':
 						$this->tpl=array('sync'=>'invitations.json', 'async'=>'invitations.json');
+
+						/* On récupère les objectifs */
+						$goals = $user_model->getAllGoalsFromByUserId(array('id'=>$user->user_id, 'deadline'=>time()));
+						$goals_list = array();
+						foreach($goals as $key => $g){
+							$goals_list[$g->user_to_id] = $g->cast();
+						}
+
+						/* On récupère les invitations */
 						$invitations = $user_model->getAllRelationsByUserId(array('user_id'=>$user->user_id));
-						$f3->set('invitations', $invitations);
+						$invitations_list = array();
+						foreach($invitations as $key => $i){
+							$i['goal'] = (isset($goals_list[$i['request_from']])?array('state' => 'true', 'id'=> $goals_list[$i['request_from']]['goal_id']):array('state' => 'false', 'id'=> ''));
+							$invitations_list[$key] = $i;
+						}
+						$f3->set('invitations', $invitations_list);
 						break;
 					case 'goals':
 						$this->tpl=array('sync'=>'goals.json', 'async'=>'goals.json');
@@ -70,6 +84,17 @@
 						break;
 				}
 			}
+		}
+
+		public function replyInvitation($f3){
+			$json = array('action'=>false);
+			if($f3->exists('POST.user_id') && $f3->exists('POST.reply')){
+				$user_model = new User_model();
+				$retour = $user_model->updateRelation(array('from'=>intval($f3->get('POST.user_id')), 'to'=>$f3->get('SESSION.user.user_id'), 'state'=>intval($f3->get('POST.reply'))));
+				if($retour)	$json['action'] = true;
+			}
+			echo(json_encode($json));
+			exit;
 		}
 	}
 ?>
