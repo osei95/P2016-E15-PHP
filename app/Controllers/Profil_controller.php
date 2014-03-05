@@ -31,7 +31,7 @@
 
 				/* Récupération des photos des followers */
 				$photos_model = new User_model();
-				$photos = $photos_model->getAllRequestsByUserId(array('user_id' => $f3->get('SESSION.user.user_id'),'state'=>1));
+				$photos = $photos_model->getAllRelationsByUserId(array('user_id' => $user->user_id,'state'=>1));
 				$f3->set('usersPhoto',$photos);
 
 				/* Récupération des news propres à l'utilisateur */
