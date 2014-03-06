@@ -228,7 +228,35 @@ $(function(){
                 },
                 success: function(data){
                     console.log(data);
-                    addGoalPopup.call(this, {
+                    goalPopup.call(this, {
+                        type : 'add',
+                        user : data.user,
+                        conteneur : '.main-section'
+                    })
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+
+        /* Détails d'un objectif */
+        $('#main-contain').on('click', '.details', function(evt){
+            $this = $(this);
+            var user_id = $this.parents('.mes-objectifs').first().data('user');
+            $.ajax({
+                dataType: 'json',
+                type : 'POST',
+                url: '/goal',
+                data: { 
+                    id : user_id,
+                    type : ($('.navigation_rencontres a.actif').attr('id')=='goals'?'from':'to')
+                },
+                success: function(data){
+                    console.log(data);
+                    goalPopup.call(this, {
+                        type : 'resume',
+                        goal : data.goal,
                         user : data.user,
                         conteneur : '.main-section'
                     })
@@ -244,10 +272,11 @@ $(function(){
             $this = $(this);
             var user_id = $this.parents('.mes-objectifs').first().data('user');
             var reply = $this.hasClass('accept')?1:0;
+            var url = ($('.navigation_rencontres a.actif').attr('id')=='goals'?'/goal/reply':'/meetings/reply');
             $.ajax({
                 dataType: 'json',
                 type : 'POST',
-                url: '/meetings/reply',
+                url: url,
                 data: { 
                     user_id : user_id,
                     reply : reply
@@ -328,7 +357,75 @@ function addNews(params){
     }
 }
 
-function addGoalPopup(params){
+function goalPopup(params){
+
+    if(params.type=='add'){
+        var details = $('<form>').attr({
+            'action' : '/goal/add',
+            'method' : 'POST'
+        }).append([ 
+            $('<input>').attr({
+                'name' : 'user_id',
+                'type' : 'hidden',
+                'value' : params.user.id
+            }),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Kilomètres à parcourir :')
+                ),
+                $('<div>').addClass('right').append(
+                    $('<input>').attr({
+                        'name' : 'distance',
+                        'type' : 'text',
+                        'value' : '1;200'
+                    }).addClass('torangekmbis')
+                )
+            ]),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Durée de l\'objectif :')
+                ),
+                $('<div>').addClass('right').append(
+                    $('<input>').attr({
+                        'name' : 'duration',
+                        'type' : 'text',
+                        'value' : '1;20'
+                    }).addClass('torangejours')
+                )
+            ]),
+            $('<input>').attr({ 
+                'type' : 'submit',
+                'value' : 'ENVOYER'
+            })
+        ]);
+    }else if(type='resume'){
+        var details = $('<div>').append([ 
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Kilomètres à parcourir :')
+                ),
+                $('<div>').addClass('right').append(
+                    $('<p>').text(Math.round(params.goal.value/1000)+'km'+(Math.round(params.goal.value/1000)?'s':'')) // m->km
+                )
+            ]),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Durée de l\'objectif :')
+                ),
+                $('<div>').addClass('right').append(
+                   $('<p>').text(params.goal.duration+' jour'+(params.goal.duration>1?'s':''))
+                )
+            ]),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Etat actuel :')
+                ),
+                $('<div>').addClass('right').append(
+                   $('<p>').text(params.goal.achievement+'%')
+                )
+            ])
+        ]);
+    }
 
     /* Création de la popup */
     var popup = $('<div>').append(
@@ -352,44 +449,7 @@ function addGoalPopup(params){
                $('<p>').text(params.user.age+' ans')
             ),
             $('<h3>').addClass('objectif').text('Votre objectif'),
-            $('<form>').attr({
-                'action' : '/goal/add',
-                'method' : 'POST'
-            }).append([ 
-                $('<input>').attr({
-                    'name' : 'user_id',
-                    'type' : 'hidden',
-                    'value' : params.user.id
-                }),
-                $('<div>').addClass('line clearfix').append([
-                    $('<div>').addClass('left').append(
-                        $('<p>').text('Kilomètres à parcourir :')
-                    ),
-                    $('<div>').addClass('right').append(
-                        $('<input>').attr({
-                            'name' : 'distance',
-                            'type' : 'text',
-                            'value' : '1;200'
-                        }).addClass('torangekmbis')
-                    )
-                ]),
-                $('<div>').addClass('line clearfix').append([
-                    $('<div>').addClass('left').append(
-                        $('<p>').text('Durée de l\'objectif :')
-                    ),
-                    $('<div>').addClass('right').append(
-                        $('<input>').attr({
-                            'name' : 'duration',
-                            'type' : 'text',
-                            'value' : '1;20'
-                        }).addClass('torangejours')
-                    )
-                ]),
-                $('<input>').attr({ 
-                    'type' : 'submit',
-                    'value' : 'ENVOYER'
-                })
-            ])
+            details
         ])
     );
     $(params.conteneur).append(popup);   

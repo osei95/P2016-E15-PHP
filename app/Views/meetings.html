@@ -63,10 +63,10 @@
 		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
 		                    }else{
 		                        $goal_message = 'Vous avez accepté le défi de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
-		                        $goal_butons = '<a href="#" class="button">Voir les détails</a>';
+		                        $goal_butons = '<a href="#" class="button details">Voir les détails</a>';
 		                    }
 	                    ?>
-						<li class="mes-objectifs clearfix" data-user="<?php $g['user_from_id']; ?>">
+						<li class="mes-objectifs clearfix" data-user="<?php echo $g['user_from_id']; ?>">
 							<div class="fleft">
 								<div><img src="/medias/users/<?php echo $g['user_from_id']; ?>/profil.jpg" alt=""></div>
 							</div>

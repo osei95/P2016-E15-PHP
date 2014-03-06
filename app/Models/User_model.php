@@ -90,6 +90,28 @@
 			$mapper->save();
 		}
 
+		function updateGoal($params){
+			$mapper=$this->getMapper('goal');
+			$goal = $mapper->load(array('goal_from=? AND goal_to=?', $params['from'], $params['to']));
+			if($goal){
+				if(isset($params['unit']))			$goal->goal_unit	 = $params['unit'];
+				if(isset($params['value']))			$goal->goal_value = $params['value'];
+				if(isset($params['achievement']))	$goal->goal_achievement = $params['achievement'];
+				if(isset($params['date']))			$goal->goal_date = $params['date'];
+				if(isset($params['deadline']))		$goal->goal_deadline = $params['deadline'];
+				if(isset($params['accepted']))		$goal->goal_accepted = $params['accepted'];
+				$goal->save();
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		function getGoalByUsersId($params){
+			$mapper=$this->getMapper('goal_infos');
+			return $mapper->load(array('user_to_id=? AND user_from_id=?', $params['to'], $params['from']));
+		}
+
 		/* Relations */
 
 		function getAllRelationsByUserId($params){

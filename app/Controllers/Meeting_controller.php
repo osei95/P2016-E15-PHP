@@ -90,7 +90,9 @@
 			$json = array('action'=>false);
 			if($f3->exists('POST.user_id') && $f3->exists('POST.reply')){
 				$user_model = new User_model();
-				$retour = $user_model->updateRelation(array('from'=>intval($f3->get('POST.user_id')), 'to'=>$f3->get('SESSION.user.user_id'), 'state'=>intval($f3->get('POST.reply'))));
+				$user_from = intval($f3->get('POST.user_id'));
+				$user_to = $f3->get('SESSION.user.user_id');
+				$retour = $user_model->updateRelation(array('from'=>$user_from, 'to'=>$user_to, 'state'=>intval($f3->get('POST.reply'))));
 				if($retour)	$json['action'] = true;
 			}
 			echo(json_encode($json));
