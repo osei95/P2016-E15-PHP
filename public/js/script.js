@@ -83,6 +83,33 @@ $(function(){
                 }
             });
        });
+
+        $('.details a.details-goal').on('click', function(evt){
+            evt.preventDefault();
+            $this = $(this);
+            var user_id = $this.parents('.details').first().data('user');
+            $.ajax({
+                dataType: 'json',
+                type : 'POST',
+                url: '/goal',
+                data: { 
+                    id : user_id,
+                    type : 'from'
+                },
+                success: function(data){
+                    console.log(data);
+                    goalPopup.call(this, {
+                        type : 'resume',
+                        goal : data.goal,
+                        user : data.user,
+                        conteneur : '.main-section'
+                    })
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
     }
 
     /* Page profil */
@@ -305,7 +332,7 @@ function resize(){
 
 function addNews(params){
     var data = params.news;
-    var news_class = 'fleft';
+    var news_class = 'fright';
     for(var key in data){
         /* Génération des classes dynamiques */
         var support_class = data[key].news.support?'active':'';

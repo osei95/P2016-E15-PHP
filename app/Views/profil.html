@@ -11,12 +11,12 @@
 	  <link rel="stylesheet" href="../public/font/stylesheet.css">
 	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
-	<body id="profil" data-id="profil" data-user="<?php echo($user['user_id']); ?>">
+	<body id="profil" data-id="profil" data-user="<?php echo($user['user_id']); ?>" class="<?php echo ($user['user_gender']==0?'man':'woman'); ?>">
 		<header class="active header_connected">
 			<div class="contain">
 				<div>
-					<a href="#" title="Mon profil" class="active"></a>
-					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
+					<a href="/profil" title="Mon profil" class="active"></a>
+					<a href="/meetings" title="Mes rencontres"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
 					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
 					<a href="/search" title="Recherche"></a>
 				</div>
@@ -27,7 +27,7 @@
 			<div class="contain clearfix">
 				<div class="fleft">
 					<h1 class="titleN2"><?php echo $user['user_firstname'].' '.$user['user_lastname']; ?></h1>
-					<span class="actif"></span>
+					<span class=""></span>
 					<div><img src="/medias/users/<?php echo($user['user_id']); ?>/profil.jpg" alt=""></div>
 					<?php if($user['user_id']!=$SESSION['user']['user_id']):?>
 					<a id="suivre" href="follow/<?php echo($user['user_id']); ?>" class="<?php echo ($supports['follow']?'active':'') ?>">Suivre</a>
@@ -164,7 +164,7 @@
 						</div>
 						<div class="fleft">
 							<p><strong><?php echo($user['user_firstname'].' '.$user['user_lastname']); ?></strong> <?php echo($n['news_content']) ?></p>
-							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="support <?php if(in_array($n['news_id'], $supports['news'])) echo 'active'; ?>">J'encourage</a><?php endif; ?>
+							<?php if($user['user_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="tolike support <?php if(in_array($n['news_id'], $supports['news'])) echo 'active'; ?>">J'encourage</a><?php endif; ?>
 						</div>
 						<div class="fright">
 							<p><?php echo(date('d/m/Y', $n['news_date'])) ?></p>

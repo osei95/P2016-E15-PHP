@@ -167,6 +167,19 @@
 			 return $this->dB->exec("SELECT `notification`.`notification_from`, COUNT(`notification`.`notification_id`) `notifications` FROM `notification` WHERE user_id=".intval($params['id'])." AND `notification`.`notification_type`='".$params['type']."' GROUP BY notification_from");
 		}
 
+		function removeNotificationsByUserId($params){
+			 return $this->dB->exec("DELETE FROM `notification`WHERE user_id=".intval($params['id'])." AND `notification`.`notification_type`='".$params['type']."'");
+		}
+
+		function addNotification($params){
+			$mapper=$this->getMapper('notification');
+			$mapper->user_id = $params['user_id'];
+			$mapper->notification_type = $params['type'];
+			$mapper->notification_content = $params['content'];
+			$mapper->notification_from = $params['from'];
+			$mapper->save();
+		}
+
 		/* Search */
 		function searchUsers($params){
 			$values = array();

@@ -19,11 +19,11 @@
 			<div class="contain">
 				<div>
 					<a href="/profil" title="Mon profil"></a>
-					<a href="#" title="Mes rencontres" class="active"></a>
+					<a href="/meetings" title="Mes rencontres" class="active"></a>
 					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
 					<a href="/search" title="Recherche"></a>
 				</div>
-				<a href="#">Déconnexion</a>
+				<a href="/logout">Déconnexion</a>
 			</div>
 		</header>
 		<section class="main-section">
@@ -32,7 +32,7 @@
 				<div class="contain clearfix navigation_rencontres">
 					<ul id="middle-nav" class="bottom-border">
 						<li><a href="#" id="meetings">Mes rencontres</a></li>
-						<li><a class="actif" href="#" id="goals">Mes objectifs</a></li>
+						<?php if($user['user_gender']==0): ?><li><a class="actif" href="#" id="goals">Mes objectifs</a></li><?php endif; ?>
 						<li><a href="#" id="invitations">Mes invitations</a></li>
 					</ul>
 				</div>

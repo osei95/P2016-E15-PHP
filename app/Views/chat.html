@@ -17,9 +17,9 @@
 			<div class="contain">
 				<div>
 					<a href="/profil" title="Mon profil"></a>
-					<a href="/" title="Mon dashboard"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
-					<a href="#" title="Messagerie"></a>
-					<a href="/search" title="Recherche" class="active"></a>
+					<a href="/meetings" title="Mes rencontres"><?php if(isset($notifications['relation'])): echo('<span>'.$notifications['relation'].'</span>'); endif;?></a>
+					<a href="/messages" title="Messagerie" class="active"></a>
+					<a href="/search" title="Recherche"></a>
 				</div>
 				<a href="/logout">Déconnexion</a>
 			</div>

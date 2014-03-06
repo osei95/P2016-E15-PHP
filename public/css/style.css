@@ -725,7 +725,7 @@ td, tr{
     color:#2d3e50;
     font-weight: normal;
 }
-.mon-actu>div:nth-child(2) a{
+.tolike{
     text-decoration: none;
     color: #2d3e50;
     font-family: segoe_uibold;
@@ -849,7 +849,7 @@ td, tr{
     font-family: segoe_uilight;
     text-transform: uppercase;
 }
-#recherche input[type="submit"], #rencontres input[type="submit"]{
+#recherche input[type="submit"]{
     background: #2d3e50;
     display: block;
     color: white;
@@ -1401,8 +1401,8 @@ margin: 40px 0;
     padding: 0 !important;
 }
 .fancybox-close{
-    top: 5px;
-    right: 5px;
+    top: 0 ;
+    right: 0 ;
     background: url(images/cross.png) no-repeat center center;
 }
 .obj-box .age, .obj-box .taille, .obj-box .poids{
@@ -1412,7 +1412,6 @@ margin: 40px 0;
     color: white;
     font-family: segoe_uilight;
     margin: 5px 0;
-    vertical-align: top;
 }
 .obj-box .taille h4{
     padding-bottom: 40px;
@@ -1464,6 +1463,9 @@ margin: 40px 0;
 #recherche .obj-box input[type="submit"]{
     margin-bottom: 0;
 }
+#profil #news>article:nth-child(2n){
+    background: transparent;
+}
 #profil #news>article:nth-child(2n-1){
     background: #2d3e50;
 }
@@ -1473,14 +1475,8 @@ margin: 40px 0;
 #profil #news>article:nth-child(2n) .live-news .separator{
     border-color: #2d3e50;
 }
-#profil #news>article:nth-child(2n) .live-news a{
-    border-color: #2d3e50;
-    color: #2d3e50;
-}
-#rencontres .empty{
-    display: block;
-    text-align: center;
-    font-family: segoe_uilight;
-    color:#8A8A8A;
-    margin: 10px 0;
+#profil #news>article:nth-child(2n-1) .tolike{
+    border-color: white;
+    color: white;
+    background-image: url(images/encourager_white.png);
 }

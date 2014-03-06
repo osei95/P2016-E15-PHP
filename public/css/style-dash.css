@@ -624,15 +624,6 @@ width: 300px;
 	font-family: segoe_uibold;
 }
 
-#news article .live-news a {
-	color: #ffffff;
-	font-family: segoe_uilight;
-	text-decoration: none;
-	border: 1px solid #ffffff;
-	padding: 5px 25px;
-	
-}
-
 #news article.bg-km{
 	background-image: url(images/bg-km.png);
 	background-repeat: no-repeat;
