@@ -30,6 +30,15 @@
 			 return $this->dB->exec("SELECT SUM(`user_has_activity`.`distance`) as `distance` FROM `user_has_activity` INNER JOIN `user` ON `user_has_activity`.`user_id` = `user`.`user_id` WHERE `user`.`user_id`=".intval($params['user_id']));
 		}
 
+		function getGoals($params){
+			$mapper = $this->getMapper('');
+			return $valueGoals = $mapper->find();
+		}
+
+		function getSum15DistanceUser($params){
+			return $this->dB->exec("SELECT SUM(`distance`) distance FROM user_has_activity WHERE user_id =".$params['user_id']." AND `date` >".$params['limit']);
+		}
+
 		function removeActivityUser($params){
 			$mapper = $this->getMapper('user_has_activity');
 			$user_has_activity = $mapper->load(array('user_id=? AND input_id=? AND date=? AND activity_id=?', $params['user_id'], $params['input_id'], $params['date'], $params['activity']->activity_id));

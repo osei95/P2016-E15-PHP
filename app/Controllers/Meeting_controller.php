@@ -28,6 +28,9 @@
 				}
 				$f3->set('goals', $goals_list);
 
+				// On supprime les notifications en rapport avec les rencontres
+				$user_model->removeNotificationsByUserId(array('id' => $user->user_id, 'type'=>'relation'));
+
 				$notifications = $user_model->getAllNotificationsByUserId(array('id' => $user->user_id));
 				$notifications_list=array();
 				foreach($notifications as $n){
@@ -93,7 +96,11 @@
 				$user_from = intval($f3->get('POST.user_id'));
 				$user_to = $f3->get('SESSION.user.user_id');
 				$retour = $user_model->updateRelation(array('from'=>$user_from, 'to'=>$user_to, 'state'=>intval($f3->get('POST.reply'))));
-				if($retour)	$json['action'] = true;
+				if($retour){
+					/* Envoi d'une notification à l'utilisateur distant */
+					$user_model->addNotification(array('from'=>$user_to, 'user_id'=>$user_from, 'content'=>'', 'type'=>'relation'));
+					$json['action'] = true;
+				}
 			}
 			echo(json_encode($json));
 			exit;

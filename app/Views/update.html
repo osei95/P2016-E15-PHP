@@ -1,0 +1,12 @@
+<?php 
+	if(isset($errors_register))	echo '<p class="error">'.current($errors_register).'</p>';
+?>
+
+<form action="/profil/update/<?php echo $user; ?>" method="post">
+	Prénom : <input type="text" id="firstname" name="firstname" /><br>
+	Nom : <input type="text" id="lastname"/><br>
+	MDP : <input type="text" id="password"/><br>
+	Confirm MDP : <input type="text" id="password2"/>
+
+	<input type="submit" name="Update" /> 
+</form>

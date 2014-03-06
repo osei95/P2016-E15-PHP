@@ -40,7 +40,7 @@
 						<div class="reussite"><h2>Taux de réussite</h2><p>par rapport aux objectifs</p></div>
 						<div class="activite"><h2>Votre activité</h2><p>sur les 15 derniers jours</p></div>
 					</div>
-					<p><?php echo '” '.$user['user_description'].' ”'; ?></p>
+					<p><?php echo (!empty($user['user_description'])) ? '” '.$user['user_description'].' ”' : '" Vous n\'avez pas encore rempli votre description. Remplissez la au plus vite. "'; ?></p>
 				</div>
 			</div>
 		</section>
@@ -114,15 +114,26 @@
 				       <td colspan="3">
 					       	<table class="photos-list">
 								<tr>
-									<td><a href=""><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Machin <br> trucbidule</span></div></a></td>
-									<td><a href=""><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Machin <br> trucbidule</span></div></a></td>
-									<td><a href=""><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Machin <br> trucbidule</span></div></a></td>
+									<td>
+										<a href="profil/<?php echo (!isset($usersPhoto[0]['user_username'])) ? '../search' : $usersPhoto[0]['user_username']; ?>"><img src="/medias/users/<?php echo (!isset($usersPhoto[0]['user_id'])) ? '#' : $usersPhoto[0]['user_id']; ?>/profil.jpg" alt=""><div class="wrapper"><span><?php echo (!isset($usersPhoto[0]['user_firstname'])) ? 'Chercher' : $usersPhoto[0]['user_firstname']; ?> <br> <?php echo (!isset($usersPhoto[0]['user_lastname'])) ? 'sportive' : $usersPhoto[0]['user_lastname']; ?></span></div></a>
+									</td>
+									<td>
+										<a href="profil/<?php echo (!isset($usersPhoto[1]['user_username'])) ? '../search' : $usersPhoto[1]['user_username']; ?>"><img src="/medias/users/<?php echo (!isset($usersPhoto[1]['user_id'])) ? '#' : $usersPhoto[1]['user_id']; ?>/profil.jpg" alt=""><div class="wrapper"><span><?php echo (!isset($usersPhoto[1]['user_firstname'])) ? 'Chercher' : $usersPhoto[1]['user_firstname']; ?> <br> <?php echo (!isset($usersPhoto[1]['user_lastname'])) ? 'sportive' : $usersPhoto[1]['user_lastname']; ?></span></div></a>
+									</td>
+									<td>
+										<a href="profil/<?php echo (!isset($usersPhoto[2]['user_username'])) ? '../search' : $usersPhoto[2]['user_username']; ?>"><img src="/medias/users/<?php echo (!isset($usersPhoto[2]['user_id'])) ? '#' : $usersPhoto[2]['user_id']; ?>/profil.jpg" alt=""><div class="wrapper"><span><?php echo (!isset($usersPhoto[2]['user_firstname'])) ? 'Chercher' : $usersPhoto[2]['user_firstname']; ?> <br> <?php echo (!isset($usersPhoto[2]['user_lastname'])) ? 'sportive' : $usersPhoto[2]['user_lastname']; ?></span></div></a>
+									</td>
 								</tr>
 								<tr>					
-									<td><a href=""><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Machin <br> trucbidule</span></div></a></td>
-									<td><a href=""><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Machin <br> trucbidule</span></div></a></td>
-									<td><a href=""><img src="../public/images/profil2.jpg" alt=""><div class="wrapper"><span>Machin <br> trucbidule</span></div></a></td>
-								</tr>
+									<td>
+										<a href="profil/<?php echo (!isset($usersPhoto[3]['user_username'])) ? '../search' : $usersPhoto[3]['user_username']; ?>"><img src="/medias/users/<?php echo (!isset($usersPhoto[3]['user_id'])) ? '#' : $usersPhoto[3]['user_id']; ?>/profil.jpg" alt=""><div class="wrapper"><span><?php echo (!isset($usersPhoto[3]['user_firstname'])) ? 'Chercher' : $usersPhoto[3]['user_firstname']; ?> <br> <?php echo (!isset($usersPhoto[0]['user_lastname'])) ? 'sportive' : $usersPhoto[0]['user_lastname']; ?></span></div></a>
+									</td>
+									<td>
+										<a href="profil/<?php echo (!isset($usersPhoto[4]['user_username'])) ? '../search' : $usersPhoto[4]['user_username']; ?>"><img src="/medias/users/<?php echo (!isset($usersPhoto[4]['user_id'])) ? '#' : $usersPhoto[4]['user_id']; ?>/profil.jpg" alt=""><div class="wrapper"><span><?php echo (!isset($usersPhoto[4]['user_firstname'])) ? 'Chercher' : $usersPhoto[4]['user_firstname']; ?> <br> <?php echo (!isset($usersPhoto[4]['user_lastname'])) ? 'sportive' : $usersPhoto[4]['user_lastname']; ?></span></div></a>
+									</td>
+									<td>
+										<a href="profil/<?php echo (!isset($usersPhoto[5]['user_username'])) ? '../search' : $usersPhoto[5]['user_username']; ?>"><img src="/medias/users/<?php echo (!isset($usersPhoto[5]['user_id'])) ? '#' : $usersPhoto[5]['user_id']; ?>/profil.jpg" alt=""><div class="wrapper"><span><?php echo (!isset($usersPhoto[5]['user_firstname'])) ? 'Chercher' : $usersPhoto[5]['user_firstname']; ?> <br> <?php echo (!isset($usersPhoto[5]['user_lastname'])) ? 'sportive' : $usersPhoto[5]['user_lastname']; ?></span></div></a>
+									</td>
 							</table>
 				       </td>
 				   </tr>

@@ -46,7 +46,6 @@
 			return $mapper;
 		}
 
-
 		/* Followers */
 
 		function follow($params){
@@ -77,6 +76,10 @@
 		function getAllGoalsFromByUserId($params){
 			$mapper=$this->getMapper('goal_infos');
 			return $mapper->find(array('user_from_id=? AND goal_deadline>?', $params['id'], $params['deadline']));
+		}
+
+		function getAllGoalsByUserId($params){
+			return $this->dB->exec("SELECT COUNT(*) AS goal, (SELECT COUNT(*) FROM goal WHERE goal_to=".$params['user_id']." AND goal_deadline<=".$params['datePresent']." AND goal_achievement >= 100) AS goalFail FROM goal WHERE goal_to =".$params['user_id']." AND goal_deadline<=".$params['datePresent']);
 		}
 
 		function addGoalUser($params){
@@ -162,6 +165,19 @@
 
 		function getAllNotificationsByUserIdAndType($params){
 			 return $this->dB->exec("SELECT `notification`.`notification_from`, COUNT(`notification`.`notification_id`) `notifications` FROM `notification` WHERE user_id=".intval($params['id'])." AND `notification`.`notification_type`='".$params['type']."' GROUP BY notification_from");
+		}
+
+		function removeNotificationsByUserId($params){
+			 return $this->dB->exec("DELETE FROM `notification`WHERE user_id=".intval($params['id'])." AND `notification`.`notification_type`='".$params['type']."'");
+		}
+
+		function addNotification($params){
+			$mapper=$this->getMapper('notification');
+			$mapper->user_id = $params['user_id'];
+			$mapper->notification_type = $params['type'];
+			$mapper->notification_content = $params['content'];
+			$mapper->notification_from = $params['from'];
+			$mapper->save();
 		}
 
 		/* Search */

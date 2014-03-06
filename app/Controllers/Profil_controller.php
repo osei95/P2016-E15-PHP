@@ -29,6 +29,11 @@
 				$user_infos['user_city'] = ucwords(strtolower($user_infos['user_city_name']));
 				$f3->set('user', $user_infos);
 
+				/* Récupération des photos des followers */
+				$photos_model = new User_model();
+				$photos = $photos_model->getAllRelationsByUserId(array('user_id' => $user->user_id,'state'=>1));
+				$f3->set('usersPhoto',$photos);
+
 				/* Récupération des news propres à l'utilisateur */
 				$news_model = new News_model();
 				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id, 'news_date' => mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()))));
@@ -117,6 +122,35 @@
 			$graphs[0]['valeur'] = $level['value'];
 			$graphs[0]['texte'] = $level['level'];
 			$graphs[0]['restant'] = round($level['leftKm'], 1);
+
+			/* Fonction qui calcule l'activité sur le site */
+			//////
+			/////
+			//////
+			/////
+			//////
+			/////
+			//////
+			/////
+			$valueDate = time() - (15 * 86400);
+			$sum15DistanceUser = new Activity_model();
+			$valueDistanceuser = $sum15DistanceUser->getSum15DistanceUser(array('user_id' => $f3->get('PARAMS.id_user'),'limit'=>$valueDate));
+
+			$valueDistanceuser[0]['distance'] = $valueDistanceuser[0]['distance'] / 1000;
+			$graphs[2]['valeur'] = round($valueDistanceuser[0]['distance'], 1);
+			$graphs[2]['texte'] = round($valueDistanceuser[0]['distance'], 1);
+
+			/* Fonction qui calcule le cercle objectif */
+			$user_model = new User_model();
+			$valuePercentGoals = $user_model->getAllGoalsByUserId(array('user_id'=>$f3->get('PARAMS.id_user'),'datePresent'=>time()));
+			if($valuePercentGoals[0]['goal'] != 0){
+				$graphs[1]['valeur'] = round(($valuePercentGoals[0]['goalFail'] * 100)/$valuePercentGoals[0]['goal'],0);
+				$graphs[1]['texte'] = round(($valuePercentGoals[0]['goalFail'] * 100)/$valuePercentGoals[0]['goal'],0);
+			}
+			else {
+				$graphs[1]['valeur'] = 0;
+				$graphs[1]['texte'] = 0;
+			}
 
 			$activity_tab = array();
 			foreach($activity as $key => $value){
