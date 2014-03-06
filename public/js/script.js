@@ -374,7 +374,7 @@ function addNews(params){
                     $('<p>').html( '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>'+data[key].news.content),
                     $('<div>').addClass('separator'),
                     $('<div>').addClass('link').append( 
-                        $('<a>').attr('href', 'support/'+key).addClass(support_class).text('J\'encourage')
+                        $('<a>').attr('href', 'support/'+key).addClass(support_class)
                     )
                 ])
             ])
