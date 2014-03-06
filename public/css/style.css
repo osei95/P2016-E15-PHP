@@ -396,7 +396,9 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
 #profil>#informations{
     background:#2d3e50;
 }
-
+#profil.woman>#informations{
+    background:#e3867f;
+}
 #profil>#informations .fleft{
     width: 340px;
     padding:30px 0;
@@ -428,6 +430,9 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     overflow: hidden;
     margin: auto;
 }
+#profil.woman>#informations .fleft>div:nth-child(3){
+    border: 5px solid #E79892
+}
 #profil>#informations .fleft>div:nth-child(3)>img{
     min-height: 100%;
     min-width: 100%;
@@ -451,6 +456,9 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
 }
 #suivre{
     background: #e3867f url(images/suivre.png) no-repeat 15px center;
+}
+.woman #suivre{
+    background: #2d3e50 url(images/suivre.png) no-repeat 15px center;
 }
 #discuter{
     background: #222222 url(images/discuter.png) no-repeat 12px center;
@@ -483,7 +491,10 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     border-right:1px solid #d3d7dc;
     display: block;
     text-decoration:none;
-}   
+}  
+.woman #resume .titleN2{
+    color:#e3867f;
+}
 #resume .photos-list{
     width: 100%;
 }
@@ -510,12 +521,18 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     color:#2d3e50;
     padding-top: 15px;
 }
+.woman #resume .info-list div>h3{
+    color:#e3867f;
+}
 #resume .info-list div>p{
     text-align: center;
     font-family: segoe_uibold;
     font-size: .9em;
     color:#2d3e50;
     padding-top: 40px;
+}
+.woman #resume .info-list div>p{
+    color:#e3867f;
 }
 td, tr{
     padding: 0;
@@ -546,12 +563,40 @@ td, tr{
     background: url(images/ville.png) no-repeat center center;
     border-left: none;
 }
-#resume .info-list>tbody>tr:last-child>td:nth-child(2){
-    background: url(images/caractere.png) no-repeat center center;
-}
 #resume .info-list>tbody>tr:last-child>td:nth-child(3){
     background: url(images/apparence.png) no-repeat center center;
 }
+
+.woman #resume .info-list>tbody>tr:first-child>td:nth-child(1){
+    background: url(images/taille-rose.png) no-repeat center center;
+}
+.woman #resume .info-list>tbody>tr:first-child>td:nth-child(2){
+    background: url(images/poids-rose.png) no-repeat center center;
+}
+.woman #resume .info-list>tbody>tr:first-child>td:nth-child(3){
+    background: url(images/age-rose.png) no-repeat center center;
+}
+.woman #resume .info-list>tbody>tr:last-child>td:nth-child(1){
+    background: url(images/ville-rose.png) no-repeat center center;
+}
+.woman #resume .info-list>tbody>tr:last-child>td:nth-child(3){
+    background: url(images/apparence-rose.png) no-repeat center center;
+}
+
+#resume .info-list>tbody>tr:last-child>td.football{ background: url(images/foot.png) no-repeat center center; }
+#resume .info-list>tbody>tr:last-child>td.rugby{ background: url(images/rugby.png) no-repeat center center; }
+#resume .info-list>tbody>tr:last-child>td.tennis{ background: url(images/tennis.png) no-repeat center center; }
+#resume .info-list>tbody>tr:last-child>td.course{ background: url(images/course.png) no-repeat center center; }
+#resume .info-list>tbody>tr:last-child>td.natation{ background: url(images/natation.png) no-repeat center center; }
+#resume .info-list>tbody>tr:last-child>td.basket{ background: url(images/basket.png) no-repeat center center; }
+
+.woman #resume .info-list>tbody>tr:last-child>td.football{ background: url(images/foot-rose.png) no-repeat center center; }
+.woman #resume .info-list>tbody>tr:last-child>td.rugby{ background: url(images/rugby-rose.png) no-repeat center center; }
+.woman #resume .info-list>tbody>tr:last-child>td.tennis{ background: url(images/tennis-rose.png) no-repeat center center; }
+.woman #resume .info-list>tbody>tr:last-child>td.course{ background: url(images/course-rose.png) no-repeat center center; }
+.woman #resume .info-list>tbody>tr:last-child>td.natation{ background: url(images/natation-rose.png) no-repeat center center; }
+.woman #resume .info-list>tbody>tr:last-child>td.basket{ background: url(images/basket-rose.png) no-repeat center center; }
+
 #resume .wrapper{
     position: absolute;
     height: 100%;
@@ -583,6 +628,9 @@ td, tr{
     display: block;
     text-decoration: none;
     font-size: 1.3em;
+}
+.woman #activity .titleN2, .woman #actuality .titleN2 {
+    color: #e3867f;
 }
 #activity .graphic{
     width: 100%;
@@ -690,11 +738,17 @@ td, tr{
     height: 15px;
     background: url(images/separe.png) repeat-x center top;
 }
+.woman .separe{
+    background: url(images/separe-rose.png) repeat-x center top;
+}
 .separe>span{
     display: block;
     width: 100%;
     height: 100%;
     background:url(images/fleche-actu.jpg) no-repeat top center;
+}
+.woman .separe>span{
+    background:url(images/fleche-actu-rose.jpg) no-repeat top center;
 }
 .mon-actu{
     border-bottom: 1px solid #a1a8b1;
@@ -707,6 +761,9 @@ td, tr{
     border: 5px solid #4c5b6a;
     overflow: hidden;
     margin: auto;
+}
+.woman .mon-actu>div:first-child>div{
+    border: 5px solid #e3867f;
 }
 .mon-actu>div:first-child>div>img{
     width: 100%;
@@ -725,6 +782,9 @@ td, tr{
     color:#2d3e50;
     font-weight: normal;
 }
+.woman .mon-actu>div:nth-child(2) p>strong{
+    color: #e3867f;
+}
 .tolike{
     text-decoration: none;
     color: #2d3e50;
@@ -735,11 +795,19 @@ td, tr{
     font-size: .9em;
     background: url(images/encourager.png) no-repeat 15px center;
 }
+.woman .tolike{
+    background: url(images/encourager-rose.png) no-repeat 15px center;
+    color: #e3867f;
+    border: 1px solid #e3867f;
+}
 .mon-actu>div.fright p{
     font-family: segoe_uibold;
     color:#2d3e50;
     text-align: right;
     margin-top: 10px;
+}
+.woman .mon-actu>div.fright p{
+    color: #e3867f;
 }
 .mon-actu>div.fright span{
     font-family: segoe_uibold;
@@ -750,6 +818,12 @@ td, tr{
     background: url(images/encourager.png) no-repeat 5px center;
     display: inline-block;
     float: right;
+}
+.woman .mon-actu>div.fright span{
+    background: url(images/encourager-rose.png) no-repeat 5px center;
+}
+.woman .mon-actu>div.fright span{
+    color: #e3867f;
 }
 #resume tbody>tr:last-child>td:first-child .photos-list:nth-child(1) .wrapper{
     background: #2d3e50;
@@ -1479,4 +1553,31 @@ margin: 40px 0;
     border-color: white;
     color: white;
     background-image: url(images/encourager_white.png);
+}
+#meeting-nav {
+    text-align: center;
+}
+
+#meeting-nav li {
+    text-align: center;
+    display:inline-block;
+    padding: 20px 50px 20px 50px;
+    font-family: segoe_uilight;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: #2d3e50;
+}
+
+
+#meeting-nav li a {
+    color:#2d3e50;
+    text-decoration: none;
+    
+}
+
+#meeting-nav li a.actif {
+    color:#2d3e50;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    
 }
