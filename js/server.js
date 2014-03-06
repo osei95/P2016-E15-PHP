@@ -1,8 +1,8 @@
 var DB_INFOS = {
-  host     : '',
-  database : '',
-  user     : '',
-  password : ''
+	host     : '',
+	database : '',
+	user     : '',
+	password : ''
 };
 
 var http  = require('http');
@@ -208,24 +208,27 @@ io.sockets.on('connection',function(socket){
 						response.action = 'notificationAlreadySent';
 					}
 				}else{
-					// Homme
-					if(current.user.gender===0){
-						connection.query('INSERT INTO relationship (request_from, request_to, request_state, request_time) VALUES ('+current.user.id+', '+user_id_to+', 0, '+Math.round((new Date()).getTime() / 1000)+')', function(err, rows, fields) {
+					connection.query('INSERT INTO relationship (request_from, request_to, request_state, request_time) VALUES ('+current.user.id+', '+user_id_to+', 0, '+Math.round((new Date()).getTime() / 1000)+')', function(err, rows, fields) {
+						if (err) throw err;
+						connection.query('INSERT INTO notification (user_id, notification_type, notification_content, notification_from) VALUES ('+user_id_to+', "relation", "", '+current.user.id+')', function(err, rows, fields) {
 							if (err) throw err;
 							if(typeof(users[user_id_to])!='undefined'){
 								users[user_id_to].socket.emit('receiveNotification', {
 									type : 'relation'
 								});
 							}
-							response.action = 'sentNotification';
+							connection.end();
 						});
+					});
+					// Homme
+					if(current.user.gender===0){
+						response.action = 'sentNotification';
 					// Femme
 					}else{
 						response.action = 'addGoal';
 					}
 				}
 				socket.emit('talkRequestResponse', response);
-				connection.end();
 			});
 		}
 	});
