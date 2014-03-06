@@ -6,13 +6,15 @@
 	  <title>Meet & run</title>
 	  <meta name="description" content="">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="../public/css/jquery.fancybox.css" type="text/css" media="screen" />
 	  <link rel="stylesheet" href="../public/css/reset.css">
-	  <link rel="stylesheet" href="../public/font/stylesheet.css">
-	  <link rel="stylesheet" href="../public/css/style.css">
-	  <link rel="stylesheet" href="../public/css/ion.rangeSlider.skinNice.css">
 	  <link rel="stylesheet" href="../public/css/ionrangeSlider.css">
+	  <link rel="stylesheet" href="../public/css/ion.rangeSlider.skinNice.css">
+	  <link rel="stylesheet" href="../public/font/stylesheet.css">
+	  <link rel="stylesheet" href="../public/css/style-dash.css">
+	  <link rel="stylesheet" href="../public/css/style.css">
 	</head>
-	<body id="rencontres">
+	<body id="rencontres" class="<?php echo ($user['user_gender']==0?'man':'woman'); ?>">
 		<header class="active header_connected " id="2">
 			<div class="contain">
 				<div>
@@ -24,7 +26,7 @@
 				<a href="#">Déconnexion</a>
 			</div>
 		</header>
-		<section class="">
+		<section class="main-section">
 			<h1 class="titleN2">Liste des rencontres</h1>
 			<nav>
 				<div class="contain clearfix navigation_rencontres">
@@ -37,7 +39,7 @@
 			</nav>
 			<section class="objectifs-H">
 				<div class="contain objectifs-feed clearfix" id="main-contain">
-					<?php if(is_array($goals)): ?>
+					<?php if(is_array($goals) && count($goals)>0): ?>
 					<ul>
 					<?php foreach($goals as $g): ?>
 						<?php $value = ceil($g['goal_value']/100); ?>
@@ -61,10 +63,10 @@
 		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
 		                    }else{
 		                        $goal_message = 'Vous avez accepté le défi de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
-		                        $goal_butons = '<a href="#" class="button">Voir les détails</a>';
+		                        $goal_butons = '<a href="#" class="button details">Voir les détails</a>';
 		                    }
 	                    ?>
-						<li class="mes-objectifs clearfix">
+						<li class="mes-objectifs clearfix" data-user="<?php echo $g['user_from_id']; ?>">
 							<div class="fleft">
 								<div><img src="/medias/users/<?php echo $g['user_from_id']; ?>/profil.jpg" alt=""></div>
 							</div>
@@ -77,6 +79,8 @@
 						</li>
 					<?php endforeach; ?>
 					</ul>
+					<?php else: ?>
+						<p class="empty">Vous n'avez pas encore reçu d'objectif</p>
 					<?php endif; ?>
 				</div>
 			</section>

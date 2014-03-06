@@ -74,10 +74,48 @@
 			return $mapper->find(array('user_to_id=?', $params['id']));
 		}
 
+		function getAllGoalsFromByUserId($params){
+			$mapper=$this->getMapper('goal_infos');
+			return $mapper->find(array('user_from_id=? AND goal_deadline>?', $params['id'], $params['deadline']));
+		}
+
+		function addGoalUser($params){
+			$mapper=$this->getMapper('goal');
+			$mapper->goal_from = $params['from'];
+			$mapper->goal_to = $params['to'];
+			$mapper->goal_unit = $params['unit'];
+			$mapper->goal_value = $params['value'];
+			$mapper->goal_date = $params['date'];
+			$mapper->goal_deadline = $params['deadline'];
+			$mapper->save();
+		}
+
+		function updateGoal($params){
+			$mapper=$this->getMapper('goal');
+			$goal = $mapper->load(array('goal_from=? AND goal_to=?', $params['from'], $params['to']));
+			if($goal){
+				if(isset($params['unit']))			$goal->goal_unit	 = $params['unit'];
+				if(isset($params['value']))			$goal->goal_value = $params['value'];
+				if(isset($params['achievement']))	$goal->goal_achievement = $params['achievement'];
+				if(isset($params['date']))			$goal->goal_date = $params['date'];
+				if(isset($params['deadline']))		$goal->goal_deadline = $params['deadline'];
+				if(isset($params['accepted']))		$goal->goal_accepted = $params['accepted'];
+				$goal->save();
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		function getGoalByUsersId($params){
+			$mapper=$this->getMapper('goal_infos');
+			return $mapper->load(array('user_to_id=? AND user_from_id=?', $params['to'], $params['from']));
+		}
+
 		/* Relations */
 
 		function getAllRelationsByUserId($params){
-			return $this->dB->exec("SELECT DISTINCT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname`, `user`.`user_gender`, `user`.`user_city_name`, `user`.`user_age`, `relationship`.`request_state`, `relationship`.`request_time`, CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN 'me' ELSE 'friend' END as `from` FROM `user_infos` `user` INNER JOIN `relationship` ON `user`.`user_id` = CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from`  END WHERE (request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).")".(isset($params['state'])?" AND request_state=".intval($params['state']):"")." ORDER BY request_time DESC");
+			return $this->dB->exec("SELECT DISTINCT `user`.`user_id`, `user`.`user_username`, `user`.`user_firstname`, `user`.`user_lastname`, `user`.`user_gender`, `user`.`user_city_name`, `user`.`user_age`, `relationship`.`request_state`, `relationship`.`request_time`, `relationship`.`request_from`, CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN 'me' ELSE 'friend' END as `from` FROM `user_infos` `user` INNER JOIN `relationship` ON `user`.`user_id` = CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from`  END WHERE (request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).")".(isset($params['state'])?" AND request_state=".intval($params['state']):"")." ORDER BY request_time DESC");
 		}
 
 		function getAllRequestsByUserId($params){
@@ -93,9 +131,27 @@
 			$mapper->save();
 		}
 
+		function updateRelation($params){
+			$mapper=$this->getMapper('relationship');
+			$relation = $mapper->load(array('request_from=? AND request_to=?', $params['from'], $params['to']));
+			if($relation){
+				if(isset($params['state']))	$relation->request_state	 = $params['state'];
+				if(isset($params['time']))	$relation->request_time = $params['time'];
+				$relation->save();
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		function isRelation($params){
 			$mapper=$this->getMapper('relationship');
 			return $mapper->load(array('((request_from=? AND request_to=?) OR (request_from=? AND request_to=?)) AND request_state=1', $params['from'], $params['to'], $params['to'], $params['from']));
+		}
+
+		function isInvitation($params){
+			$mapper=$this->getMapper('relationship');
+			return $mapper->load(array('request_from=? AND request_to=? AND request_state=?', $params['from'], $params['to'], $params['state']));
 		}
 
 		/* Notifications */

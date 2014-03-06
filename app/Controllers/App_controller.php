@@ -105,6 +105,79 @@
 				
 			}
 		}
+
+		function user($f3){
+			if($f3->exists('POST.id'))	$user_id = intval($f3->get('POST.id'));
+			else 						$user_id = $f3->get('SESSION.user.user_id');
+			
+			$this->tpl=array('sync'=>'user.json', 'async'=>'user.json');
+			$user_model = new User_model();
+			$user = $user_model->getUserById(array('id' => $user_id));
+			if($user){
+				$user_infos = $user->cast();
+				$user_infos['body_weight'] = ceil($user_infos['body_weight']/10);
+				$f3->set('user', $user_infos);
+			}
+		}
+
+		function goal($f3){
+			if($f3->exists('POST.id') && $f3->exists('POST.type')){
+
+				$this->tpl=array('sync'=>'goal.json', 'async'=>'goal.json');
+
+				if($f3->get('POST.type')=='to'){
+					$user_from = $f3->get('SESSION.user.user_id');
+					$user_to = intval($f3->get('POST.id'));
+				}else{
+					$user_to = $f3->get('SESSION.user.user_id');
+					$user_from = intval($f3->get('POST.id'));
+				}
+
+				$user_model = new User_model();
+				$user = $user_model->getUserById(array('id' => $user_to));
+				if($user){
+					$user_infos = $user->cast();
+					$user_infos['body_weight'] = ceil($user_infos['body_weight']/10);
+					$f3->set('user', $user_infos);
+					$goal = $user_model->getGoalByUsersId(array('from' => $user_from, 'to'=>$user_to));
+					if($goal){
+						$goal_infos = $goal->cast();
+						$f3->set('goal', $goal_infos);
+					}
+				}
+			}
+		}
+
+		function addGoal($f3){
+			if($f3->exists('POST.user_id') && $f3->exists('POST.distance') && $f3->exists('POST.duration')){
+				$user_model = new User_model();
+				$user_to = intval($f3->get('POST.user_id'));
+				$user_from = intval($f3->get('SESSION.user.user_id'));
+				// Le destinataire de l'objectif était celui ayant lancé l'invitation
+				$invitation = $user_model->isInvitation(array('from'=>$user_to, 'to'=>$user_from, 'state'=>0));
+				if($invitation){
+					$distance = intval($f3->get('POST.distance'))*1000;	//conversion km -> m
+					$unit = 'distance';
+					$date = time();
+					$deadline = time()+(intval($f3->get('POST.duration'))*86400);
+					$user_model->addGoalUser(array('from'=>$user_from, 'to'=>$user_to, 'date'=>$date, 'deadline'=>$deadline, 'value'=>$distance, 'unit'=>$unit));
+				}
+			}
+			$f3->reroute('/meetings');
+		}
+
+		public function replyGoal($f3){
+			$json = array('action'=>false);
+			if($f3->exists('POST.user_id') && $f3->exists('POST.reply')){
+				$user_model = new User_model();
+				$user_from = intval($f3->get('POST.user_id'));
+				$user_to = $f3->get('SESSION.user.user_id');
+				$retour = $user_model->updateGoal(array('from'=>$user_from, 'to'=>$user_to, 'accepted'=>intval($f3->get('POST.reply'))));
+				if($retour)	$json['action'] = true;
+			}
+			echo(json_encode($json));
+			exit;
+		}
 		
 	}
 

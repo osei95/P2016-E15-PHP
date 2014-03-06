@@ -4,9 +4,9 @@ $(function(){
 
     /* Landing page */
     if($('#landing').length>0){
-        resize();
+        resize.call(this);
         $(window).on('resize', function(){
-            resize();
+            resize.call(this);
         });
 
         $(document).on('scroll', function() {
@@ -36,7 +36,7 @@ $(function(){
                     },
                     success: function(data){
                         if(Object.keys(data).length>0){
-                            addNews({
+                            addNews.call(this, {
                                 news : data,
                                 conteneur : '#news'
                             });
@@ -73,7 +73,7 @@ $(function(){
                 },
                 success: function(data){
                     $('#news').empty();
-                    addNews({
+                    addNews.call(this, {
                         news : data,
                         conteneur : '#news'
                     })
@@ -201,7 +201,7 @@ $(function(){
     /* Page rencontres */
     if($('#rencontres').length>0){
 
-       $('.navigation_rencontres a').on('click', function(evt){
+        $('.navigation_rencontres a').on('click', function(evt){
             evt.preventDefault();
             var $this = $(this);
 
@@ -211,115 +211,88 @@ $(function(){
             $('.navigation_rencontres a').removeClass('actif');
             $this.addClass('actif');
 
+            switchSectionMeetings({type : $this.attr('id')});
+        });
+    
+        /* Ajout d'un objectif en réponse à une invitation */
+        $('#main-contain').on('click', '.target', function(evt){
+            $this = $(this);
+            var user_id = $this.parents('.mes-objectifs').first().data('user');
+            console.log(user_id);
             $.ajax({
                 dataType: 'json',
                 type : 'POST',
-                url: '/meetings',
+                url: '/user',
                 data: { 
-                    type : $this.attr('id')
+                    id : user_id
                 },
                 success: function(data){
-                    $('#main-contain').empty();
                     console.log(data);
-                    switch($this.attr('id')){
-                        case 'meetings':
-                            $('#main-contain').append(
-                                $('<section>').addClass('contain').attr('id', 'result').append( 
-                                    $('<div>').addClass('list-result clearfix')
-                                )
-                            );
-                            for(var key in data){
-                                var meeting = $('<div>').append([
-                                    $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg'),
-                                    $('<div>').append([
-                                        $('<h2>').text(data[key].user.firstname+' '+data[key].user.lastname),
-                                        $('<p>').text(data[key].user.city),
-                                        $('<p>').text(data[key].user.age),
-                                        $('<a>').attr('href', '/profil/'+data[key].user.username).text('Voir le profil'),
-                                    ])
-                                ]);
-                                $('#main-contain section.contain .list-result').append(meeting);
-                            }
-                            break;
-                         case 'goals':
-                         case 'invitations':
-                            //console.log(data);
-                            $('#main-contain').append(
-                                $('<ul>').addClass('list')
-                            );
-                            if(Object.keys(data).length>0){
-                                for(var key in data){
-                                    var line_class = 'normal';
-                                    var line_message = '';
-                                    var line_butons ='';
-                                    if($this.attr('id')=='goals'){
-                                        if(data[key].goal.accepted==0){
-                                            line_class = 'fix';
-                                            line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
-                                            line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
-                                        }else if(data[key].goal.accepted==-1){
-                                            line_class = 'fix';
-                                            line_message = 'Vous avez refusé l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                        }else if(data[key].goal.achievement>=100){
-                                            line_class = 'finish';
-                                            line_message = 'Vous avez rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                            line_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
-                                        }else if(data[key].goal.deadline<Math.round((new Date()).getTime()/1000)){
-                                            line_class = 'done';
-                                            line_message = 'Vous n’avez pas rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                        }else{
-                                            line_message = 'Vous avez accepté le défi de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                            line_butons = $('<a>').attr('href', '#').addClass('button').text('Voir les détails');
-                                        }
-                                    }else{
-                                        if(data[key].invitation.state==0){
-                                            line_class = 'normal';
-                                            if(data[key].invitation.from=='me'){
-                                                line_message = 'Vous avez envoyé une invitation à <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                            }else{
-                                                 line_class = 'fix';
-                                                line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
-                                                line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a envoyé une invitation';
-                                            }
-                                        }else if(data[key].invitation.state==-1){
-                                            line_class = 'fix';
-                                            if(data[key].invitation.from=='me'){
-                                                line_message = 'Vous avez refusé l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                            }else{
-                                                line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a refusé votre invitation';
-                                            }
-                                        }else{
-                                            line_class = 'finish';
-                                            line_butons = $('<a>').attr('href', '#').addClass('chat').text('Discuter');
-                                            if(data[key].invitation.from=='me'){
-                                                line_message = 'Vous avez accepté l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
-                                            }else{
-                                                line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a accepté votre invitation';
-                                            }
-                                        }
-                                    }
-                                    var line = $('<li>').addClass('mes-objectifs clearfix').append([
-                                        $('<div>').addClass('fleft').append( 
-                                            $('<div>').append(
-                                                 $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg')
-                                            )
-                                        ),
-                                        $('<div>').addClass('fleft '+line_class).append( 
-                                            $('<p>').html(line_message)
-                                        ),
-                                        $('<div>').addClass('fright').append(line_butons)
-                                    ]);
-                                    $('#main-contain .list').append(line);
-                                }
-                            }
-                            break;
+                    goalPopup.call(this, {
+                        type : 'add',
+                        user : data.user,
+                        conteneur : '.main-section'
+                    })
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+
+        /* Détails d'un objectif */
+        $('#main-contain').on('click', '.details', function(evt){
+            $this = $(this);
+            var user_id = $this.parents('.mes-objectifs').first().data('user');
+            $.ajax({
+                dataType: 'json',
+                type : 'POST',
+                url: '/goal',
+                data: { 
+                    id : user_id,
+                    type : ($('.navigation_rencontres a.actif').attr('id')=='goals'?'from':'to')
+                },
+                success: function(data){
+                    console.log(data);
+                    goalPopup.call(this, {
+                        type : 'resume',
+                        goal : data.goal,
+                        user : data.user,
+                        conteneur : '.main-section'
+                    })
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+
+        /* Réponse à une invitation */
+        $('#main-contain').on('click', '.accept, .refus', function(evt){
+            $this = $(this);
+            var user_id = $this.parents('.mes-objectifs').first().data('user');
+            var reply = $this.hasClass('accept')?1:0;
+            var url = ($('.navigation_rencontres a.actif').attr('id')=='goals'?'/goal/reply':'/meetings/reply');
+            $.ajax({
+                dataType: 'json',
+                type : 'POST',
+                url: url,
+                data: { 
+                    user_id : user_id,
+                    reply : reply
+                },
+                success: function(data){
+                    if(data.action){
+                        switchSectionMeetings.call(this, {type : $('.navigation_rencontres a.actif').attr('id')});
+                    }else{
+                        alert('Une erreur s\'est produite...');
                     }
                 },
                 error : function(data){
                     console.log(data);
                 }
             });
-       });
+        });
     }
 
 });
@@ -382,4 +355,239 @@ function addNews(params){
         /* Ajout de la news */
         $(params.conteneur).append(news);
     }
+}
+
+function goalPopup(params){
+
+    if(params.type=='add'){
+        var details = $('<form>').attr({
+            'action' : '/goal/add',
+            'method' : 'POST'
+        }).append([ 
+            $('<input>').attr({
+                'name' : 'user_id',
+                'type' : 'hidden',
+                'value' : params.user.id
+            }),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Kilomètres à parcourir :')
+                ),
+                $('<div>').addClass('right').append(
+                    $('<input>').attr({
+                        'name' : 'distance',
+                        'type' : 'text',
+                        'value' : '1;200'
+                    }).addClass('torangekmbis')
+                )
+            ]),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Durée de l\'objectif :')
+                ),
+                $('<div>').addClass('right').append(
+                    $('<input>').attr({
+                        'name' : 'duration',
+                        'type' : 'text',
+                        'value' : '1;20'
+                    }).addClass('torangejours')
+                )
+            ]),
+            $('<input>').attr({ 
+                'type' : 'submit',
+                'value' : 'ENVOYER'
+            })
+        ]);
+    }else if(type='resume'){
+        var details = $('<div>').append([ 
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Kilomètres à parcourir :')
+                ),
+                $('<div>').addClass('right').append(
+                    $('<p>').text(Math.round(params.goal.value/1000)+'km'+(Math.round(params.goal.value/1000)?'s':'')) // m->km
+                )
+            ]),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Durée de l\'objectif :')
+                ),
+                $('<div>').addClass('right').append(
+                   $('<p>').text(params.goal.duration+' jour'+(params.goal.duration>1?'s':''))
+                )
+            ]),
+            $('<div>').addClass('line clearfix').append([
+                $('<div>').addClass('left').append(
+                    $('<p>').text('Etat actuel :')
+                ),
+                $('<div>').addClass('right').append(
+                   $('<p>').text(params.goal.achievement+'%')
+                )
+            ])
+        ]);
+    }
+
+    /* Création de la popup */
+    var popup = $('<div>').append(
+        $('<div>').addClass('obj-box clearfix').attr('id', 'detail1').append([
+            $('<h2>').text('Objectif à atteindre'),
+            $('<h3>').addClass('cible').text('Votre cible'),
+            $('<p>').addClass('name').text(params.user.firstname+' '+params.user.lastname),
+            $('<div>').addClass('photo').append(
+                $('<img>').attr('src', '/medias/users/'+params.user.id+'/profil.jpg')
+            ),
+            $('<div>').addClass('taille').append(
+               $('<h4>').text('Taille'),
+               $('<p>').text(params.user.height+' cm')
+            ),
+            $('<div>').addClass('poids').append(
+               $('<h4>').text('Poids'),
+               $('<p>').text(params.user.weight+' kg')
+            ),
+            $('<div>').addClass('age').append(
+               $('<h4>').text('Age'),
+               $('<p>').text(params.user.age+' ans')
+            ),
+            $('<h3>').addClass('objectif').text('Votre objectif'),
+            details
+        ])
+    );
+    $(params.conteneur).append(popup);   
+    $(popup).fancybox().click();
+    $(popup).off('click');
+    $('.torangekmbis').ionRangeSlider({type:"single", postfix: " km"});
+    $('.torangejours').ionRangeSlider({type:"single", postfix: " jours"});
+}
+
+function switchSectionMeetings(params){
+    $.ajax({
+        dataType: 'json',
+        type : 'POST',
+        url: '/meetings',
+        data: { 
+            type : params.type
+        },
+        success: function(data){
+            $('#main-contain').empty();
+            console.log(data);
+            switch(params.type){
+                case 'meetings':
+                    $('#main-contain').append(
+                        $('<section>').addClass('contain').attr('id', 'result').append( 
+                            $('<div>').addClass('list-result clearfix')
+                        )
+                    );
+                    for(var key in data){
+                        var meeting = $('<div>').append([
+                            $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg'),
+                            $('<div>').append([
+                                $('<h2>').text(data[key].user.firstname+' '+data[key].user.lastname),
+                                $('<p>').text(data[key].user.city),
+                                $('<p>').text(data[key].user.age),
+                                $('<a>').attr('href', '/profil/'+data[key].user.username).text('Voir le profil'),
+                            ])
+                        ]);
+                        $('#main-contain section.contain .list-result').append(meeting);
+                    }
+                    break;
+                 case 'goals':
+                 case 'invitations':
+                    if(Object.keys(data).length>0){
+                        $('#main-contain').append(
+                            $('<ul>').addClass('list')
+                        );
+                        for(var key in data){
+                            var line_class = 'normal';
+                            var line_message = '';
+                            var line_butons ='';
+                            if(params.type=='goals'){
+                                /* Si un objectif est en attente de réponse */
+                                if(data[key].goal.accepted==0){
+                                    line_class = 'fix';
+                                    line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
+                                    line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
+                                    if($('body.woman').length>0) line_butons.push($('<a>').attr('href', '#').addClass('target').text('Fixer un objectif'));
+                                /* Si un objectif est refusé */
+                                }else if(data[key].goal.accepted==-1){
+                                    line_class = 'fix';
+                                    line_message = 'Vous avez refusé l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                /* Si un objectif est réussi */
+                                }else if(data[key].goal.achievement>=100){
+                                    line_class = 'finish';
+                                    line_message = 'Vous avez rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    line_butons = $('<a>').attr('href', '/messages/'+data[key].user.username).addClass('chat').text('Discuter');
+                                /* Si un objectif est raté */
+                                }else if(data[key].goal.deadline<Math.round((new Date()).getTime()/1000)){
+                                    line_class = 'done';
+                                    line_message = 'Vous n’avez pas rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                /* Si un objectif est en attente */
+                                }else{
+                                    line_message = 'Vous avez accepté le défi de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    line_butons = $('<a>').attr('href', '#').addClass('details button').text('Voir les détails');
+                                }
+                            }else{
+                                /* Si l'utilisateur est invité */
+                                if(data[key].invitation.state==0){
+                                    line_class = 'normal';
+                                    if(data[key].invitation.from=='me'){
+                                        line_message = 'Vous avez envoyé une invitation à <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    }else{
+                                        /* Si il y a un objectif en cours */
+                                        if(data[key].goal.state=='false'){
+                                            line_class = 'fix';
+                                            line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
+                                            if($('body.woman').length>0) line_butons.push($('<a>').attr('href', '#').addClass('target').text('Fixer un objectif'));
+                                            line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a envoyé une invitation';
+                                        }else{
+                                            line_message = 'Vous avez envoyé un défi à <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            line_butons = $('<a>').addClass('details button').attr({
+                                                'href' : '#',
+                                                'data-goal' : data[key].goal.id
+                                            }).text('Voir les détails');
+                                        }
+                                    }
+                                /* Si l'utilisateur a déjà refusé l'invitation */
+                                }else if(data[key].invitation.state==-1){
+                                    line_class = 'fix';
+                                    if(data[key].invitation.from=='me'){
+                                        line_message = 'Vous avez refusé l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    }else{
+                                        line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a refusé votre invitation';
+                                    }
+                                /* Si l'utilisateur a déjà accepté l'inviation */
+                                }else{
+                                    line_class = 'finish';
+                                    line_butons = $('<a>').attr('href', '/messages/'+data[key].user.username).addClass('chat').text('Discuter');
+                                    if(data[key].invitation.from=='me'){                                    
+                                        line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a accepté votre invitation';
+                                    }else{
+                                        line_message = 'Vous avez accepté l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    }
+                                }
+                            }
+                            var line = $('<li>').addClass('mes-objectifs clearfix').attr('data-user', data[key].user.id).append([
+                                $('<div>').addClass('fleft').append( 
+                                    $('<div>').append(
+                                         $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg')
+                                    )
+                                ),
+                                $('<div>').addClass('fleft '+line_class).append( 
+                                    $('<p>').html(line_message)
+                                ),
+                                $('<div>').addClass('fright').append(line_butons)
+                            ]);
+                            $('#main-contain .list').append(line);
+                        }
+                    }else{
+                        $('#main-contain').append(
+                            $('<p>').addClass('empty').text('-- Vous n\'avez pas encore '+(params.type=='goals'?'d\'objectif.':'d\'invitation')+' --')
+                        );
+                    }
+                    break;
+            }
+        },
+        error : function(data){
+            console.log(data);
+        }
+    });
 }
