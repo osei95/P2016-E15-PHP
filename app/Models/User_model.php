@@ -78,6 +78,10 @@
 			return $mapper->find(array('user_from_id=? AND goal_deadline>?', $params['id'], $params['deadline']));
 		}
 
+		function getAllGoalsByUserId($params){
+			return $this->dB->exec("SELECT COUNT(*) AS goal, (SELECT COUNT(*) FROM goal WHERE goal_to=".$params['user_id']." AND goal_deadline<=".$params['datePresent']." AND goal_achievement >= 100) AS goalFail FROM goal WHERE goal_to =".$params['user_id']." AND goal_deadline<=".$params['datePresent']);
+		}
+
 		function addGoalUser($params){
 			$mapper=$this->getMapper('goal');
 			$mapper->goal_from = $params['from'];

@@ -141,8 +141,16 @@
 			$graphs[2]['texte'] = round($valueDistanceuser[0]['distance'], 1);
 
 			/* Fonction qui calcule le cercle objectif */
-			$valueGoals = new Activity_model();
-			$valuePercentGoals = $valueGoals->
+			$user_model = new User_model();
+			$valuePercentGoals = $user_model->getAllGoalsByUserId(array('user_id'=>$f3->get('PARAMS.id_user'),'datePresent'=>time()));
+			if($valuePercentGoals[0]['goal'] != 0){
+				$graphs[1]['valeur'] = round(($valuePercentGoals[0]['goalFail'] * 100)/$valuePercentGoals[0]['goal'],0);
+				$graphs[1]['texte'] = round(($valuePercentGoals[0]['goalFail'] * 100)/$valuePercentGoals[0]['goal'],0);
+			}
+			else {
+				$graphs[1]['valeur'] = 0;
+				$graphs[1]['texte'] = 0;
+			}
 
 			$activity_tab = array();
 			foreach($activity as $key => $value){
