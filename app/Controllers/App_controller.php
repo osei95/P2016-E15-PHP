@@ -161,6 +161,8 @@
 					$date = time();
 					$deadline = time()+(intval($f3->get('POST.duration'))*86400);
 					$user_model->addGoalUser(array('from'=>$user_from, 'to'=>$user_to, 'date'=>$date, 'deadline'=>$deadline, 'value'=>$distance, 'unit'=>$unit));
+					/* Envoi d'une notification à l'utilisateur distant */
+					$user_model->addNotification(array('from'=>$user_from, 'user_id'=>$user_to, 'content'=>'', 'type'=>'relation'));
 				}
 			}
 			$f3->reroute('/meetings');
@@ -173,7 +175,11 @@
 				$user_from = intval($f3->get('POST.user_id'));
 				$user_to = $f3->get('SESSION.user.user_id');
 				$retour = $user_model->updateGoal(array('from'=>$user_from, 'to'=>$user_to, 'accepted'=>intval($f3->get('POST.reply'))));
-				if($retour)	$json['action'] = true;
+				if($retour){
+					/* Envoi d'une notification à l'utilisateur distant */
+					$user_model->addNotification(array('from'=>$user_to, 'user_id'=>$user_from, 'content'=>'', 'type'=>'relation'));
+					$json['action'] = true;
+				}
 			}
 			echo(json_encode($json));
 			exit;
