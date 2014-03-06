@@ -334,18 +334,7 @@ width: 300px;
     width: 35px;
     margin: 0 5px;
 }
-#profil header .contain div>a:nth-child(1){
-    background:url(images/header-icon1.png) no-repeat center center;
-}
-#profil header .contain div>a:nth-child(2){
-    background:url(images/header-icon2.png) no-repeat center center;
-}
-#profil header .contain div>a:nth-child(3){
-    background:url(images/header-icon3.png) no-repeat center center;
-}
-#profil header .contain div>a:nth-child(4){
-    background:url(images/header-icon4.png) no-repeat center center;
-}
+
 #profil header .contain>a:last-child{
     display: block;
     height: 100%;
@@ -562,22 +551,24 @@ width: 300px;
 #news article {
 	
 	border-bottom:1px solid #ffffff;
-	height: 223px;
+	height: 150px;
 }
 
 #news article .profil{
 	background-color: rgba(0, 0, 0, 0.5); 
-	padding: 23px 0 0 0;
-	height: 200px;
+	padding: 10px 0 0 0;
+	height: 150px;
 	width: 250px;
-	
+	box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
 }
 
 #news article .profil .name{
     display: block;
 	color: #ffffff;
 	text-align: center;
-	font-size: 19px;
+	font-size: 1em;
 	font-family: segoe_uilight;
 	text-decoration: none;
 }
@@ -585,18 +576,18 @@ width: 300px;
 #news article .profil .date{
 	color: #ffffff;
 	text-align: center;
-	font-size: 15px;
-	font-family: segoe_uibold;
+	font-size: .8em;
+	font-family: segoe_uiregular;
 	
 }
 
 #news article .profil .friend-pics{
-	margin: 15px 0 15px 0;
+	margin: 5px 0;
 }
 
 #news article .profil .targets{
-	height: 80px;
-	width: 80px;
+	height: 70px;
+	width: 70px;
 	border-radius: 50px;
 	border: 4px solid #d1d5d9;
 	margin: 0 auto;
@@ -611,7 +602,7 @@ width: 300px;
 #news article .live-news{
 	text-align: center;
 	width: 75%;
-	margin-top:50px;
+	margin-top:30px;
 	color: #ffffff;
 }
 
@@ -620,13 +611,13 @@ width: 300px;
 	border-top: 1px solid #ffffff;
 	width: 200px;
 	margin: 0 auto;
-	padding: 20px 0 20px 0;
+	padding: 15px 0;
 }
 
 #news article .live-news p {
 	font-family: segoe_uilight;
-	font-size: 18px;
-	margin-bottom: 30px;
+	font-size: 1em;
+	margin-bottom: 20px;
 }
 
 #news article .live-news p span{
@@ -638,7 +629,7 @@ width: 300px;
 	font-family: segoe_uilight;
 	text-decoration: none;
 	border: 1px solid #ffffff;
-	padding: 9px 25px 9px 25px;
+	padding: 5px 25px;
 	
 }
 
@@ -670,13 +661,7 @@ width: 300px;
 	background-size: cover;
 }
 
-#news .loading{
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    font-family: segoe_uilight;
-    color:#5E5E5E;
-}
+
 
 
 

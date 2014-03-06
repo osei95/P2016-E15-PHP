@@ -67,6 +67,8 @@ io.sockets.on('connection',function(socket){
 					connection.query('DELETE FROM notification WHERE user_id='+current.user.id+' AND notification_type="message" AND notification_seen=0', function(err, rows, fields) {
 						connection.end();
 					});
+				}else{
+					connection.end();
 				}
 
 
@@ -161,7 +163,6 @@ io.sockets.on('connection',function(socket){
 									users[current.im.to.id].socket.emit('receiveNotification', {
 										type : 'message'
 									});
-									connection.end();
 								});
 							}
 						});
@@ -177,6 +178,7 @@ io.sockets.on('connection',function(socket){
 						}
 					});
 				}
+				connection.end();
 			});
 		}
 	});
@@ -208,7 +210,7 @@ io.sockets.on('connection',function(socket){
 				}else{
 					// Homme
 					if(current.user.gender===0){
-						connection.query('INSERT INTO relationship (request_from, request_to, request_state, request_time) VALUES ('+current.user.id+', '+user_id_to+', 0, '+new Date().getTime()+')', function(err, rows, fields) {
+						connection.query('INSERT INTO relationship (request_from, request_to, request_state, request_time) VALUES ('+current.user.id+', '+user_id_to+', 0, '+Math.round((new Date()).getTime() / 1000)+')', function(err, rows, fields) {
 							if (err) throw err;
 							if(typeof(users[user_id_to])!='undefined'){
 								users[user_id_to].socket.emit('receiveNotification', {

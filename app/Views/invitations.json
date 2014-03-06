@@ -1,0 +1,23 @@
+{
+	<?php foreach($invitations as $key => $i): ?>
+	"<?php echo $key; ?>" : {
+		"user" : {
+			"id" : "<?php echo $i['user_id'] ?>",
+			"username" : "<?php echo $i['user_username']; ?>",
+			"firstname" : "<?php echo $i['user_firstname']; ?>",
+			"lastname" : "<?php echo $i['user_lastname']; ?>",
+			"gender" : "<?php echo $i['user_gender']; ?>"
+		},
+		"invitation" : {
+			"state" : "<?php echo $i['request_state']; ?>",
+			"time" : "<?php echo $i['request_time']; ?>",
+			"from" : "<?php echo $i['from']; ?>"
+		},
+		"goal" : {
+			"state" : "<?php echo $i['goal']['state']; ?>",
+			"id" : "<?php echo $i['goal']['id']; ?>"
+		}
+	}
+	<?php if($key!=count($invitations)-1) echo ','; ?>
+	<?php endforeach; ?>
+}

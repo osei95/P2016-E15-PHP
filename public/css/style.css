@@ -40,8 +40,8 @@ header{
     position: relative;
 }
 #landing header form{
-    position: relative;
     margin-top:15px;
+    position: relative;
 }
 #landing header p.error{
     position: absolute;
@@ -357,7 +357,7 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
 }
 .header_connected .contain div>a>span{
     border: 1px solid white;
-    background: red;
+    background: #e2867e;
     color: white;
     border-radius: 10px;
     height: 20px;
@@ -849,7 +849,7 @@ td, tr{
     font-family: segoe_uilight;
     text-transform: uppercase;
 }
-#recherche input[type="submit"]{
+#recherche input[type="submit"], #rencontres input[type="submit"]{
     background: #2d3e50;
     display: block;
     color: white;
@@ -898,22 +898,22 @@ td, tr{
     background: transparent;
     border-radius: 0;
     width: 320px;
-    height: 30px;
     box-sizing:border-box;
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
+    height: 30px;
 }
 #recherche .section .sportchoice .left p{
     position:relative;
     top: 48px;
 }
-#recherche .city_autocomplete ul{
+#recherche .villeauto{
     position: absolute;
     top: 50px;
     width: 100%;
     z-index: 3;
 }
-#recherche .city_autocomplete ul li{
+#recherche .villeauto li{
     font-family: segoe_uiregular;
     color: white;
     border-bottom: 1px solid #929292;
@@ -928,10 +928,10 @@ td, tr{
     -moz-box-sizing:border-box;
     -webkit-box-sizing:border-box;
 }
-#recherche .city_autocomplete ul{
+#recherche .villeauto{
     display:none;
 }
-#recherche .city_autocomplete ul li:hover{
+#recherche .villeauto li:hover{
     background:#455d77;
     cursor: pointer;
 }
@@ -1095,4 +1095,392 @@ background-color: #2d3e50;
     font-family: segoe_uibold;
     font-size: 1.5em;
     text-align: center;
+}
+
+/*------ PAGE OBJECTIFS -------*/
+
+#recherche .objectif-F .titleN2{
+    color:#000;
+    margin: 40px 0;
+}
+
+#middle-nav {
+    text-align: center;
+}
+
+#middle-nav li {
+    text-align: center;
+    display:inline-block;
+    padding: 20px 92px 20px 92px;
+    font-family: segoe_uilight;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: #2d3e50;
+}
+
+#middle-nav li a {
+    color:#2d3e50;
+    text-decoration: none;
+    
+}
+
+#middle-nav li a.actif {
+    color:#2d3e50;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    
+}
+
+.bottom-border {
+    
+    border-bottom: 1px solid #2d3e50;
+    margin-bottom: 15px; 
+    
+}
+
+
+
+#objectifs-F .titleN2 {
+color: #e2867e;
+margin: 40px 0;
+}
+
+#objectifs-F #middle-nav li a {
+    color:#e2867e;
+    text-decoration: none;
+    
+}
+
+#objectifs-F #middle-nav li a.actif {
+    color:#e2867e;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    
+}
+
+#objectifs-F .bottom-border {
+    
+    border-bottom: 1px solid #e2867e;
+    margin-bottom: 15px; 
+    
+}
+
+
+
+.objectifs-feed {
+    
+    margin-bottom: 150px;
+    
+}
+
+.mes-objectifs>div:nth-child(2){
+    margin-left: 20px;
+    padding-top: 15px;
+}
+
+.mes-objectifs .fright{
+    padding-top: 25px;
+    
+}
+
+.mes-objectifs .fright a{
+    margin: 0 5px;
+    padding: 5px 30px;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 3px;
+    
+}
+
+.mes-objectifs .fright .button{
+    background-repeat: no-repeat;
+    padding: 5px 30px;
+    background-position: 15px center;
+    background-color: #2d3e50;
+    
+}
+
+.mes-objectifs .fright .accept{
+    background-image: url(images/accept-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #239e58;
+    
+}
+
+.mes-objectifs .fright .refus{
+    background-image: url(images/refus-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #e84c3d;
+    
+}
+
+.mes-objectifs .fright .chat{
+    background-image: url(images/chat-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #222222;
+    
+}
+
+.mes-objectifs .fright .target{
+    background-image: url(images/target-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #e2867e;
+    
+}
+
+
+
+
+.mes-objectifs{
+    padding: 12px 0;
+}
+.mes-objectifs>div:first-child>div{
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+    border: 5px solid #4c5b6a;
+    overflow: hidden;
+    margin: auto;
+}
+.mes-objectifs>div:first-child>div>img{
+    width: 100%;
+    min-height: 100%;
+}
+.mes-objectifs>div:nth-child(2){
+    margin-left: 20px;
+}
+
+.mes-objectifs .normal p{
+    color:#8a8a8a;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .normal p strong{
+    font-family: segoe_uibold;
+    color:#2d3e50;
+    font-weight: normal;
+}
+
+
+.mes-objectifs .fix p{
+    color:#e2867e;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .fix strong{
+    font-family: segoe_uibold;
+    color:#e2867e;
+    font-weight: normal;
+}
+
+.mes-objectifs .done p{
+    color:#e84c3d;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .done strong{
+    font-family: segoe_uibold;
+    color:#e84c3d;
+    font-weight: normal;
+}
+
+
+.mes-objectifs .finish p{
+    color:#239e58;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .finish strong{
+    font-family: segoe_uibold;
+    color:#239e58;
+    font-weight: normal;
+}
+
+.mes-objectifs>div:nth-child(2) a{
+    text-decoration: none;
+    color: #2d3e50;
+    font-family: segoe_uibold;
+    padding: 5px 15px 5px 35px;
+    border: 1px solid #2d3e50;
+    margin-top: 20px;
+    font-size: .9em;
+    background: url(images/encourager.png) no-repeat 15px center;
+}
+.mes-objectifs>div.fright p{
+    font-family: segoe_uibold;
+    color:#2d3e50;
+    text-align: right;
+    margin-top: 10px;
+}
+.mes-objectifs>div.fright span{
+    font-family: segoe_uibold;
+    color: #2d3e50;
+    text-align: right;
+    margin-top: 20px;
+    padding-left: 20px;
+    background: url(images/encourager.png) no-repeat 5px center;
+    display: inline-block;
+    float: right;
+}
+
+/* -------------------------- Dashboard ----------------------------- */
+
+.obj-box{
+    width: 500px;
+    background: #e2867e;
+    padding: 20px;
+}
+.obj-box h2{
+    text-transform: uppercase;
+    font-family: segoe_uilight;
+    font-size: 1.2em;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.obj-box h3{
+    color: white;
+    font-family: segoe_uilight;
+    padding-left: 40px;
+    margin: 20px 0;
+}
+.obj-box h3.cible{
+    background: url(images/female-icon.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 140px center;
+}
+.obj-box h3.objectif{
+    background: url(images/gym.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 160px center;
+}
+.obj-box h3.resultat{
+    background: url(images/pres-icon.png) no-repeat left center, url(images/separateur_recherche.jpg) no-repeat 160px center;
+}
+.obj-box .name{
+    color: white;
+    text-align:center;
+    font-family: segoe_uilight;
+}
+.obj-box .photo{
+    height: 75px;
+    width: 75px;
+    border-radius: 75px;
+    border: 5px solid #e69891;
+    overflow: hidden;
+    margin: 10px auto;
+}
+.obj-box .photo img{
+    height: 100%;
+    width: 100%;
+}
+.obj-box .distance, .obj-box .duree{
+    width: 49%;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-family: segoe_uilight;
+    margin: 5px 0;
+}
+.obj-box .distance h4{
+    padding-left: 30px;
+    background: url(images/distance-icon.png) no-repeat left center;
+    display: inline-block;
+}
+.obj-box .duree h4{
+    padding-left: 30px;
+    background: url(images/duree-icon.png) no-repeat left center;
+    display: inline-block;
+}
+.obj-box .distance p, #profil .obj-box .duree p{
+    font-family: segoe_uiregular;
+}
+.fancybox-skin{
+    padding: 0 !important;
+}
+.fancybox-close{
+    top: 5px;
+    right: 5px;
+    background: url(images/cross.png) no-repeat center center;
+}
+.obj-box .age, .obj-box .taille, .obj-box .poids{
+    width: 32.5%;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-family: segoe_uilight;
+    margin: 5px 0;
+    vertical-align: top;
+}
+.obj-box .taille h4{
+    padding-bottom: 40px;
+    background: url(images/box-icon1.png) no-repeat center 30px;
+}
+.obj-box .poids h4{
+    padding-bottom: 40px;
+    background: url(images/box-icon2.png) no-repeat center 35px;
+}
+.obj-box .age h4{
+    padding-bottom: 40px;
+    background: url(images/box-icon3.png) no-repeat center 35px;
+}
+.obj-box .line>.left {
+    text-align: right;
+    display: inline-block;
+    width: 40%;
+}
+.obj-box .line{
+    margin-bottom: 10px;
+}
+.obj-box .line>.right {
+    display: inline-block;
+    width: 210px;
+    margin-left: 50px;
+    vertical-align: top;
+    position: relative;
+}
+.obj-box .line>.left p {
+    color: white;
+    font-family: segoe_uilight;
+    text-transform: uppercase;
+    font-size: .9em;
+    position: relative;
+    top: 25px;
+}
+.obj-box .irs-single{
+    color: white;
+    font-size: .8em;
+}
+.obj-box .irs-slider{
+    background: white;
+    top: 19px;
+}
+.obj-box .irs-line{
+    background: white;
+    height: 2px;
+}
+#recherche .obj-box input[type="submit"]{
+    margin-bottom: 0;
+}
+#profil #news>article:nth-child(2n-1){
+    background: #2d3e50;
+}
+#profil #news>article:nth-child(2n) .live-news{
+    color: #2d3e50;
+}
+#profil #news>article:nth-child(2n) .live-news .separator{
+    border-color: #2d3e50;
+}
+#profil #news>article:nth-child(2n) .live-news a{
+    border-color: #2d3e50;
+    color: #2d3e50;
+}
+#rencontres .empty{
+    display: block;
+    text-align: center;
+    font-family: segoe_uilight;
+    color:#8A8A8A;
+    margin: 10px 0;
 }
