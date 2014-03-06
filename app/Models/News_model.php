@@ -20,7 +20,9 @@
 		}
 
 		function getAllNewsFromUserId($params){
-			return $this->mapper->find(array('user_from_id=? AND news_date<=?', $params['user_id'], $params['news_date']), array('order'=>'news_date DESC'));
+			$options = array('order'=>'news_date DESC');
+			if(isset($params['limit']))	$options['limit'] = $params['limit'];
+			return $this->mapper->find(array('user_from_id=? AND news_date<=?', $params['user_id'], $params['news_date']), $options);
  		}
 
  		function getAllFollowingsNews($params){
@@ -32,7 +34,7 @@
  		}
 
  		function getAllNews($params){
- 			return $this->dB->exec(" SELECT DISTINCT * FROM news_infos WHERE news_infos.user_from_id IN (SELECT following_to FROM following WHERE following.following_from=".intval($params['user_id']).") OR news_infos.user_from_id IN (SELECT CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from` END user_id FROM relationship WHERE ((request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).") AND request_state=1)) OR user_from_id=".intval($params['user_id'])." ".(isset($params['news_date'])?"AND news_date<=".$params['news_date']:"")." GROUP BY news_infos.news_id ORDER BY news_date DESC ".(isset($params['offset']) && isset($params['limit'])?"LIMIT ".$params['offset'].", ".$params['limit']:''));
+ 			return $this->dB->exec(" SELECT DISTINCT * FROM news_infos WHERE news_infos.user_from_id IN (SELECT following_to FROM following WHERE following.following_from=".intval($params['user_id']).") OR news_infos.user_from_id IN (SELECT CASE WHEN  `relationship`.`request_from`=".intval($params['user_id'])." THEN `relationship`.`request_to` ELSE `relationship`.`request_from` END user_id FROM relationship WHERE ((request_from=".intval($params['user_id'])." OR request_to=".intval($params['user_id']).") AND request_state=1)) ".(isset($params['news_date'])?"AND news_date<=".$params['news_date']:"")." GROUP BY news_infos.news_id ORDER BY news_date DESC ".(isset($params['offset']) && isset($params['limit'])?"LIMIT ".$params['offset'].", ".$params['limit']:''));
  		}
 
  		function getNewsFromUserIdByType($params){

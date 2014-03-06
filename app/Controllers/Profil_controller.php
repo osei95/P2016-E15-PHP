@@ -36,7 +36,7 @@
 
 				/* Récupération des news propres à l'utilisateur */
 				$news_model = new News_model();
-				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id, 'news_date' => mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time()))));
+				$news = $news_model->getAllNewsFromUserId(array('user_id' => $user->user_id, 'news_date' => mktime(23, 59, 59, date('m',time()), date('d',time()), date('Y',time())), 'limit'=>4));
 				$f3->set('news', $news);
 
 				/* Récupération des supports propres à l'utilisateur */

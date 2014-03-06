@@ -335,7 +335,7 @@ function addNews(params){
     var news_class = 'fright';
     for(var key in data){
         /* Génération des classes dynamiques */
-        var support_class = data[key].news.support?'active':'';
+        var support_class = data[key].news.support?'active support tolike':'support tolike';
         var activity_class = 'bg-';
         switch(data[key].news.type){
             case 'activity_calories':
