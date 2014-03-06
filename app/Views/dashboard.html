@@ -17,7 +17,7 @@
 			<div class="contain">
 				<div>
 					<a href="/profil" title="Mon profil"></a>
-					<a href="/" title="Mon dashboard" class="active"></a>
+					<a href="/meetings" title="Mon rencontres"></a>
 					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
 					<a href="/search" title="Recherche"></a>
 				</div>
@@ -44,22 +44,22 @@
 					
 					<?php if(count($goals)>0):?>
 						<?php foreach($goals as $g): ?>
-						<div class="details">
+						<div class="details" data-user="<?php echo($g['user_from_id']); ?>">
 								<div class="targets">
 									<div class="pics">
 										<img src="/medias/users/<?php echo($g['user_from_id']); ?>/profil.jpg" alt="">
 									</div>
 								</div> <!--End of targets -->
-								<div class="status">
+								<!--<div class="status">
 									<span class="actif"></span>
-								</div> <!--End of status -->
+								</div>-->
 								
 								<div class="name">
 									<p><?php echo $g['user_from_firstname'].' '.$g['user_from_lastname']; ?></p>
 								</div> <!--End of name -->
 								
 								<div class="link">
-									<a href="#">Voir les détails</a>
+									<a href="#" class="details-goal">Voir les détails</a>
 								</div> <!--End of link -->
 						</div>
 						<?php endforeach; ?>
