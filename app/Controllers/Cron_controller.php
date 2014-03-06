@@ -43,6 +43,22 @@
 			}
 		}
 
+		function updateGoals($f3){
+			$goal_model = new Goal_model();
+			$activity_model = new Activity_model();
+			$goals = $goal_model->getAllUnachievedGoals(array());
+			if(is_array($goals)){
+				foreach($goals as $goal){
+					if($goal->goal_unit=='distance'){
+						$distance = $activity_model->getSumDistanceUser(array('user_id'=>$goal->goal_to, 'date_min'=>$goal->goal_date, 'date_max'=>$goal->goal_deadline));
+						$current_distance = (!is_array($distance) || !isset($distance[0]['distance'])?0:$distance[0]['distance']);
+						$new_achievement = (100*$current_distance)/$goal->goal_value;
+						$goal_model->updateGoal(array('id'=>$goal->goal_id, 'achievement'=>$new_achievement));
+					}
+				}
+			}
+		}
+
 		public function afterroute($f3){
          	exit;
       	}

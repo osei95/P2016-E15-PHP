@@ -27,7 +27,10 @@
 		}
 
 		function getSumDistanceUser($params){
-			 return $this->dB->exec("SELECT SUM(`user_has_activity`.`distance`) as `distance` FROM `user_has_activity` INNER JOIN `user` ON `user_has_activity`.`user_id` = `user`.`user_id` WHERE `user`.`user_id`=".intval($params['user_id']));
+			$query = "SELECT COALESCE(SUM(`user_has_activity`.`distance`),0) as `distance` FROM `user_has_activity` INNER JOIN `user` ON `user_has_activity`.`user_id` = `user`.`user_id` WHERE `user`.`user_id`=".intval($params['user_id']);
+			if(isset($params['date_min']))	$query.=' AND date>='.$params['date_min'];
+			if(isset($params['date_max']))	$query.=' AND date<='.$params['date_max'];
+			return $this->dB->exec($query);
 		}
 
 		function getGoals($params){
