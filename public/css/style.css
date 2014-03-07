@@ -439,7 +439,7 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     width: 100%;
 }
 #profil>#informations .fleft a{
-    width: 100px;
+    width: 120px;
     height: 30px;
     border-radius: 3px;
     display: inline-block;
@@ -457,11 +457,23 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
 #suivre{
     background: #e3867f url(images/suivre.png) no-repeat 15px center;
 }
+#suivre:hover{
+    background-color:#e99e99;
+}
+#suivre:active{
+    background-color:#b36b66;
+}
 .woman #suivre{
     background: #2d3e50 url(images/suivre.png) no-repeat 15px center;
 }
 #discuter{
     background: #222222 url(images/discuter.png) no-repeat 12px center;
+}
+#discuter:hover{
+    background-color: #393939;
+}
+#discuter:active{
+    background-color: #111111;
 }
 #profil>#informations .fright>p{
     color:white;
@@ -470,6 +482,41 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     line-height: 40px;
     font-weight: bold;
     text-align: center;
+}
+#profil .nodescription{
+    font-style: normal;
+    font-family: segoe_uilight;
+    font-size: .9em;
+    font-weight: normal;
+}
+.fancybox-skin{
+    background: none;
+}
+#profil .obj-box.confirm p{
+    color: white;
+    font-family: segoe_uilight;
+    padding-left: 50px;
+    background: url(images/tick-confirm.png) no-repeat 20px; center;
+}
+header .logo{
+    color: white;
+    float: left;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0 20px;
+    line-height: 60px;
+}
+header .logo:hover{
+    background:#425262;
+}
+#profil .obj-box.confirm p strong{
+    color: white;
+    font-family: segoe_uibold;
 }
 #resume>div>div{
     display: table;
@@ -1414,107 +1461,6 @@ margin: 40px 0;
 }
 
 
-.mes-objectifs>div:nth-child(2){
-    margin-left: 20px;
-    padding: 2.3% 0 0% 0;
-}
-
-.mes-objectifs .fright{
-    padding: 3.4% 0 0% 0;
-    
-}
-
-.mes-objectifs .fright a{
-    margin: 0 10px 0 10px;
-    padding: 10px 45px 10px 45px;
-    font-family: segoe_uibold;
-    text-decoration: none;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 3px;
-    
-}
-
-.mes-objectifs .fright .button{
-    background-repeat: no-repeat;
-    padding: 10px 23px 10px 23px;
-    background-position: 15px center;
-    background-color: #2d3e50;
-    
-}
-
-.mes-objectifs .fright .accept{
-    background-image: url(images/accept-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #239e58;
-    
-}
-
-.mes-objectifs .fright .refus{
-    background-image: url(images/refus-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #e84c3d;
-    
-}
-
-.mes-objectifs .fright .chat{
-    background-image: url(images/chat-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #222222;
-    
-}
-
-.mes-objectifs .fright .target{
-    background-image: url(images/target-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #e2867e;
-    
-}
-
-
-
-
-.mes-objectifs{
-    padding: 20px 0;
-}
-.mes-objectifs>div:first-child>div{
-    height: 80px;
-    width: 80px;
-    border-radius: 50px;
-    border: 5px solid #4c5b6a;
-    overflow: hidden;
-    margin: auto;
-}
-.mes-objectifs>div:first-child>div>img{
-    width: 100%;
-    min-height: 100%;
-}
-.mes-objectifs>div:nth-child(2){
-    margin-left: 20px;
-}
-
-.mes-objectifs .normal p{
-    color:#8a8a8a;
-    font-family: segoe_uilight;
-    margin: 10px 0 20px 0;
-}
-.mes-objectifs .normal p strong{
-    font-family: segoe_uibold;
-    color:#2d3e50;
-    font-weight: normal;
-}
-
-.mes-objectifs .normal p strong a{
-    text-decoration: none;
-    color:#2d3e50;
-}
-
-
-
 .mes-objectifs .fix p{
     color:#e2867e;
     font-family: segoe_uilight;
@@ -1526,11 +1472,6 @@ margin: 40px 0;
     font-weight: normal;
 }
 
-.mes-objectifs .fix strong a{
-    color:#e2867e;
-    text-decoration: none;
-}
-
 .mes-objectifs .done p{
     color:#e84c3d;
     font-family: segoe_uilight;
@@ -1540,11 +1481,6 @@ margin: 40px 0;
     font-family: segoe_uibold;
     color:#e84c3d;
     font-weight: normal;
-}
-
-.mes-objectifs .done strong a{
-    text-decoration: none;
-    color:#e84c3d;
 }
 
 
@@ -1559,13 +1495,7 @@ margin: 40px 0;
     font-weight: normal;
 }
 
-.mes-objectifs .finish strong a{
-    text-decoration: none;
-    color:#239e58;
-    font-weight: normal;
-}
-
-/*.mes-objectifs>div:nth-child(2) a{
+.mes-objectifs>div:nth-child(2) a{
     text-decoration: none;
     color: #2d3e50;
     font-family: segoe_uibold;
@@ -1574,8 +1504,7 @@ margin: 40px 0;
     margin-top: 20px;
     font-size: .9em;
     background: url(images/encourager.png) no-repeat 15px center;
-}*/
-
+}
 .mes-objectifs>div.fright p{
     font-family: segoe_uibold;
     color:#2d3e50;
@@ -1592,8 +1521,6 @@ margin: 40px 0;
     display: inline-block;
     float: right;
 }
-
-/* end middle nav*/ 
 
 /* -------------------------- Dashboard ----------------------------- */
 
