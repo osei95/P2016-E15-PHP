@@ -53,7 +53,7 @@ $(function(){
         });
 
         /* Encourgagements */
-        $('.support').on('click', function(evt){
+        $('#profil[data-id=dashboard]').on('click', '.support', function(evt){
             evt.preventDefault();
             var $this = $(this);
             $.getJSON($this.attr('href'), function(data){
@@ -104,7 +104,8 @@ $(function(){
                 url: '/goal',
                 data: { 
                     id : user_id,
-                    type : 'from'
+                    type : 'from',
+                    return : 'to'
                 },
                 success: function(data){
                     console.log(data);
