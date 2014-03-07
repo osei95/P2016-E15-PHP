@@ -660,7 +660,7 @@ td, tr{
     display: block;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top center;
+    background:url(images/fleche-actu.png) no-repeat top center;
 }
 
 .separe-dash{
@@ -675,7 +675,7 @@ td, tr{
     top:10px;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top center;
+    background:url(images/fleche-actu.png) no-repeat top center;
 }
 
 
@@ -691,7 +691,7 @@ td, tr{
     top:10px;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top right 150px;
+    background:url(images/fleche-actu.png) no-repeat top right 150px;
 }
 
 .separe-dash-left{
@@ -706,7 +706,7 @@ td, tr{
     top:10px;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top left 150px;
+    background:url(images/fleche-actu.png) no-repeat top left 150px;
 }
 
 
