@@ -33,6 +33,10 @@ Et pour ceux qui n’ont pas de bracelets :)
 * RunKeeper
 * Moves
 
+Gestion de projet
+—————————————
+* https://trello.com/b/2lrR8azs/projet-php-e15-p2016
+
 
 L’équipe
 --------
