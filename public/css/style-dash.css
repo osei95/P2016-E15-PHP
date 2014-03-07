@@ -420,8 +420,13 @@ width: 300px;
 	margin-bottom: 20px;
 }
 
-#news article .live-news p span{
+#news article .live-news p strong{
 	font-family: segoe_uibold;
+}
+
+#news article .live-news p strong a{
+	color:#fff;
+	text-decoration: none;
 }
 
 #news article.bg-km{
