@@ -28,7 +28,7 @@
 					}
 				}
 
-				if($user_to){
+				if(isset($user_to) && $user_to){
 
 					/* On vérifie que les 2 personnes sont en relation */
 					$relation = $user_model->isRelation(array('from'=>$user->user_id, 'to'=>$user_to->user_id));
@@ -42,11 +42,7 @@
 						$conversation_infos = array('messages'=>$messages, 'user_from'=>$user_infos, 'user_to'=>$user_to_infos);
 
 						$f3->set('conversation', $conversation_infos);
-					}else{
-						$this->tpl=array('sync'=>'404.html');
 					}
-				}else{
-					$this->tpl=array('sync'=>'404.html');
 				}
 
 				/* Récupération de toutes les relations */

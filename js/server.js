@@ -163,7 +163,10 @@ io.sockets.on('connection',function(socket){
 									users[current.im.to.id].socket.emit('receiveNotification', {
 										type : 'message'
 									});
+									connection.end();
 								});
+							}else{
+								connection.end();
 							}
 						});
 					}
@@ -174,11 +177,13 @@ io.sockets.on('connection',function(socket){
 						if(rows.length==0){
 							connection.query('INSERT INTO notification (user_id, notification_type, notification_content, notification_from) VALUES ('+current.im.to.id+', "message", "", '+current.user.id+')', function(err, rows, fields) {
 								if (err) throw err;
+								connection.end();
 							});
+						}else{
+							connection.end();
 						}
 					});
 				}
-				connection.end();
 			});
 		}
 	});
