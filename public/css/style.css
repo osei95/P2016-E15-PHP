@@ -1184,24 +1184,63 @@ background-color: #2d3e50;
 }
 
 /* ----------------------------- PAGE 404 ----------------------------- */
+#page_404 section{
+	margin-bottom: 100px;
+	
+}
+
 #page_404 section h1{
-    margin-top:20px;
+    margin-top:-20px;
     display: block;
     color:#2d3e50;
-    font-family: segoe_uibold;
-    font-size: 4em;
+       font-family: segoe_uibold;
+    text-transform: uppercase;
+    font-size: 36px;
     text-align: center;
 }
-#page_404 section h1 .erreur{
-    font-size: 1.5em;
-}
-#page_404 section a{
-    margin:40px 0;
-    display: block;
-    color:#2d3e50;
-    font-family: segoe_uibold;
-    font-size: 1.5em;
+#page_404 section .erreur{
+    background-image: url(images/404-icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
     text-align: center;
+    margin: 0 auto;
+    width: 100px;
+    padding: 130px 0 0px 0;
+}
+
+
+.home-btn{
+	font-size: 14px;
+		font-family: segoe_uibold;
+	text-transform: uppercase;
+	text-align: center;
+	margin-top: 20px;
+	background-color: #2d3e50;
+	width: 230px;
+	margin: 15px auto;
+	padding: 7px 0 7px 0;
+	border-radius: 3px;
+	box-shadow: 0px 3px 0px black;
+	
+	
+}
+
+.home-btn:active{
+	font-family: segoe_uibold;
+	text-transform: uppercase;
+	text-align: center;
+	position: relative;
+	box-shadow: 0px 2px 0px black;
+	bottom: -1px;
+	
+}
+
+.home-btn a{
+	text-decoration: none;
+	color: #fff;
+	
+	
+	
 }
 
 /*------ PAGE OBJECTIFS -------*/
@@ -1760,3 +1799,26 @@ margin: 40px 0;
     width: 100%;
     height: 113px;
 }
+
+
+/* sticky footer */
+
+
+* {
+	margin: 0;
+}
+html, body {
+	height: 100%;
+}
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -200px; /* the bottom margin is the negative value of the footer's height */
+}
+footer, .push {
+	height: 200px; /* '.push' must be the same height as 'footer' */
+}
+
+
+/* sticky footer */
