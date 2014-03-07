@@ -787,18 +787,32 @@ td, tr{
 }
 .tolike{
     text-decoration: none;
-    color: #2d3e50;
+    color: transparent;
     font-family: segoe_uibold;
     padding: 5px 15px 5px 35px;
     border: 1px solid #2d3e50;
-    margin-top: 20px;
     font-size: .9em;
-    background: url(images/encourager.png) no-repeat 15px center;
+    background: url(images/encourager.png) no-repeat top center;
+    -webkit-transition:all 200ms ease-in;
+    -moz-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+    display: inline-block;
+    width: 140px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 .woman .tolike{
-    background: url(images/encourager-rose.png) no-repeat 15px center;
-    color: #e3867f;
+    background: url(images/encourager-rose.png) no-repeat top center;
+    color: transparent !important;
     border: 1px solid #e3867f;
+}
+.tolike.active{
+    background: #2d3e50 url(images/encourager.png) no-repeat bottom center;
+}
+.woman .tolike.active{
+    background: #e3867f url(images/encourager-rose.png) no-repeat bottom center;
 }
 .mon-actu>div.fright p{
     font-family: segoe_uibold;
@@ -1551,8 +1565,10 @@ margin: 40px 0;
 }
 #profil #news>article:nth-child(2n-1) .tolike{
     border-color: white;
-    color: white;
-    background-image: url(images/encourager_white.png);
+    background: url(images/encourager-white.png) no-repeat top center;
+}
+#profil #news>article:nth-child(2n-1) .tolike.active{
+    background: white url(images/encourager-white.png) no-repeat bottom center;
 }
 #meeting-nav {
     text-align: center;

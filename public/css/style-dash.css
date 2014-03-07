@@ -503,7 +503,16 @@ width: 300px;
 	color: #3a5066;
 	border: 1px solid #3a5066;
 	padding: 5px 25px 5px 25px;
+    -webkit-transition: 0.2s all ease-in;
+    -o-transition: 0.2s all ease-in;
+    -ms-transition: 0.2s all ease-in;
+    -moz-transition: 0.2s all ease-in;
+    transition: 0.2s all ease-in;
 	
+}
+#profil #informations-dash .fright .details .link a:hover{
+    color: white;
+    background: #3a5066;
 }
 
 /* End*/ 
@@ -611,7 +620,7 @@ width: 300px;
 	border-top: 1px solid #ffffff;
 	width: 200px;
 	margin: 0 auto;
-	padding: 15px 0;
+	padding: 10px 0;
 }
 
 #news article .live-news p {
