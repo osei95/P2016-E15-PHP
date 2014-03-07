@@ -1,0 +1,51 @@
+<?php if(isset($GET['callback'])): echo $GET['callback'].'('; endif;?>
+{
+"header":[
+<?php if(isset($header)): ?>
+{
+"code":<?php echo $header['code']?>,
+"status":"<?php echo $header['status']?>",
+"text":"<?php echo $header['text']?>"
+}
+<?php endif; ?>
+],
+<?php if(isset($users)):?>
+"users":[
+<?php foreach($users as $key => $u):?>
+{
+"id":"<?php echo $u->user_id ?>",
+"firstname":"<?php echo $u->user_firstname ?>",
+"lastname":"<?php echo $u->user_lastname ?>",
+"username":"<?php echo $u->user_username ?>",
+"url":"<?php echo 'http://php.h3.erwan.co/api/users/'.$u->user_id; ?>"
+}
+<?php if($key<count($users)-1): echo ','; endif; ?>
+<?php endforeach;?>
+]
+<?php endif;?>
+<?php if(isset($user)):?>
+"user":
+{
+"id":"<?php echo $user->user_id ?>",
+"firstname":"<?php echo $user->user_firstname ?>",
+"lastname":"<?php echo $user->user_lastname ?>",
+"lastname":"<?php echo $user->user_lastname ?>",
+"email":"<?php echo $user->user_email ?>",
+"gender":"<?php echo $user->user_gender ?>",
+"description":"<?php echo $user->user_description ?>",
+"city":"<?php echo $user->user_city_name ?>",
+"birthday":"<?php echo $user->user_birthday ?>",
+"weight":"<?php echo $user->body_weight ?>",
+"height":"<?php echo $user->body_height ?>",
+"last_update_body":"<?php echo $user->body_date ?>",
+"appearance":"<?php echo $user->appearance_name ?>",
+"temperament":"<?php echo $user->temperament_name ?>",
+"sport":"<?php echo $user->sport_name ?>",
+"followings":"<?php echo $user->followings ?>",
+"achieved_goals":"<?php echo $user->achieved_goals ?>",
+"relations":"<?php echo $user->relations ?>",
+"photo":"<?php echo 'http://php.h3.erwan.co/medias/users/'.$user->user_id.'/profil.jpg' ?>"
+}
+<?php endif;?>
+}
+<?php if(isset($GET['callback'])): echo ')'; endif; ?>
