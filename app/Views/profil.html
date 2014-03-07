@@ -32,6 +32,11 @@
 					<?php if($user['user_id']!=$SESSION['user']['user_id']):?>
 					<a id="suivre" href="follow/<?php echo($user['user_id']); ?>" class="<?php echo ($supports['follow']?'active':'') ?>">Suivre</a>
 					<a id="discuter" href="/messages/<?php echo($user['user_username']); ?>" data-id="<?php echo($user['user_id']); ?>">Discuter</a>
+					<div style="display:none">
+						<div id="confirm-envoi" class="obj-box confirm">
+							<p>Votre invitation a bien été envoyée à <strong>Steve Machin</strong></p>
+						</div>
+					</div>
 					<?php endif; ?>
 				</div>
 				<div class="fright">
