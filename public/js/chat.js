@@ -25,6 +25,20 @@ socket.on('loadedPage',function(params){
 				}
 			});
 		});
+
+		 /* Si une conversation est chargée */
+	    if($('#profil[data-id=chat]').length>0){
+
+	        if($('#profil[data-id=chat] #conversation-block.open').length>0){
+
+	            var id_user = $('#profil[data-id=chat] #conversation-block').data('user');
+	            socket.emit('connectIM', {
+	                to : {
+	                    id : id_user
+	                }
+	            });
+	        }
+	    }
 	}else{
 		alert('Erreur de connexion au serveur');
 	}

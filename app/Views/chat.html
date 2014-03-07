@@ -59,7 +59,7 @@
 										<span class="actif"></span>
 									</div> <!--End of status -->
 									<div class="name">
-										<p><?php echo($r['user_firstname'].' '.$r['user_lastname']);?></p>
+										<p><?php echo($r['user_firstname'].'<br>'.$r['user_lastname']);?></p>
 									</div> <!--End of name -->
 								</div>
 								<?php endforeach; ?>
@@ -75,7 +75,7 @@
 		</div>
 		</section>
 		<div class="contain clearfix">
-			<section id="conversation-block" class="<?php echo (isset($conversation)?'':'hidden'); ?>">
+			<section id="conversation-block" class="<?php echo (isset($conversation)?'open':'hidden'); ?>" <?php echo (isset($conversation)?'data-user="'.$conversation['user_to']['user_id'].'"':''); ?>>
 				<div class="conversation-actions">	
 				<?php if(isset($conversation)): ?>
 				<?php foreach($conversation['messages'] as $key => $message): ?>
