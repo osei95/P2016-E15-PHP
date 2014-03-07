@@ -723,7 +723,9 @@ width: 300px;
  	display: inline-block;
  	position: relative;
  	top:-3px;
- 	width: 640px;
+ 	float: right;
+ 	margin-top: 15px;
+ 	width: 860px;
 }
 
 #profil #chat-feed .f-all .separator-bottom{
