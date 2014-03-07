@@ -53,16 +53,16 @@
 		                        $goal_butons = '<a href="#" class="accept">Accepter</a><a class="refus" href="#">Refuser</a>';
 		                    }else if($g['goal_accepted']==-1){
 		                        $goal_class = 'fix';
-		                        $goal_message = 'Vous avez refusé l’objectif de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
+		                        $goal_message = 'Vous avez refusé l’objectif de <strong><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></strong>';
 		                    }else if($g['goal_achievement']>=100){
 		                        $goal_class = 'finish';
-		                        $goal_message = 'Vous avez rempli l’objectif de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
+		                        $goal_message = 'Vous avez rempli l’objectif de <strong><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></strong>';
 		                        $goal_butons = '<a href="#" class="chat">Discuter</a>';
 		                    }else if($g['goal_deadline']<time()){
 		                        $goal_class = 'done';
-		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
+		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <strong><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></strong>';
 		                    }else{
-		                        $goal_message = 'Vous avez accepté le défi de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
+		                        $goal_message = 'Vous avez accepté le défi de <strong><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></strong>';
 		                        $goal_butons = '<a href="#" class="button details">Voir les détails</a>';
 		                    }
 	                    ?>
