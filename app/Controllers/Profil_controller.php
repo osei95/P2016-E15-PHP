@@ -128,9 +128,9 @@
 			$activity_model = new Activity_model();
 			$activityUser = $activity_model->getActivityUser(array('user_id' => $f3->get('PARAMS.id_user'),'limit'=>$valueDate));
 
-			$valueDistanceuser[0]['distance'] = $valueDistanceuser[0]['distance'] / 1000;
-			$graphs[2]['valeur'] = round($valueDistanceuser[0]['distance'], 1);
-			$graphs[2]['texte'] = round($valueDistanceuser[0]['distance'], 1);
+			$activityUser[0]['distance'] = $activityUser[0]['distance'] / 1000;
+			$graphs[2]['valeur'] = round($activityUser[0]['distance'], 1);
+			$graphs[2]['texte'] = round($activityUser[0]['distance'], 1);
 
 			/* Fonction qui calcule le cercle objectif */
 			$user_model = new User_model();
