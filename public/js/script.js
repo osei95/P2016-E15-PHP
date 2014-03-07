@@ -50,7 +50,17 @@ $(function(){
                     }
                 });
             }
-        })
+        });
+
+        /* Encourgagements */
+        $('.support').on('click', function(evt){
+            evt.preventDefault();
+            var $this = $(this);
+            $.getJSON($this.attr('href'), function(data){
+                if(data.action.name=='support') $this.addClass('active');
+                else                            $this.removeClass('active');
+            });
+        });
 
        $('.navigation_news a').on('click', function(evt){
             evt.preventDefault();
@@ -371,7 +381,7 @@ function addNews(params){
                     $('<p>').addClass('date').text(data[key].news.date)
                 ]),
                 $('<div>').addClass('live-news fleft').append([
-                    $('<p>').html( '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>'+data[key].news.content),
+                    $('<p>').html( '<strong><a href="/profil/'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>'+data[key].news.content),
                     $('<div>').addClass('separator'),
                     $('<div>').addClass('link').append( 
                         $('<a>').attr('href', 'support/'+key).addClass(support_class)

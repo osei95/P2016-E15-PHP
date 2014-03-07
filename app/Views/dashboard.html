@@ -132,10 +132,10 @@
 				
 					
 					<div class="live-news fleft">
-						<p><span><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></span> <?php echo($n['news_content']) ?></p>
+						<strong><a href="<?php echo $n['user_from_username']; ?>"><?php echo $n['user_from_firstname'].' '.$n['user_from_lastname']; ?></a></strong> <?php echo($n['news_content']) ?></p>
 						<div class="separator"></div>
 						<div class="link">
-							<?php if($n['user_from_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="tolike <?php if(in_array($n['news_id'], $supports['news'])) echo 'active'; ?>">J'encourage</a><?php endif; ?>
+							<?php if($n['user_from_id']!=$SESSION['user']['user_id']): ?><a href="support/<?php echo($n['news_id']); ?>" class="tolike support <?php if(in_array($n['news_id'], $supports['news'])) echo 'active'; ?>">J'encourage</a><?php endif; ?>
 						</div> <!--End of link -->
 					</div>
 				</div>
