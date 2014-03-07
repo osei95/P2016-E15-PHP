@@ -455,7 +455,18 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     -webkit-box-sizing:border-box;
 }
 #suivre{
-    background: #e3867f url(images/suivre.png) no-repeat 15px center;
+    color: transparent !important;
+    background: #e3867f url(images/suivre.png) no-repeat top center;
+    -webkit-transition:all 200ms ease-in;
+    -moz-transition:all 200ms ease-in;
+    -o-transition:all 200ms ease-in;
+    transition:all 200ms ease-in;
+}
+#suivre.active{
+    background: #e3867f url(images/suivre.png) no-repeat bottom center;
+}
+.woman #suivre.active{
+    background: #2d3e50 url(images/suivre.png) no-repeat bottom center;
 }
 #suivre:hover{
     background-color:#e99e99;
@@ -465,6 +476,12 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
 }
 .woman #suivre{
     background: #2d3e50 url(images/suivre.png) no-repeat 15px center;
+}
+.woman #suivre:active{
+    background-color:#1e2935;
+}
+.woman #suivre:hover{
+    background-color:#576573;
 }
 #discuter{
     background: #222222 url(images/discuter.png) no-repeat 12px center;
@@ -1827,6 +1844,17 @@ margin: 40px 0;
     display: block;
     width: 100%;
     height: 113px;
+}
+
+#rencontres input[type="submit"]{
+    display: block;
+    float: none;
+    margin: 40px auto;
+    background: #2d3e50;
+    color: white;
+    font-family: segoe_uibold;
+    box-shadow: 0px 3px 0px black;
+    border-radius: 3px;
 }
 
 /*Message Erreur */

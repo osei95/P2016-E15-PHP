@@ -166,7 +166,14 @@ $(function(){
                 }else if(params.action=='addGoal'){
                     alert('Voulez-vous ajouter un objectif ?');
                 }else if(params.action=='sentNotification'){
-                    alert('Demande envoyée');
+                    $('#informations').append(
+                        $('<div>').append(
+                            $('<div>').attr('id', 'confirm-envoi').addClass('obj-box confirm').append(
+                                $('<p>').html('Votre invitation a bien été envoyée')
+                            ) 
+                        )
+                    );
+                    $('#confirm-envoi').fancybox().click();
                 }else if(params.action=='notificationAlreadySent'){
                     alert('Demande déjà envoyée');
                 }
@@ -436,60 +443,63 @@ function goalPopup(params){
                 'value' : 'ENVOYER'
             })
         ]);
-    }else if(type='resume'){
-        var details = $('<div>').append([ 
-            $('<div>').addClass('line clearfix').append([
-                $('<div>').addClass('left').append(
-                    $('<p>').text('Kilomètres à parcourir :')
-                ),
-                $('<div>').addClass('right').append(
-                    $('<p>').text(Math.round(params.goal.value/1000)+'km'+(Math.round(params.goal.value/1000)?'s':'')) // m->km
-                )
-            ]),
-            $('<div>').addClass('line clearfix').append([
-                $('<div>').addClass('left').append(
-                    $('<p>').text('Durée de l\'objectif :')
-                ),
-                $('<div>').addClass('right').append(
-                   $('<p>').text(params.goal.duration+' jour'+(params.goal.duration>1?'s':''))
-                )
-            ]),
-            $('<div>').addClass('line clearfix').append([
-                $('<div>').addClass('left').append(
-                    $('<p>').text('Etat actuel :')
-                ),
-                $('<div>').addClass('right').append(
-                   $('<p>').text(params.goal.achievement+'%')
-                )
-            ])
-        ]);
-    }
 
-    /* Création de la popup */
-    var popup = $('<div>').append(
-        $('<div>').addClass('obj-box clearfix').attr('id', 'detail1').append([
+        /* Création de la popup */
+        var popup = $('<div>').append(
+            $('<div>').addClass('obj-box clearfix').attr('id', 'detail1').append([
+                $('<h2>').text('Objectif à atteindre'),
+                $('<h3>').addClass('cible').text('Votre cible'),
+                $('<p>').addClass('name').text(params.user.firstname+' '+params.user.lastname),
+                $('<div>').addClass('photo').append(
+                    $('<img>').attr('src', '/medias/users/'+params.user.id+'/profil.jpg')
+                ),
+                $('<div>').addClass('taille').append(
+                   $('<h4>').text('Taille'),
+                   $('<p>').text(params.user.height+' cm')
+                ),
+                $('<div>').addClass('poids').append(
+                   $('<h4>').text('Poids'),
+                   $('<p>').text(params.user.weight+' kg')
+                ),
+                $('<div>').addClass('age').append(
+                   $('<h4>').text('Age'),
+                   $('<p>').text(params.user.age+' ans')
+                ),
+                $('<h3>').addClass('objectif').text('Votre objectif'),
+                details
+            ])
+        );
+
+    }else if(type='resume'){
+
+        var popup = $('<div>').attr('id', 'obj1').addClass('obj-box clearfix').append([
             $('<h2>').text('Objectif à atteindre'),
             $('<h3>').addClass('cible').text('Votre cible'),
             $('<p>').addClass('name').text(params.user.firstname+' '+params.user.lastname),
-            $('<div>').addClass('photo').append(
+            $('<div>').addClass('photo').append( 
                 $('<img>').attr('src', '/medias/users/'+params.user.id+'/profil.jpg')
             ),
-            $('<div>').addClass('taille').append(
-               $('<h4>').text('Taille'),
-               $('<p>').text(params.user.height+' cm')
-            ),
-            $('<div>').addClass('poids').append(
-               $('<h4>').text('Poids'),
-               $('<p>').text(params.user.weight+' kg')
-            ),
-            $('<div>').addClass('age').append(
-               $('<h4>').text('Age'),
-               $('<p>').text(params.user.age+' ans')
-            ),
             $('<h3>').addClass('objectif').text('Votre objectif'),
-            details
-        ])
-    );
+            $('<div>').addClass('distance').append([ 
+                $('<h4>').text('Distance à parcourir'),
+                $('<p>').text(Math.round(params.goal.value/1000)+'km'+(Math.round(params.goal.value/1000)?'s':''))
+            ]),
+            $('<div>').addClass('duree').append([ 
+                $('<h4>').text('Durée de l\'objectif'),
+                $('<p>').text((params.goal.duration-1)+' jour'+(params.goal.duration>1?'s':''))
+            ]),
+            $('<h3>').addClass('resultat').text('Votre résultat'),
+            $('<div>').addClass('distance').append([ 
+                $('<h4>').text('Distance parcouru'),
+                $('<p>').text(params.goal.achievement+'%')
+            ]),
+            $('<div>').addClass('duree').append([ 
+                $('<h4>').text('Temps restant'),
+                $('<p>').text(params.goal.remaining+' jours')
+            ])
+        ]);
+
+    }
     $(params.conteneur).append(popup);   
     $(popup).fancybox().click();
     $(popup).off('click');
@@ -630,9 +640,3 @@ function switchSectionMeetings(params){
         }
     });
 }
-
-window.onresize = function() {
-        if (window.innerHeight<400 || window.innerHeight<500){
-            document.location.href="/mobile";
-        }
-    }
