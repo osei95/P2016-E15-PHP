@@ -30,3 +30,4 @@ $RECYCLE.BIN/
 ### PROJECT ###
 **/config/database.ini
 **/config/apis.ini
+public/css/style-dash.css

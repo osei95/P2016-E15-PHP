@@ -420,8 +420,13 @@ width: 300px;
 	margin-bottom: 20px;
 }
 
-#news article .live-news p span{
+#news article .live-news p strong{
 	font-family: segoe_uibold;
+}
+
+#news article .live-news p strong a{
+	color:#fff;
+	text-decoration: none;
 }
 
 #news article.bg-km{
@@ -660,7 +665,7 @@ td, tr{
     display: block;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top center;
+    background:url(images/fleche-actu.png) no-repeat top center;
 }
 
 .separe-dash{
@@ -674,7 +679,11 @@ td, tr{
     position: relative;
     top:0;
     width: 100%;
+<<<<<<< HEAD
     height: 10px
+=======
+    height: 100%;
+>>>>>>> FETCH_HEAD
     background:url(images/fleche-actu.png) no-repeat top center;
 }
 
@@ -691,7 +700,7 @@ td, tr{
     top:10px;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top right 150px;
+    background:url(images/fleche-actu.png) no-repeat top right 150px;
 }
 
 .separe-dash-left{
@@ -706,7 +715,7 @@ td, tr{
     top:10px;
     width: 100%;
     height: 100%;
-    background:url(images/fleche-actu.jpg) no-repeat top left 150px;
+    background:url(images/fleche-actu.png) no-repeat top left 150px;
 }
 
 
