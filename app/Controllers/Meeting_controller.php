@@ -55,6 +55,11 @@
 						$meetings = $user_model->getAllRelationsByUserId(array('user_id'=>$user->user_id, 'state'=>1));
 						$f3->set('meetings', $meetings);
 						break;
+					case 'followers':
+						$this->tpl=array('sync'=>'meetings.json', 'async'=>'meetings.json');
+						$followers = $user_model->getAllFollowersByUserId(array('user_id'=>$user->user_id));
+						$f3->set('meetings', $followers);
+						break;
 					case 'invitations':
 						$this->tpl=array('sync'=>'invitations.json', 'async'=>'invitations.json');
 

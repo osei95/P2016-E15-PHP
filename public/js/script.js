@@ -508,6 +508,7 @@ function switchSectionMeetings(params){
             $('#main-contain').empty();
             console.log(data);
             switch(params.type){
+                case 'followers':
                 case 'meetings':
                     $('#main-contain').append(
                         $('<section>').addClass('contain').attr('id', 'result').append( 
@@ -515,7 +516,7 @@ function switchSectionMeetings(params){
                         )
                     );
                     for(var key in data){
-                        var meeting = $('<div>').append([
+                        var line = $('<div>').append([
                             $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg'),
                             $('<div>').append([
                                 $('<h2>').text(data[key].user.firstname+' '+data[key].user.lastname),
@@ -524,7 +525,7 @@ function switchSectionMeetings(params){
                                 $('<a>').attr('href', '/profil/'+data[key].user.username).text('Voir le profil'),
                             ])
                         ]);
-                        $('#main-contain section.contain .list-result').append(meeting);
+                        $('#main-contain section.contain .list-result').append(line);
                     }
                     break;
                  case 'goals':
