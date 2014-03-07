@@ -1764,6 +1764,9 @@ margin: 40px 0;
 #profil #news>article:nth-child(2n) .live-news{
     color: #2d3e50;
 }
+#profil #news>article:nth-child(2n) .live-news a{
+    color: #2d3e50;
+}
 #profil #news>article:nth-child(2n) .live-news .separator{
     border-color: #2d3e50;
 }
