@@ -20,13 +20,13 @@ ET FAITES DES RENCONTRES !
 
 Séduite par un Coureur ? Un Cycliste ? Un Footballeur ? Un Basketteur ? Un défi relevé ? Ou un simple événement ? Laissez vous emporter par l’ambiance sportive pour faire de nouvelles rencontres, voire plus si affinités...
 
-Fonctionne avec les ses bracelets
+Fonctionne avec ses bracelets
 ----------------------------------
 
 * JawBone UP
 * FitBit
 
-Et pour ceux qui n’ont pas de bracelets
+Et pour ceux qui n’ont pas de bracelets :)
 ----------------------------------------
 
 * RunKeeper
