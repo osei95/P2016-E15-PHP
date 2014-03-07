@@ -15,10 +15,25 @@
 	<body id="page_404">
 		<header class="active">
 		</header>
+		<div class="wrapper">
 		<section>
-			<h1><span class="erreur">404</span><br> Page non trouvée...</h1>
-			<a href="/">Retour <?php echo (isset($SESSION['user'])?'au dashboard':'à la page d\'accueil'); ?></a>
+			<div class="erreur"></div>
+			<h1><br> Vous ne pouvez pas courir ici !</h1>
+				<div class="home-btn">
+						<a href ="/">Retourner à l'accueil
+					</div> 
+				
+		<?php echo (isset($SESSION['user'])?'au dashboard':'à la page d\'accueil'); ?>
+		</a>
 		</section>
+		
+		<div class="push"></div>
+		
+		</div>
+		
+		
+		
+		
 		<footer>
 			<div class="contain">
 				<div>
@@ -46,5 +61,6 @@
 				</div>
 			</div>
 		</footer>
+		</div>
 	</body>
 </html>
