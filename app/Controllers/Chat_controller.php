@@ -18,28 +18,35 @@
 
 				/* Si on doit charger une conversation */
 				if($f3->exists('PARAMS.username')){
-
 					$user_to = $user_model->getUserByUsername(array('username' => $f3->get('PARAMS.username')));
-					if($user_to){
+				}else{
+					$chat_model = new Chat_model();
+					$last_message = $chat_model->getLastMessage(array('user_id'=>$f3->get('SESSION.user.user_id')));
+					if(is_array($last_message) && count($last_message)>0){
+						$user_last_message = ($last_message[0]->message_to==$f3->get('SESSION.user.user_id')?$last_message[0]->message_from:$last_message[0]->message_to);
+						$user_to = $user_model->getUserById(array('id' => $user_last_message));
+					}
+				}
 
-						/* On vérifie que les 2 personnes sont en relation */
-						$relation = $user_model->isRelation(array('from'=>$user->user_id, 'to'=>$user_to->user_id));
-						if($relation){
+				if($user_to){
 
-							$user_to_infos = $user_to->cast();
+					/* On vérifie que les 2 personnes sont en relation */
+					$relation = $user_model->isRelation(array('from'=>$user->user_id, 'to'=>$user_to->user_id));
+					if($relation){
 
-							$chat_model = new Chat_model();
-							$messages = $chat_model->getUserMessages(array('user_from'=>$user->user_id, 'user_to'=>$user_to->user_id));
+						$user_to_infos = $user_to->cast();
 
-							$conversation_infos = array('messages'=>$messages, 'user_from'=>$user_infos, 'user_to'=>$user_to_infos);
+						$chat_model = new Chat_model();
+						$messages = $chat_model->getUserMessages(array('user_from'=>$user->user_id, 'user_to'=>$user_to->user_id));
 
-							$f3->set('conversation', $conversation_infos);
-						}else{
-							$this->tpl=array('sync'=>'404.html');
-						}
+						$conversation_infos = array('messages'=>$messages, 'user_from'=>$user_infos, 'user_to'=>$user_to_infos);
+
+						$f3->set('conversation', $conversation_infos);
 					}else{
 						$this->tpl=array('sync'=>'404.html');
 					}
+				}else{
+					$this->tpl=array('sync'=>'404.html');
 				}
 
 				/* Récupération de toutes les relations */
