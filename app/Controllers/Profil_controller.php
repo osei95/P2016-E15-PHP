@@ -124,17 +124,9 @@
 			$graphs[0]['restant'] = round($level['leftKm'], 1);
 
 			/* Fonction qui calcule l'activité sur le site */
-			//////
-			/////
-			//////
-			/////
-			//////
-			/////
-			//////
-			/////
 			$valueDate = time() - (15 * 86400);
-			$sum15DistanceUser = new Activity_model();
-			$valueDistanceuser = $sum15DistanceUser->getSum15DistanceUser(array('user_id' => $f3->get('PARAMS.id_user'),'limit'=>$valueDate));
+			$activity_model = new Activity_model();
+			$activityUser = $activity_model->getActivityUser(array('user_id' => $f3->get('PARAMS.id_user'),'limit'=>$valueDate));
 
 			$valueDistanceuser[0]['distance'] = $valueDistanceuser[0]['distance'] / 1000;
 			$graphs[2]['valeur'] = round($valueDistanceuser[0]['distance'], 1);

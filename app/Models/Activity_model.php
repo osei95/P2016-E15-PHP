@@ -38,7 +38,7 @@
 			return $valueGoals = $mapper->find();
 		}
 
-		function getSum15DistanceUser($params){
+		function getActivityUser($params){
 			return $this->dB->exec("SELECT SUM(`distance`) distance FROM user_has_activity WHERE user_id =".$params['user_id']." AND `date` >".$params['limit']);
 		}
 

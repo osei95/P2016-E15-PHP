@@ -1356,6 +1356,107 @@ margin: 40px 0;
 }
 
 
+.mes-objectifs>div:nth-child(2){
+    margin-left: 20px;
+    padding: 2.3% 0 0% 0;
+}
+
+.mes-objectifs .fright{
+    padding: 3.4% 0 0% 0;
+    
+}
+
+.mes-objectifs .fright a{
+    margin: 0 10px 0 10px;
+    padding: 10px 45px 10px 45px;
+    font-family: segoe_uibold;
+    text-decoration: none;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 3px;
+    
+}
+
+.mes-objectifs .fright .button{
+    background-repeat: no-repeat;
+    padding: 10px 23px 10px 23px;
+    background-position: 15px center;
+    background-color: #2d3e50;
+    
+}
+
+.mes-objectifs .fright .accept{
+    background-image: url(images/accept-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #239e58;
+    
+}
+
+.mes-objectifs .fright .refus{
+    background-image: url(images/refus-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #e84c3d;
+    
+}
+
+.mes-objectifs .fright .chat{
+    background-image: url(images/chat-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #222222;
+    
+}
+
+.mes-objectifs .fright .target{
+    background-image: url(images/target-icon.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-color: #e2867e;
+    
+}
+
+
+
+
+.mes-objectifs{
+    padding: 20px 0;
+}
+.mes-objectifs>div:first-child>div{
+    height: 80px;
+    width: 80px;
+    border-radius: 50px;
+    border: 5px solid #4c5b6a;
+    overflow: hidden;
+    margin: auto;
+}
+.mes-objectifs>div:first-child>div>img{
+    width: 100%;
+    min-height: 100%;
+}
+.mes-objectifs>div:nth-child(2){
+    margin-left: 20px;
+}
+
+.mes-objectifs .normal p{
+    color:#8a8a8a;
+    font-family: segoe_uilight;
+    margin: 10px 0 20px 0;
+}
+.mes-objectifs .normal p strong{
+    font-family: segoe_uibold;
+    color:#2d3e50;
+    font-weight: normal;
+}
+
+.mes-objectifs .normal p strong a{
+    text-decoration: none;
+    color:#2d3e50;
+}
+
+
+
 .mes-objectifs .fix p{
     color:#e2867e;
     font-family: segoe_uilight;
@@ -1367,6 +1468,11 @@ margin: 40px 0;
     font-weight: normal;
 }
 
+.mes-objectifs .fix strong a{
+    color:#e2867e;
+    text-decoration: none;
+}
+
 .mes-objectifs .done p{
     color:#e84c3d;
     font-family: segoe_uilight;
@@ -1376,6 +1482,11 @@ margin: 40px 0;
     font-family: segoe_uibold;
     color:#e84c3d;
     font-weight: normal;
+}
+
+.mes-objectifs .done strong a{
+    text-decoration: none;
+    color:#e84c3d;
 }
 
 
@@ -1390,7 +1501,13 @@ margin: 40px 0;
     font-weight: normal;
 }
 
-.mes-objectifs>div:nth-child(2) a{
+.mes-objectifs .finish strong a{
+    text-decoration: none;
+    color:#239e58;
+    font-weight: normal;
+}
+
+/*.mes-objectifs>div:nth-child(2) a{
     text-decoration: none;
     color: #2d3e50;
     font-family: segoe_uibold;
@@ -1399,7 +1516,8 @@ margin: 40px 0;
     margin-top: 20px;
     font-size: .9em;
     background: url(images/encourager.png) no-repeat 15px center;
-}
+}*/
+
 .mes-objectifs>div.fright p{
     font-family: segoe_uibold;
     color:#2d3e50;
@@ -1416,6 +1534,8 @@ margin: 40px 0;
     display: inline-block;
     float: right;
 }
+
+/* end middle nav*/ 
 
 /* -------------------------- Dashboard ----------------------------- */
 
