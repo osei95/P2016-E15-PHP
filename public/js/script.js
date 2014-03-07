@@ -630,3 +630,9 @@ function switchSectionMeetings(params){
         }
     });
 }
+
+window.onresize = function() {
+        if (window.innerHeight<400 || window.innerHeight<500){
+            document.location.href="/mobile";
+        }
+    }
