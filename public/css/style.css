@@ -1826,6 +1826,20 @@ margin: 40px 0;
     height: 113px;
 }
 
+/*Message Erreur */
+
+#rencontres .empty {
+	
+	font-family: segoeui-bold;
+	text-align: center;
+	color: #c0c0c0;
+	padding: 30px;
+	font-size: 20px;
+}
+
+/*Message Erreur*/
+
+
 
 /* sticky footer */
 

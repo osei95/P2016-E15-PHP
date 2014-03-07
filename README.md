@@ -1,8 +1,9 @@
 RUN & MEET 
 ================================================
 
-1er site de rencontre pour sportifs connectés.
-http://php.h3.erwan.co/
+1er site de rencontres pour sportifs connectés.
+* Site : http://php.h3.erwan.co/
+* API :  http://php.h3.erwan.co/api/users/
 
 LE CONCEPT
 ---------------------------
@@ -18,7 +19,7 @@ Synchronisez automatiquement toutes vos prouesses sportives, grâce à votre bra
 ET FAITES DES RENCONTRES !
 ---------------------------
 
-Séduite par un Coureur ? Un Cycliste ? Un Footballeur ? Un Basketteur ? Un défi relevé ? Ou un simple événement ? Laissez vous emporter par l’ambiance sportive pour faire de nouvelles rencontres, voire plus si affinités...
+Séduite par un Coureur ? Un Cycliste ? Un Footballeur ? Un Basketteur ? Un défi relevé ? ou un simple événement ? Laissez vous emporter par l’ambiance sportive pour faire de nouvelles rencontres, voire plus si affinités...
 
 Fonctionne avec ses bracelets
 ----------------------------------
