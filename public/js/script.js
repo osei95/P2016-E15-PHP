@@ -371,7 +371,7 @@ function addNews(params){
                     $('<p>').addClass('date').text(data[key].news.date)
                 ]),
                 $('<div>').addClass('live-news fleft').append([
-                    $('<p>').html( '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>'+data[key].news.content),
+                    $('<p>').html( '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>'+data[key].news.content),
                     $('<div>').addClass('separator'),
                     $('<div>').addClass('link').append( 
                         $('<a>').attr('href', 'support/'+key).addClass(support_class)
@@ -531,25 +531,25 @@ function switchSectionMeetings(params){
                                 /* Si un objectif est en attente de réponse */
                                 if(data[key].goal.accepted==0){
                                     line_class = 'fix';
-                                    line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
+                                    line_message = '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong> vous a fixé un objectif de <strong>'+data[key].goal.value+' '+(data[key].goal.type=='distance'?(data[key].goal.value>1?'kms':'km'):'')+'</strong> à parcourir en '+data[key].goal.duration+' '+(data[key].goal.duration>1?'jours':'jour')+'</strong>';
                                     line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
                                     if($('body.woman').length>0) line_butons.push($('<a>').attr('href', '#').addClass('target').text('Fixer un objectif'));
                                 /* Si un objectif est refusé */
                                 }else if(data[key].goal.accepted==-1){
                                     line_class = 'fix';
-                                    line_message = 'Vous avez refusé l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    line_message = 'Vous avez refusé l’objectif de <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                 /* Si un objectif est réussi */
                                 }else if(data[key].goal.achievement>=100){
                                     line_class = 'finish';
-                                    line_message = 'Vous avez rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    line_message = 'Vous avez rempli l’objectif de <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                     line_butons = $('<a>').attr('href', '/messages/'+data[key].user.username).addClass('chat').text('Discuter');
                                 /* Si un objectif est raté */
                                 }else if(data[key].goal.deadline<Math.round((new Date()).getTime()/1000)){
                                     line_class = 'done';
-                                    line_message = 'Vous n’avez pas rempli l’objectif de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    line_message = 'Vous n’avez pas rempli l’objectif de <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                 /* Si un objectif est en attente */
                                 }else{
-                                    line_message = 'Vous avez accepté le défi de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                    line_message = 'Vous avez accepté le défi de <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                     line_butons = $('<a>').attr('href', '#').addClass('details button').text('Voir les détails');
                                 }
                             }else{
@@ -557,16 +557,16 @@ function switchSectionMeetings(params){
                                 if(data[key].invitation.state==0){
                                     line_class = 'normal';
                                     if(data[key].invitation.from=='me'){
-                                        line_message = 'Vous avez envoyé une invitation à <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                        line_message = 'Vous avez envoyé une invitation à <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                     }else{
                                         /* Si il y a un objectif en cours */
                                         if(data[key].goal.state=='false'){
                                             line_class = 'fix';
                                             line_butons = [$('<a>').attr('href', '#').addClass('accept').text('Accepter'), $('<a>').attr('href', '#').addClass('refus').text('Refuser')];
                                             if($('body.woman').length>0) line_butons.push($('<a>').attr('href', '#').addClass('target').text('Fixer un objectif'));
-                                            line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> vous a envoyé une invitation';
+                                            line_message = '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong> vous a envoyé une invitation';
                                         }else{
-                                            line_message = 'Vous avez envoyé un défi à <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                            line_message = 'Vous avez envoyé un défi à <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                             line_butons = $('<a>').addClass('details button').attr({
                                                 'href' : '#',
                                                 'data-goal' : data[key].goal.id
@@ -577,18 +577,18 @@ function switchSectionMeetings(params){
                                 }else if(data[key].invitation.state==-1){
                                     line_class = 'fix';
                                     if(data[key].invitation.from=='me'){
-                                        line_message = 'Vous avez refusé l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                        line_message = 'Vous avez refusé l\'invitation de <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                     }else{
-                                        line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a refusé votre invitation';
+                                        line_message = '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong> a refusé votre invitation';
                                     }
                                 /* Si l'utilisateur a déjà accepté l'inviation */
                                 }else{
                                     line_class = 'finish';
                                     line_butons = $('<a>').attr('href', '/messages/'+data[key].user.username).addClass('chat').text('Discuter');
                                     if(data[key].invitation.from=='me'){                                    
-                                        line_message = '<span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span> a accepté votre invitation';
+                                        line_message = '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong> a accepté votre invitation';
                                     }else{
-                                        line_message = 'Vous avez accepté l\'invitation de <span>'+data[key].user.firstname+' '+data[key].user.lastname+'</span>';
+                                        line_message = 'Vous avez accepté l\'invitation de <strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>';
                                     }
                                 }
                             }
