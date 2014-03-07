@@ -79,35 +79,7 @@
 		</section>
 		<div class="contain clearfix">
 			<section id="conversation-block" class="<?php echo (isset($conversation)?'open':'hidden'); ?>" <?php echo (isset($conversation)?'data-user="'.$conversation['user_to']['user_id'].'"':''); ?>>
-				<div class="conversation-actions">	
-				<?php if(isset($conversation)): ?>
-				<?php foreach($conversation['messages'] as $key => $message): ?>
-				<?php if(!isset($last_date))	$last_date=$message['message_date']; ?>
-				<?php if($message['message_date']!=$last_date || $key==0): ?>
-					<?php $last_date = $message['message_date']; ?>
-					<div class="date">
-						<div class="separator"></div>
-						<p><?php echo $last_date; ?></p>
-						<div class="separator"></div>
-					</div>
-				<?php endif; ?>	
-				<div class="<?php echo $message['message_from_class']; ?>">
-					<div class="<?php echo $message['message_from_class']; ?>_block">
-						<div class="<?php echo $message['message_from_class']; ?>_pics">
-							<div class="pics">
-								<img src="/medias/users/<?php echo $message['message_from']; ?>/profil.jpg" alt="">
-							</div>
-						</div> <!--End me_pics -->
-						<div class="<?php echo $message['message_from_class']; ?>_talk">
-							<span class="clock_icon">10h42</span>
-							<p class="message">
-								<?php echo $message['message_content']; ?>
-							</p>
-						</div>
-					</div>		
-				</div>
-				<?php endforeach; ?>				
-				<?php endif; ?>				
+				<div class="conversation-actions">			
 				</div>
 				<form id="conversation-tfchat" method="post">
 					<textarea type="text" class="conversation-tftextarea" placeholder="Entrez votre message"></textarea>
