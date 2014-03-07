@@ -1427,6 +1427,16 @@ margin: 40px 0;
 	
 }
 
+.mes-objectifs .fright .button:hover{
+	background-color: #576573;
+	
+}
+
+.mes-objectifs .fright .button:active{
+	background-color: #1e2935;
+	
+}
+
 .mes-objectifs .fright .accept{
 	background-image: url(images/accept-icon.png);
 	background-repeat: no-repeat;
@@ -1434,6 +1444,17 @@ margin: 40px 0;
 	background-color: #239e58;
 	
 }
+
+.mes-objectifs .fright .accept:hover{
+	background-color: #4fb179;
+	
+}
+
+.mes-objectifs .fright .accept:active{
+	background-color: #1e844a;
+	
+}
+
 
 .mes-objectifs .fright .refus{
 	background-image: url(images/refus-icon.png);
@@ -1443,6 +1464,17 @@ margin: 40px 0;
 	
 }
 
+.mes-objectifs .fright .refus:hover{
+	background-color: #ed7064;
+	
+}
+
+.mes-objectifs .fright .refus:active{
+	background-color: #c54034;
+	
+}
+
+
 .mes-objectifs .fright .chat{
 	background-image: url(images/chat-icon.png);
 	background-repeat: no-repeat;
@@ -1450,6 +1482,18 @@ margin: 40px 0;
 	background-color: #222222;
 	
 }
+
+
+.mes-objectifs .fright .chat:hover{
+	background-color: #393939;
+	
+}
+
+.mes-objectifs .fright .chat:active{
+	background-color: #111111;
+	
+}
+
 
 .mes-objectifs .fright .target{
 	background-image: url(images/target-icon.png);
