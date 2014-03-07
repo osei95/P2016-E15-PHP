@@ -2,8 +2,8 @@ RUN & MEET
 ================================================
 
 1er site de rencontres pour sportifs connectés.
-Site : http://php.h3.erwan.co/
-API :  http://php.h3.erwan.co/api/users/
+* Site : http://php.h3.erwan.co/
+* API :  http://php.h3.erwan.co/api/users/
 
 LE CONCEPT
 ---------------------------
