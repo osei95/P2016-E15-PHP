@@ -176,6 +176,10 @@
 			$f3->reroute('/meetings');
 		}
 
+		function mobile($f3){
+			$this->tpl=array('sync'=>'mobile.html');
+		}
+
 		public function replyGoal($f3){
 			$json = array('action'=>false);
 			if($f3->exists('POST.user_id') && $f3->exists('POST.reply')){
