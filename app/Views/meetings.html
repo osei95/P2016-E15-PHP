@@ -21,7 +21,7 @@
 				<div>
 					<a href="/profil" title="Mon profil"></a>
 					<a href="/meetings" title="Mes rencontres" class="active"></a>
-					<a href="/messages" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
+					<a href="/messages" class="active" title="Messagerie"><?php if(isset($notifications['message'])): echo('<span>'.$notifications['message'].'</span>'); endif;?></a>
 					<a href="/search" title="Recherche"></a>
 				</div>
 				<a href="/logout">Déconnexion</a>

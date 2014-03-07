@@ -32,7 +32,7 @@
 						<h2 class="TitleN3">Conversations</h2>
 						<div class ="chat-infos">
 							<span class="chat-icon-women"></span>
-							<p><?php echo($user['relations']); ?> contact<?php if($user['relations']>1): echo('s'); endif; ?></p>
+							<p><?php if(is_array($relations)): echo(count($relations)); endif; ?> contact<?php if(is_array($relations) && count($relations)>1): echo('s'); endif; ?></p>
 							<div class="separator"></div>
 							<div id="tfheader">
 								<!--
