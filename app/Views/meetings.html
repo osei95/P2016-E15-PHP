@@ -49,20 +49,20 @@
 		                    $goal_butons = '';
 							if($g['goal_accepted']==0){
 		                        $goal_class = 'fix';
-		                        $goal_message = '<strong>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</strong> vous a fixé un objectif de <strong>'.$value.' '.($value>1?'kms':'km').'</strong> à parcourir en <strong>'.$duration.' '.($duration>1?'jours':'jour').'</strong>';
+		                        $goal_message = '<strong><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></strong> vous a fixé un objectif de <strong>'.$value.' '.($value>1?'kms':'km').'</strong> à parcourir en <strong>'.$duration.' '.($duration>1?'jours':'jour').'</strong>';
 		                        $goal_butons = '<a href="#" class="accept">Accepter</a><a class="refus" href="#">Refuser</a>';
 		                    }else if($g['goal_accepted']==-1){
 		                        $goal_class = 'fix';
-		                        $goal_message = 'Vous avez refusé l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                        $goal_message = 'Vous avez refusé l’objectif de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
 		                    }else if($g['goal_achievement']>=100){
 		                        $goal_class = 'finish';
-		                        $goal_message = 'Vous avez rempli l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                        $goal_message = 'Vous avez rempli l’objectif de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
 		                        $goal_butons = '<a href="#" class="chat">Discuter</a>';
 		                    }else if($g['goal_deadline']<time()){
 		                        $goal_class = 'done';
-		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                        $goal_message = 'Vous n’avez pas rempli l’objectif de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
 		                    }else{
-		                        $goal_message = 'Vous avez accepté le défi de <span>'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</span>';
+		                        $goal_message = 'Vous avez accepté le défi de <span><a href="#">'.$g['user_from_firstname'].' '.$g['user_from_lastname'].'</a></span>';
 		                        $goal_butons = '<a href="#" class="button details">Voir les détails</a>';
 		                    }
 	                    ?>
