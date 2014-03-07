@@ -176,7 +176,7 @@
 						</div>
 						<div class="fright">
 							<p><?php echo(date('d/m/Y', $n['news_date'])) ?></p>
-							<span><?php echo($n['news_supports']); ?></span>
+							<span><?php echo($n['news_supports']); ?> ecouragement<?php if($n['news_supports']>1): echo('s'); endif; ?></span>
 						</div>
 					</li>
 					<?php endforeach; ?>

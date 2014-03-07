@@ -475,7 +475,7 @@ footer>div>div>div:nth-child(2)>div>a:nth-child(3):hover{
     background-color:#b36b66;
 }
 .woman #suivre{
-    background: #2d3e50 url(images/suivre.png) no-repeat 15px center;
+    background: #2d3e50 url(images/suivre.png) no-repeat top center;
 }
 .woman #suivre:active{
     background-color:#1e2935;
@@ -1855,6 +1855,15 @@ margin: 40px 0;
     font-family: segoe_uibold;
     box-shadow: 0px 3px 0px black;
     border-radius: 3px;
+}
+
+#recherche .chat-infos{
+    position: relative;
+}
+
+#edit-search{
+    top: 0;
+    right: 0;
 }
 
 /*Message Erreur */
