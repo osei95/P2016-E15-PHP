@@ -20,9 +20,8 @@
 			<div class="erreur"></div>
 			<h1><br> Vous ne pouvez pas courir ici !</h1>
 				<div class="home-btn">
-						<a href ="/">Retourner à l'accueil</a>
+						<a href ="/">Retourner <?php echo (isset($SESSION['user'])?'au dashboard':'à la page d\'accueil'); ?></a>
 					</div> 
-					<?php echo (isset($SESSION['user'])?'au dashboard':'à la page d\'accueil'); ?>
 		</section>
 		
 		<div class="push"></div>
