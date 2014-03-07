@@ -40,15 +40,7 @@
 				</div>
 				
 				<div class="fright">
-					<h2 class="objectifs-dash">Mes objectifs</h2>
-					
-					
-					<!--<p class="dash-text">Vous n'avez pas d'objectifs pour le moment</p>
-					
-					<div class="dash-search-btn">
-						<a href ="#">Lancer la recherche</a>
-					</div>-->
-					
+					<h2 class="objectifs-dash">Mes objectifs</h2>				
 					
 					
 					<?php if(count($goals)>0):?>
@@ -73,7 +65,11 @@
 						</div>
 						<?php endforeach; ?>
 					<?php else: ?>
-						<p>Vous n'avez pas encore d'objectif...</p>
+						<p class="dash-text">Vous n'avez pas d'objectifs pour le moment</p>
+					
+						<div class="dash-search-btn">
+							<a href ="/search">Lancer la recherche</a>
+						</div>
 					<?php endif; ?>
 	
 				</div>
