@@ -80,7 +80,7 @@ width: 300px;
 	
 }
 
-.dash-search-btn:hover{
+.dash-search-btn:active{
 	font-family: segoe_uibold;
 	text-transform: uppercase;
 	text-align: center;
