@@ -671,18 +671,28 @@ td, tr{
 .separe-dash{
     display: block;
     width: 100%;
+<<<<<<< HEAD
     height: 0px
+=======
+    height: 0;
+>>>>>>> FETCH_HEAD
     position: relative;
 }
 .separe-dash>span{
     display: block;
     position: relative;
+<<<<<<< HEAD
     top:0;
     width: 100%;
 <<<<<<< HEAD
     height: 10px
 =======
     height: 100%;
+>>>>>>> FETCH_HEAD
+=======
+    top:0px;
+    width: 100%;
+    height: 10px;
 >>>>>>> FETCH_HEAD
     background:url(images/fleche-actu.png) no-repeat top center;
 }
@@ -697,7 +707,7 @@ td, tr{
 .separe-dash-right>span{
     display: block;
     position: relative;
-    top:10px;
+    top:0px;
     width: 100%;
     height: 100%;
     background:url(images/fleche-actu.png) no-repeat top right 150px;

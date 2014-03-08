@@ -50,7 +50,17 @@ $(function(){
                     }
                 });
             }
-        })
+        });
+
+        /* Encourgagements */
+        $('.support').on('click', function(evt){
+            evt.preventDefault();
+            var $this = $(this);
+            $.getJSON($this.attr('href'), function(data){
+                if(data.action.name=='support') $this.addClass('active');
+                else                            $this.removeClass('active');
+            });
+        });
 
        $('.navigation_news a').on('click', function(evt){
             evt.preventDefault();
@@ -371,7 +381,7 @@ function addNews(params){
                     $('<p>').addClass('date').text(data[key].news.date)
                 ]),
                 $('<div>').addClass('live-news fleft').append([
-                    $('<p>').html( '<strong><a href="'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>'+data[key].news.content),
+                    $('<p>').html( '<strong><a href="/profil/'+data[key].user.username+'">'+data[key].user.firstname+' '+data[key].user.lastname+'</a></strong>'+data[key].news.content),
                     $('<div>').addClass('separator'),
                     $('<div>').addClass('link').append( 
                         $('<a>').attr('href', 'support/'+key).addClass(support_class)
@@ -498,6 +508,7 @@ function switchSectionMeetings(params){
             $('#main-contain').empty();
             console.log(data);
             switch(params.type){
+                case 'followers':
                 case 'meetings':
                     $('#main-contain').append(
                         $('<section>').addClass('contain').attr('id', 'result').append( 
@@ -505,7 +516,7 @@ function switchSectionMeetings(params){
                         )
                     );
                     for(var key in data){
-                        var meeting = $('<div>').append([
+                        var line = $('<div>').append([
                             $('<img>').attr('src', '/medias/users/'+data[key].user.id+'/profil.jpg'),
                             $('<div>').append([
                                 $('<h2>').text(data[key].user.firstname+' '+data[key].user.lastname),
@@ -514,7 +525,7 @@ function switchSectionMeetings(params){
                                 $('<a>').attr('href', '/profil/'+data[key].user.username).text('Voir le profil'),
                             ])
                         ]);
-                        $('#main-contain section.contain .list-result').append(meeting);
+                        $('#main-contain section.contain .list-result').append(line);
                     }
                     break;
                  case 'goals':

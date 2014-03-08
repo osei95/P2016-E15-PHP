@@ -69,10 +69,13 @@
 			$support = $news_model->getSupportByUserId(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
 			if(!$support){
 				$news_model->createSupport(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+				$json=array('action'=>array('name'=>'support'));
 			}else{
 				$news_model->removeSupport(array('news_id' => $f3->get('PARAMS.id_news'), 'user_id' => $f3->get('SESSION.user.user_id')));
+				$json=array('action'=>array('name'=>'unsupport'));
 			}
-			$f3->reroute('/');
+			echo(json_encode($json));
+			exit;
 		}
 
 		function news($f3){

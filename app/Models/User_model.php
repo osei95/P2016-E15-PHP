@@ -66,6 +66,10 @@
 			return $mapper->load(array('following_from=? AND following_to=?', $params['from'], $params['to']));
 		}
 
+		function getAllFollowersByUserId($params){
+			return $this->dB->exec("SELECT DISTINCT user_id, user_firstname, user_lastname, user_username, user_gender, user_city_name, user_age FROM user_infos INNER JOIN following ON user_infos.user_id=following.following_from WHERE following.following_to=".$params['user_id']);
+		}
+
 		/* Goals */
 
 		function getAllGoalsToByUserId($params){

@@ -1298,37 +1298,69 @@ background-color: #2d3e50;
 }
 
 #middle-nav {
-    text-align: center;
+	text-align: center;
 }
 
 #middle-nav li {
-    text-align: center;
-    display:inline-block;
-    padding: 20px 92px 20px 92px;
-    font-family: segoe_uilight;
-    font-size: 0.9em;
-    text-transform: uppercase;
-    color: #2d3e50;
+	text-align: center;
+	display:inline-block;
+	padding: 20px 92px 20px 92px;
+	font-family: segoe_uilight;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	color: #2d3e50;
 }
 
+
 #middle-nav li a {
-    color:#2d3e50;
-    text-decoration: none;
-    
+	color:#2d3e50;
+	text-decoration: none;
+	
 }
 
 #middle-nav li a.actif {
-    color:#2d3e50;
-    font-family: segoe_uibold;
-    text-decoration: none;
-    
+	color:#2d3e50;
+	font-family: segoe_uibold;
+	text-decoration: none;
+	
 }
 
+
+
+#meeting-nav {
+	text-align: center;
+}
+
+#meeting-nav li {
+	text-align: center;
+	display:inline-block;
+	padding: 20px 50px 20px 50px;
+	font-family: segoe_uilight;
+	font-size: 0.9em;
+	text-transform: uppercase;
+	color: #2d3e50;
+}
+
+
+#meeting-nav li a {
+	color:#2d3e50;
+	text-decoration: none;
+	
+}
+
+#meeting-nav li a.actif {
+	color:#2d3e50;
+	font-family: segoe_uibold;
+	text-decoration: none;
+	
+}
+
+
 .bottom-border {
-    
-    border-bottom: 1px solid #2d3e50;
-    margin-bottom: 15px; 
-    
+	
+	border-bottom: 1px solid #2d3e50;
+	margin-bottom: 15px; 
+	
 }
 
 
@@ -1339,103 +1371,147 @@ margin: 40px 0;
 }
 
 #objectifs-F #middle-nav li a {
-    color:#e2867e;
-    text-decoration: none;
-    
+	color:#e2867e;
+	text-decoration: none;
+	
 }
 
 #objectifs-F #middle-nav li a.actif {
-    color:#e2867e;
-    font-family: segoe_uibold;
-    text-decoration: none;
-    
+	color:#e2867e;
+	font-family: segoe_uibold;
+	text-decoration: none;
+	
 }
 
 #objectifs-F .bottom-border {
-    
-    border-bottom: 1px solid #e2867e;
-    margin-bottom: 15px; 
-    
+	
+	border-bottom: 1px solid #e2867e;
+	margin-bottom: 15px; 
+	
 }
 
 
 
 .objectifs-feed {
-    
-    margin-bottom: 150px;
-    
+	
+	margin-bottom: 150px;
+	
 }
 
 .mes-objectifs>div:nth-child(2){
     margin-left: 20px;
-    padding-top: 15px;
+    padding: 2.3% 0 0% 0;
 }
 
 .mes-objectifs .fright{
-    padding-top: 25px;
-    
+	padding: 3.4% 0 0% 0;
+	
 }
 
 .mes-objectifs .fright a{
-    margin: 0 5px;
-    padding: 5px 30px;
-    font-family: segoe_uibold;
-    text-decoration: none;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 3px;
-    
+	margin: 0 10px 0 10px;
+	padding: 10px 45px 10px 45px;
+	font-family: segoe_uibold;
+	text-decoration: none;
+	color: #fff;
+	font-size: 13px;
+	border-radius: 3px;
+	
 }
 
 .mes-objectifs .fright .button{
-    background-repeat: no-repeat;
-    padding: 5px 30px;
-    background-position: 15px center;
-    background-color: #2d3e50;
-    
+	background-repeat: no-repeat;
+	padding: 10px 23px 10px 23px;
+	background-position: 15px center;
+	background-color: #2d3e50;
+	
+}
+
+.mes-objectifs .fright .button:hover{
+	background-color: #576573;
+	
+}
+
+.mes-objectifs .fright .button:active{
+	background-color: #1e2935;
+	
 }
 
 .mes-objectifs .fright .accept{
-    background-image: url(images/accept-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #239e58;
-    
+	background-image: url(images/accept-icon.png);
+	background-repeat: no-repeat;
+	background-position: 15px center;
+	background-color: #239e58;
+	
 }
+
+.mes-objectifs .fright .accept:hover{
+	background-color: #4fb179;
+	
+}
+
+.mes-objectifs .fright .accept:active{
+	background-color: #1e844a;
+	
+}
+
 
 .mes-objectifs .fright .refus{
-    background-image: url(images/refus-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #e84c3d;
-    
+	background-image: url(images/refus-icon.png);
+	background-repeat: no-repeat;
+	background-position: 15px center;
+	background-color: #e84c3d;
+	
 }
+
+.mes-objectifs .fright .refus:hover{
+	background-color: #ed7064;
+	
+}
+
+.mes-objectifs .fright .refus:active{
+	background-color: #c54034;
+	
+}
+
 
 .mes-objectifs .fright .chat{
-    background-image: url(images/chat-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #222222;
-    
+	background-image: url(images/chat-icon.png);
+	background-repeat: no-repeat;
+	background-position: 15px center;
+	background-color: #222222;
+	
 }
 
+
+.mes-objectifs .fright .chat:hover{
+	background-color: #393939;
+	
+}
+
+.mes-objectifs .fright .chat:active{
+	background-color: #111111;
+	
+}
+
+
 .mes-objectifs .fright .target{
-    background-image: url(images/target-icon.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-    background-color: #e2867e;
-    
+	background-image: url(images/target-icon.png);
+	background-repeat: no-repeat;
+	background-position: 15px center;
+	background-color: #e2867e;
+	
 }
 
 
 
 
 .mes-objectifs{
-    padding: 12px 0;
+    padding: 20px 0;
 }
 .mes-objectifs>div:first-child>div{
-    height: 60px;
-    width: 60px;
+    height: 80px;
+    width: 80px;
     border-radius: 50px;
     border: 5px solid #4c5b6a;
     overflow: hidden;
@@ -1460,6 +1536,12 @@ margin: 40px 0;
     font-weight: normal;
 }
 
+.mes-objectifs .normal p strong a{
+    text-decoration: none;
+    color:#2d3e50;
+}
+
+
 
 .mes-objectifs .fix p{
     color:#e2867e;
@@ -1472,6 +1554,11 @@ margin: 40px 0;
     font-weight: normal;
 }
 
+.mes-objectifs .fix strong a{
+    color:#e2867e;
+    text-decoration: none;
+}
+
 .mes-objectifs .done p{
     color:#e84c3d;
     font-family: segoe_uilight;
@@ -1481,6 +1568,11 @@ margin: 40px 0;
     font-family: segoe_uibold;
     color:#e84c3d;
     font-weight: normal;
+}
+
+.mes-objectifs .done strong a{
+    text-decoration: none;
+    color:#e84c3d;
 }
 
 
@@ -1495,7 +1587,13 @@ margin: 40px 0;
     font-weight: normal;
 }
 
-.mes-objectifs>div:nth-child(2) a{
+.mes-objectifs .finish strong a{
+    text-decoration: none;
+    color:#239e58;
+    font-weight: normal;
+}
+
+/*.mes-objectifs>div:nth-child(2) a{
     text-decoration: none;
     color: #2d3e50;
     font-family: segoe_uibold;
@@ -1504,7 +1602,8 @@ margin: 40px 0;
     margin-top: 20px;
     font-size: .9em;
     background: url(images/encourager.png) no-repeat 15px center;
-}
+}*/
+
 .mes-objectifs>div.fright p{
     font-family: segoe_uibold;
     color:#2d3e50;
@@ -1726,6 +1825,20 @@ margin: 40px 0;
     width: 100%;
     height: 113px;
 }
+
+/*Message Erreur */
+
+#rencontres .empty {
+	
+	font-family: segoeui-bold;
+	text-align: center;
+	color: #c0c0c0;
+	padding: 30px;
+	font-size: 20px;
+}
+
+/*Message Erreur*/
+
 
 
 /* sticky footer */
