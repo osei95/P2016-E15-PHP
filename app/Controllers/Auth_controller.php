@@ -79,7 +79,7 @@
 				$user_model = new User_model();
 				$infos['username'] = $f3->get('SESSION.registration_auth.username');
 				$infos['password'] = $f3->get('SESSION.registration_auth.password');
-				if($user_model->getUserByUsername(array('username' => $infos['username']))!=null){
+				if(!$user_model->getUserByUsername(array('username' => $infos['username']))){
 					$errors['username'] = 'Ce pseudonyme est déjà utilisé par un autre membre.';
 				}
 				if(strlen($infos['firstname'])<2){
@@ -90,7 +90,7 @@
 				}
 				if(!filter_var($infos['email'], FILTER_VALIDATE_EMAIL)){
 					$errors['email'] = 'Veuillez vérifier la saisie de votre adresse mail.';
-				}elseif($user_model->getUserByEmail(array('email' => $infos['email']))!=null){
+				}elseif(!$user_model->getUserByEmail(array('email' => $infos['email']))){
 					$errors['email'] = 'Cette adresse mail est déjà utilisée par un autre membre.';
 				}
 
@@ -191,7 +191,7 @@
 				$user_model = new User_model();
 				$this->tpl=array('sync'=>'home.html');
 				$f3->set('SESSION.registration_auth', array('username' => $f3->get('POST.username'), 'password' => $f3->get('POST.password')));
-				if(strlen($infos['username'])<6){
+				if(strlen($infos['username'])<4){
 					$errors['username'] = 'Votre pseudonyme doit contenir 4 caractères au minimum.';
 				}elseif($user_model->getUserByUsername(array('username' => $infos['username']))!=null){
 					$errors['username'] = 'Ce pseudonyme est déjà utilisé par un autre membre.';

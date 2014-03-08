@@ -348,9 +348,6 @@ width: 300px;
 #profil header .contain div>a:nth-child(2){
     background:url(images/header-icon2.png) no-repeat center center;
 }
-#profil header .contain div>a:nth-child(3){
-    background:url(images/header-icon3.png) no-repeat center center;
-}
 #profil header .contain div>a:nth-child(4){
     background:url(images/header-icon4.png) no-repeat center center;
 }

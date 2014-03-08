@@ -5,6 +5,7 @@ RUN & MEET
 * Site : http://php.h3.erwan.co/
 * API :  http://php.h3.erwan.co/api/users/
 
+
 LE CONCEPT
 ---------------------------
 Run & Meet est un nouveau concept de sites de rencontres qui est basé sur l’utilisation des bracelets connectés et des applications de tracking sportif. Le site va permettre aux utilisateurs de faire des rencontres ainsi que d’obtenir un bilan détaillé de leurs activités physiques.
@@ -32,6 +33,10 @@ Et pour ceux qui n’ont pas de bracelets :)
 
 * RunKeeper
 * Moves
+
+Gestion de projet
+-----------------
+* https://trello.com/b/2lrR8azs/projet-php-e15-p2016
 
 
 L’équipe

@@ -139,7 +139,12 @@
 				$user_model = new User_model();
 				$user = $user_model->getUserById(array('id' => $user_to));
 				if($user){
-					$user_infos = $user->cast();
+					if($f3->exists('POST.return') && $f3->get('POST.return')=='to'){
+						$user_return = $user_model->getUserById(array('id' => $user_from));
+						$user_infos = $user_return->cast();
+					}else{
+						$user_infos = $user->cast();
+					}
 					$user_infos['body_weight'] = ceil($user_infos['body_weight']/10);
 					$f3->set('user', $user_infos);
 					$goal = $user_model->getGoalByUsersId(array('from' => $user_from, 'to'=>$user_to));
@@ -169,6 +174,10 @@
 				}
 			}
 			$f3->reroute('/meetings');
+		}
+
+		function mobile($f3){
+			$this->tpl=array('sync'=>'mobile.html');
 		}
 
 		public function replyGoal($f3){

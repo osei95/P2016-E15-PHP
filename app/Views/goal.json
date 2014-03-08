@@ -4,7 +4,8 @@
 		"unit" : "<?php echo $goal['goal_unit']; ?>",
 		"value" : "<?php echo $goal['goal_value']; ?>",
 		"achievement" : "<?php echo $goal['goal_achievement']; ?>",
-		"duration" : "<?php echo ceil(($goal['goal_deadline']-$goal['goal_date'])/84600); ?>"
+		"duration" : "<?php echo ceil(($goal['goal_deadline']-$goal['goal_date'])/84600); ?>",
+		"remaining" : "<?php echo abs(ceil(($goal['goal_deadline']-time())/84600)-1); ?>"
 	},
 	"user" : {
 		"id" : "<?php echo $user['user_id']; ?>",
