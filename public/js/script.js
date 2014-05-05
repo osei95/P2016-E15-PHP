@@ -316,7 +316,7 @@ $(function(){
         $('#main-contain').on('click', '.accept, .refus', function(evt){
             $this = $(this);
             var user_id = $this.parents('.mes-objectifs').first().data('user');
-            var reply = $this.hasClass('accept')?1:0;
+            var reply = $this.hasClass('accept')?'1':'0';
             var url = ($('.navigation_rencontres a.actif').attr('id')=='goals'?'/goal/reply':'/meetings/reply');
             $.ajax({
                 dataType: 'json',
